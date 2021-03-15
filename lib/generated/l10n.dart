@@ -35,11 +35,71 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Recorder`
+  /// `MemoryBox`
   String get app_name {
     return Intl.message(
-      'Recorder',
+      'MemoryBox',
       name: 'app_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Твой голос всегда рядом`
+  String get slogan {
+    return Intl.message(
+      'Твой голос всегда рядом',
+      name: 'slogan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Мы рады тебя видеть`
+  String get hello_old {
+    return Intl.message(
+      'Мы рады тебя видеть',
+      name: 'hello_old',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Привет!`
+  String get hello_new1 {
+    return Intl.message(
+      'Привет!',
+      name: 'hello_new1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Мы рады видеть тебя здесь.\nЭто приложение поможет записывать сказки и держать их в удобном месте не заполняя память на телефоне`
+  String get hello_new2 {
+    return Intl.message(
+      'Мы рады видеть тебя здесь.\nЭто приложение поможет записывать сказки и держать их в удобном месте не заполняя память на телефоне',
+      name: 'hello_new2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Взрослые иногда нуждаются \nв сказке даже больше, чем дети`
+  String get hello_old_desc {
+    return Intl.message(
+      'Взрослые иногда нуждаются \nв сказке даже больше, чем дети',
+      name: 'hello_old_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Продолжить`
+  String get btn_next {
+    return Intl.message(
+      'Продолжить',
+      name: 'btn_next',
       desc: '',
       args: [],
     );

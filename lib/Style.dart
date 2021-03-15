@@ -8,3 +8,8 @@ Color cRed = Color.fromRGBO(226,119,119,1);
 Color cGreen = Color.fromRGBO(121,166,113,1);
 Color cOrange = Color.fromRGBO(241,180,136,1);
 Color cBlue = Color.fromRGBO(94,119,206,1);
+Color cBlueSoso = Color.fromRGBO(140,132,226,1);
+Color cBackground = Color.fromRGBO(246,246,246,1);
+
+
+ThemeData mainTheme = ThemeData.dark().copyWith(backgroundColor: cBackground);

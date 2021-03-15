@@ -21,6 +21,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "app_name" : MessageLookupByLibrary.simpleMessage("Recorder")
+    "app_name" : MessageLookupByLibrary.simpleMessage("MemoryBox"),
+    "btn_next" : MessageLookupByLibrary.simpleMessage("Продолжить"),
+    "hello_new1" : MessageLookupByLibrary.simpleMessage("Привет!"),
+    "hello_new2" : MessageLookupByLibrary.simpleMessage("Мы рады видеть тебя здесь.\nЭто приложение поможет записывать сказки и держать их в удобном месте не заполняя память на телефоне"),
+    "hello_old" : MessageLookupByLibrary.simpleMessage("Мы рады тебя видеть"),
+    "hello_old_desc" : MessageLookupByLibrary.simpleMessage("Взрослые иногда нуждаются \nв сказке даже больше, чем дети"),
+    "slogan" : MessageLookupByLibrary.simpleMessage("Твой голос всегда рядом")
   };
 }
