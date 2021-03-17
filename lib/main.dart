@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:recorder/Routes.dart';
 import 'package:recorder/Style.dart';
+import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
+import 'package:recorder/UI/Home/General.dart';
 
 import 'generated/l10n.dart';
 
@@ -24,7 +27,13 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
-      home: OldPerson(),
+      home: Login(),
+      initialRoute: Routes.home,
+      routes: <String, WidgetBuilder>{
+        Routes.welcomeNew: (BuildContext context) => Login(),
+        Routes.welcomeOld: (BuildContext context) => OldPerson(),
+        Routes.home: (BuildContext context) => General(),
+      },
     );
   }
 }

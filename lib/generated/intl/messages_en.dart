@@ -23,10 +23,15 @@ class MessageLookup extends MessageLookupByLibrary {
   static _notInlinedMessages(_) => <String, Function> {
     "app_name" : MessageLookupByLibrary.simpleMessage("MemoryBox"),
     "btn_next" : MessageLookupByLibrary.simpleMessage("Продолжить"),
+    "desc_register" : MessageLookupByLibrary.simpleMessage("Регистрация привяжет твои сказки \n к облаку, после чего они всегда\n будут с тобой"),
+    "enter_code" : MessageLookupByLibrary.simpleMessage("Введи код из смс, чтобы \nмы тебя запомнили"),
+    "enter_num" : MessageLookupByLibrary.simpleMessage("Введите номер телефона"),
+    "hello" : MessageLookupByLibrary.simpleMessage("Привет!"),
     "hello_new1" : MessageLookupByLibrary.simpleMessage("Привет!"),
-    "hello_new2" : MessageLookupByLibrary.simpleMessage("Мы рады видеть тебя здесь.\nЭто приложение поможет записывать сказки и держать их в удобном месте не заполняя память на телефоне"),
+    "hello_new2" : MessageLookupByLibrary.simpleMessage("Мы рады видеть тебя здесь.\nЭто приложение поможет записывать \nсказки и держать их в удобном месте\n не заполняя память на телефоне"),
     "hello_old" : MessageLookupByLibrary.simpleMessage("Мы рады тебя видеть"),
     "hello_old_desc" : MessageLookupByLibrary.simpleMessage("Взрослые иногда нуждаются \nв сказке даже больше, чем дети"),
+    "later" : MessageLookupByLibrary.simpleMessage("Позже"),
     "slogan" : MessageLookupByLibrary.simpleMessage("Твой голос всегда рядом")
   };
 }

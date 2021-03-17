@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 part 'IconData.dart';
 
-Widget IconSvg( {@required int id, Color color, double width, double height, bool nullColor}){
+Widget IconSvg(int id,{ Color color, double width, double height, bool nullColor}){
 
   String icon (String name, {bool active, bool check}){
     String path = "assets/images/";
@@ -15,12 +15,18 @@ Widget IconSvg( {@required int id, Color color, double width, double height, boo
 
   String iconName;
 
-  int count = 2;
+  int count = 7;
   if(id < 0||id >= count)id=0;
 
   switch(id) {
     case 0: iconName =icon('back_ellipse'); break;
     case 1: iconName =icon('heart'); break;
+    case 2: iconName =icon('voice'); break;
+    case 3: iconName =icon('profile'); break;
+    case 4: iconName =icon('paper'); break;
+    case 5: iconName =icon('home'); break;
+    case 6: iconName =icon('category'); break;
+    default: iconName = icon('heart'); break;
   }
 
 
