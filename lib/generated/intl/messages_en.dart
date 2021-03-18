@@ -21,8 +21,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "add" : MessageLookupByLibrary.simpleMessage("Добавить"),
+    "and_here" : MessageLookupByLibrary.simpleMessage("И тут"),
     "app_name" : MessageLookupByLibrary.simpleMessage("MemoryBox"),
+    "audios" : MessageLookupByLibrary.simpleMessage("Аудиозаписи"),
     "btn_next" : MessageLookupByLibrary.simpleMessage("Продолжить"),
+    "collections" : MessageLookupByLibrary.simpleMessage("Подборки"),
     "desc_register" : MessageLookupByLibrary.simpleMessage("Регистрация привяжет твои сказки \n к облаку, после чего они всегда\n будут с тобой"),
     "enter_code" : MessageLookupByLibrary.simpleMessage("Введи код из смс, чтобы \nмы тебя запомнили"),
     "enter_num" : MessageLookupByLibrary.simpleMessage("Введите номер телефона"),
@@ -31,7 +35,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hello_new2" : MessageLookupByLibrary.simpleMessage("Мы рады видеть тебя здесь.\nЭто приложение поможет записывать \nсказки и держать их в удобном месте\n не заполняя память на телефоне"),
     "hello_old" : MessageLookupByLibrary.simpleMessage("Мы рады тебя видеть"),
     "hello_old_desc" : MessageLookupByLibrary.simpleMessage("Взрослые иногда нуждаются \nв сказке даже больше, чем дети"),
+    "here" : MessageLookupByLibrary.simpleMessage("Тут"),
     "later" : MessageLookupByLibrary.simpleMessage("Позже"),
-    "slogan" : MessageLookupByLibrary.simpleMessage("Твой голос всегда рядом")
+    "open_all" : MessageLookupByLibrary.simpleMessage("Открыть все"),
+    "slogan" : MessageLookupByLibrary.simpleMessage("Твой голос всегда рядом"),
+    "text_of_empty_audios" : MessageLookupByLibrary.simpleMessage("Как только ты запишешь аудио, она появится здесь."),
+    "titleOfEmptyCollection" : MessageLookupByLibrary.simpleMessage("Здесь будет твой набор сказок")
   };
 }

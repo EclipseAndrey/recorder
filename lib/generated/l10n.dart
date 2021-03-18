@@ -154,6 +154,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Подборки`
+  String get collections {
+    return Intl.message(
+      'Подборки',
+      name: 'collections',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Открыть все`
+  String get open_all {
+    return Intl.message(
+      'Открыть все',
+      name: 'open_all',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Аудиозаписи`
+  String get audios {
+    return Intl.message(
+      'Аудиозаписи',
+      name: 'audios',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Добавить`
+  String get add {
+    return Intl.message(
+      'Добавить',
+      name: 'add',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Здесь будет твой набор сказок`
+  String get titleOfEmptyCollection {
+    return Intl.message(
+      'Здесь будет твой набор сказок',
+      name: 'titleOfEmptyCollection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Тут`
+  String get here {
+    return Intl.message(
+      'Тут',
+      name: 'here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `И тут`
+  String get and_here {
+    return Intl.message(
+      'И тут',
+      name: 'and_here',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Как только ты запишешь аудио, она появится здесь.`
+  String get text_of_empty_audios {
+    return Intl.message(
+      'Как только ты запишешь аудио, она появится здесь.',
+      name: 'text_of_empty_audios',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

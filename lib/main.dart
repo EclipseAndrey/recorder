@@ -10,7 +10,8 @@ import 'package:recorder/UI/Home/General.dart';
 import 'generated/l10n.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent));
   runApp(MyApp());
 }
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
-      home: Login(),
+      home: General(),
       initialRoute: Routes.home,
       routes: <String, WidgetBuilder>{
         Routes.welcomeNew: (BuildContext context) => Login(),
@@ -37,4 +38,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
