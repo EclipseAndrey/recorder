@@ -17,43 +17,46 @@ class Collections extends StatefulWidget {
 class _CollectionsState extends State<Collections> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(S.of(context).collections,
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: 1.05)),
-              GestureDetector(
-                onTap: () {},
-                child: Text(S.of(context).open_all,
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
-              ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 11),
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(S.of(context).collections,
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 1.05)),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text(S.of(context).open_all,
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+                ),
+              ],
+            ),
           ),
-        ),
-        colleectionsPreview()
-      ],
+          collectionsPreview()
+        ],
+      ),
     );
   }
 
-  colleectionsPreview() {
+  collectionsPreview() {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
         children: [
           CollectionItemOne(
             length: 0,
-            width: (MediaQuery.of(context).size.width / 2 - 63) * 240 / 183,
-            height: ((MediaQuery.of(context).size.width / 2 - 63) * 240 / 183) *
+            width: (MediaQuery.of(context).size.width / 2 - 43/2),
+            height: ((MediaQuery.of(context).size.width / 2 - 43/2)) *
                 240 /
                 183,
             img:
@@ -71,8 +74,9 @@ class _CollectionsState extends State<Collections> {
               }
             },
           ),
+          SizedBox(width: 11,),
           Container(
-            height: 240,
+            // height: 240,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -81,12 +85,8 @@ class _CollectionsState extends State<Collections> {
                         ? S.of(context).here
                         : S.of(context).add,
                     length: 0,
-                    width: (MediaQuery.of(context).size.width / 2 - 63) *
-                        240 /
-                        183,
-                    height: ((MediaQuery.of(context).size.width / 2 - 63) *
-                            240 /
-                            183) *
+                    width:(MediaQuery.of(context).size.width / 2 - 43/2),
+                    height: ((MediaQuery.of(context).size.width / 2 - 43/2) ) *
                         113 /
                         183,
                     contColor: Color.fromRGBO(241, 180, 136, 0.8),
@@ -99,17 +99,14 @@ class _CollectionsState extends State<Collections> {
                         widget.onTapCollection(1);
                       }
                     }),
+                SizedBox(height: 16,),
                 SmallCollectionItem(
                     text: widget.items.length == 0
                         ? S.of(context).and_here
                         : S.of(context).add,
                     length: 0,
-                    width: (MediaQuery.of(context).size.width / 2 - 63) *
-                        240 /
-                        183,
-                    height: ((MediaQuery.of(context).size.width / 2 - 63) *
-                            240 /
-                            183) *
+                    width: (MediaQuery.of(context).size.width / 2 - 43/2) ,
+                    height: (MediaQuery.of(context).size.width / 2 - 43/2)*
                         113 /
                         183,
                     contColor: Color.fromRGBO(103, 139, 210, 0.8),

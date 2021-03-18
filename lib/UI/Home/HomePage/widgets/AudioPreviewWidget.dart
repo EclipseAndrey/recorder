@@ -98,7 +98,7 @@ class _AudioPreviewState extends State<AudioPreview> {
                 return Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.075,
+                    
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         border:
