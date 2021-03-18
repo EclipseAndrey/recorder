@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/AudioModal.dart';
+import 'package:recorder/Models/AudioModel.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/UI/Home/HomePage/widgets/AudioPreviewWidget.dart';
-import 'package:recorder/UI/Home/HomePage/widgets/CollectionsWidget.dart';
+import 'package:recorder/UI/Pages/Home/widgets/AudioPreviewWidget.dart';
+import 'package:recorder/UI/Pages/Home/widgets/CollectionsWidget.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 
 class HomePage extends StatefulWidget {

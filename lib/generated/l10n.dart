@@ -234,6 +234,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Редактировать`
+  String get edit_number {
+    return Intl.message(
+      'Редактировать',
+      name: 'edit_number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Подписка`
+  String get subscription {
+    return Intl.message(
+      'Подписка',
+      name: 'subscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Выйти из приложения`
+  String get log_out {
+    return Intl.message(
+      'Выйти из приложения',
+      name: 'log_out',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Удалить аккаунт`
+  String get delete_profile {
+    return Intl.message(
+      'Удалить аккаунт',
+      name: 'delete_profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Сохранить`
+  String get save {
+    return Intl.message(
+      'Сохранить',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

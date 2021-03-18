@@ -15,7 +15,7 @@ Widget IconSvg(int id,
 
   String iconName;
 
-  int count = 12;
+  int count = 13;
   if (id < 0 || id >= count) id = 0;
 
   switch (id) {
@@ -54,6 +54,9 @@ Widget IconSvg(int id,
       break;
     case 11:
       iconName = icon('moreAudios');
+      break;
+    case 12:
+      iconName = icon('changePhoto');
       break;
     default:
       iconName = icon('heart');

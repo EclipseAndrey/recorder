@@ -35,6 +35,12 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
               width: widget.width,
               height: widget.height,
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 4),
+                      blurRadius: 20,
+                      color: Color.fromRGBO(0, 0, 0, 0.25))
+                ],
                 borderRadius: BorderRadius.circular(15),
                 color: Color.fromRGBO(113, 165, 159, 0.8),
               ),

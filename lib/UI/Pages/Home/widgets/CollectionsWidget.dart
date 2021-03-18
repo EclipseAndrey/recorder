@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/CollectionModal.dart';
-import 'package:recorder/UI/Home/HomePage/widgets/FirstCollectionItem.dart';
-import 'package:recorder/UI/Home/HomePage/widgets/SmallCollectionItem.dart';
+import 'package:recorder/Models/CollectionModel.dart';
+import 'package:recorder/UI/Pages/Home/widgets/FirstCollectionItem.dart';
+import 'package:recorder/UI/Pages/Home/widgets/SmallCollectionItem.dart';
 import 'package:recorder/generated/l10n.dart';
 
 class Collections extends StatefulWidget {
@@ -51,14 +51,12 @@ class _CollectionsState extends State<Collections> {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Row(
-
         children: [
           CollectionItemOne(
             length: 0,
-            width: (MediaQuery.of(context).size.width / 2 - 43/2),
-            height: ((MediaQuery.of(context).size.width / 2 - 43/2)) *
-                240 /
-                183,
+            width: (MediaQuery.of(context).size.width / 2 - 43 / 2),
+            height:
+                ((MediaQuery.of(context).size.width / 2 - 43 / 2)) * 240 / 183,
             img:
                 'https://www.sunhome.ru/i/wallpapers/57/chert-kartinka.orig.jpg',
             title: 'Сказки  про Черт ',
@@ -74,7 +72,9 @@ class _CollectionsState extends State<Collections> {
               }
             },
           ),
-          SizedBox(width: 11,),
+          SizedBox(
+            width: 11,
+          ),
           Container(
             // height: 240,
             child: Column(
@@ -85,8 +85,8 @@ class _CollectionsState extends State<Collections> {
                         ? S.of(context).here
                         : S.of(context).add,
                     length: 0,
-                    width:(MediaQuery.of(context).size.width / 2 - 43/2),
-                    height: ((MediaQuery.of(context).size.width / 2 - 43/2) ) *
+                    width: (MediaQuery.of(context).size.width / 2 - 43 / 2),
+                    height: ((MediaQuery.of(context).size.width / 2 - 43 / 2)) *
                         113 /
                         183,
                     contColor: Color.fromRGBO(241, 180, 136, 0.8),
@@ -99,14 +99,16 @@ class _CollectionsState extends State<Collections> {
                         widget.onTapCollection(1);
                       }
                     }),
-                SizedBox(height: 16,),
+                SizedBox(
+                  height: 16,
+                ),
                 SmallCollectionItem(
                     text: widget.items.length == 0
                         ? S.of(context).and_here
                         : S.of(context).add,
                     length: 0,
-                    width: (MediaQuery.of(context).size.width / 2 - 43/2) ,
-                    height: (MediaQuery.of(context).size.width / 2 - 43/2)*
+                    width: (MediaQuery.of(context).size.width / 2 - 43 / 2),
+                    height: (MediaQuery.of(context).size.width / 2 - 43 / 2) *
                         113 /
                         183,
                     contColor: Color.fromRGBO(103, 139, 210, 0.8),

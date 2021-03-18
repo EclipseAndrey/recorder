@@ -7,7 +7,7 @@ const double appbarHeight = 56.0;
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   bool moreIsActive = false;
 
-  MyAppBar({this.moreIsActive});
+  MyAppBar({@required this.moreIsActive});
 
   @override
   _MyAppBarState createState() => _MyAppBarState();

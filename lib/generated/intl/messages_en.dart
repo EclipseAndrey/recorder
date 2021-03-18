@@ -27,7 +27,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "audios" : MessageLookupByLibrary.simpleMessage("Аудиозаписи"),
     "btn_next" : MessageLookupByLibrary.simpleMessage("Продолжить"),
     "collections" : MessageLookupByLibrary.simpleMessage("Подборки"),
+    "delete_profile" : MessageLookupByLibrary.simpleMessage("Удалить аккаунт"),
     "desc_register" : MessageLookupByLibrary.simpleMessage("Регистрация привяжет твои сказки \n к облаку, после чего они всегда\n будут с тобой"),
+    "edit_number" : MessageLookupByLibrary.simpleMessage("Редактировать"),
     "enter_code" : MessageLookupByLibrary.simpleMessage("Введи код из смс, чтобы \nмы тебя запомнили"),
     "enter_num" : MessageLookupByLibrary.simpleMessage("Введите номер телефона"),
     "hello" : MessageLookupByLibrary.simpleMessage("Привет!"),
@@ -37,8 +39,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hello_old_desc" : MessageLookupByLibrary.simpleMessage("Взрослые иногда нуждаются \nв сказке даже больше, чем дети"),
     "here" : MessageLookupByLibrary.simpleMessage("Тут"),
     "later" : MessageLookupByLibrary.simpleMessage("Позже"),
+    "log_out" : MessageLookupByLibrary.simpleMessage("Выйти из приложения"),
     "open_all" : MessageLookupByLibrary.simpleMessage("Открыть все"),
+    "save" : MessageLookupByLibrary.simpleMessage("Сохранить"),
     "slogan" : MessageLookupByLibrary.simpleMessage("Твой голос всегда рядом"),
+    "subscription" : MessageLookupByLibrary.simpleMessage("Подписка"),
     "text_of_empty_audios" : MessageLookupByLibrary.simpleMessage("Как только ты запишешь аудио, она появится здесь."),
     "titleOfEmptyCollection" : MessageLookupByLibrary.simpleMessage("Здесь будет твой набор сказок")
   };

@@ -3,13 +3,10 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 
 class Background extends StatefulWidget {
-
   final Widget title;
   final Widget body;
-  Background({this.body, this.title});
-
-
-
+  final Color color;
+  Background({this.body, this.title, this.color});
 
   @override
   _BackgroundState createState() => _BackgroundState();
@@ -19,7 +16,6 @@ class _BackgroundState extends State<Background> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       color: Theme.of(context).backgroundColor,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -27,10 +23,9 @@ class _BackgroundState extends State<Background> {
         children: [
           Align(
             alignment: Alignment.topCenter,
-            child: IconSvg(
-                IconsSvg.backEllipse,
+            child: IconSvg(IconsSvg.backEllipse,
                 width: MediaQuery.of(context).size.width,
-                color: cBlueSoso),
+                color: widget.color == null ? cBlueSoso : widget.color),
           ),
           Align(
             alignment: Alignment.topCenter,
@@ -44,11 +39,11 @@ class _BackgroundState extends State<Background> {
                       child: widget.title ?? SizedBox(),
                     ),
                   ),
-
                 ),
                 Container(
-                    height: MediaQuery.of(context).size.height - (MediaQuery.of(context).size.width * 369/ 414),
-                    child: widget.body??SizedBox())
+                    height: MediaQuery.of(context).size.height -
+                        (MediaQuery.of(context).size.width * 369 / 414),
+                    child: widget.body ?? SizedBox())
               ],
             ),
           )

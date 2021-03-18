@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/AudioModal.dart';
+import 'package:recorder/Models/AudioModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
@@ -98,7 +98,6 @@ class _AudioPreviewState extends State<AudioPreview> {
                 return Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Container(
-                    
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         border:

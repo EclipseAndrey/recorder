@@ -5,7 +5,7 @@ import 'package:recorder/Routes.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
-import 'package:recorder/UI/Home/General.dart';
+import 'package:recorder/UI/General.dart';
 
 import 'generated/l10n.dart';
 
