@@ -10,7 +10,6 @@ import 'package:recorder/generated/l10n.dart';
 import 'package:recorder/main.dart';
 
 class ProfilePage extends StatefulWidget {
-  bool isEdit = false;
   ProfileModel person = ProfileModel(
       img:
           'https://i0.wp.com/ru.maestro24.org/wp-content/uploads/2019/08/5ec8fa394089b2517a1194120352615e.jpg?fit=1080%2C1080&ssl=1',
@@ -18,11 +17,14 @@ class ProfilePage extends StatefulWidget {
       phoneNumber: '+7 (676) 465 12 12',
       usMemory: 150,
       avMemory: 500);
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool isEdit = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,8 +34,9 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: MyAppBar(moreIsActive: false),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          child: Center(
-            child: widget.isEdit ? profileIsEdit() : profileNotEdit(context),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: isEdit ? profileIsEdit() : profileNotEdit(context),
           ),
         ),
       ),
@@ -42,16 +45,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget profileIsEdit() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ProfileImage(isEdit: widget.isEdit, person: widget.person),
+        ProfileImage(isEdit: isEdit, person: widget.person),
         SizedBox(
           height: 40,
         ),
-        ProfileName(isEdit: widget.isEdit, person: widget.person),
+        ProfileName(isEdit: isEdit, person: widget.person),
         SizedBox(
           height: 80,
         ),
-        PhoneNumber(isEdit: widget.isEdit, person: widget.person),
+        PhoneNumber(isEdit: isEdit, person: widget.person),
         SizedBox(
           height: 40,
         ),
@@ -62,22 +66,24 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget profileNotEdit(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ProfileImage(isEdit: widget.isEdit, person: widget.person),
+        ProfileImage(isEdit: isEdit, person: widget.person),
         SizedBox(
           height: 14,
         ),
-        ProfileName(isEdit: widget.isEdit, person: widget.person),
-        PhoneNumber(isEdit: widget.isEdit, person: widget.person),
+        ProfileName(isEdit: isEdit, person: widget.person),
+        PhoneNumber(isEdit: isEdit, person: widget.person),
         changeButton(),
         SizedBox(
           height: 45,
         ),
+        textSubscription(),
         SubcriptionProgress(person: widget.person),
         SizedBox(
           height: 65,
         ),
-        bottomRow(context),
+        bottomButtons(context),
         SizedBox(
           height: 60,
         ),
@@ -89,10 +95,10 @@ class _ProfilePageState extends State<ProfilePage> {
     return GestureDetector(
         onTap: () {
           setState(() {
-            widget.isEdit = !widget.isEdit;
+            isEdit = !isEdit;
           });
         },
-        child: widget.isEdit
+        child: isEdit
             ? Text(S.of(context).save, style: phoneTextStyle(isPhone: false))
             : Text(
                 S.of(context).edit_number,
@@ -101,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ));
   }
 
-  Container bottomRow(BuildContext context) {
+  Container bottomButtons(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.745,
       child: Row(
@@ -125,6 +131,15 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget textSubscription() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 1),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: cBlack, width: 1))),
+      child: Text(S.of(context).subscription, style: subscriptionTextStyle),
     );
   }
 }

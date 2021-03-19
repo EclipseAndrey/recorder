@@ -17,12 +17,7 @@ class _SubcriptionProgressState extends State<SubcriptionProgress> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.only(bottom: 1),
-          decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: cBlack, width: 1))),
-          child: Text(S.of(context).subscription, style: subscriptionTextStyle),
-        ),
+
         SizedBox(
           height: 20,
         ),

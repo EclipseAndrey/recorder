@@ -32,7 +32,9 @@ class _MyProgressBarState extends State<MyProgressBar> {
             height: widget.height,
             child: Row(
               children: [
-                Container(
+                AnimatedContainer(
+                  duration:
+                  Duration(milliseconds: 200),
                   height: widget.height,
                   width: ((widget.usage / widget.available) * widget.width)
                       .toDouble(),
