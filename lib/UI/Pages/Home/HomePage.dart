@@ -13,40 +13,34 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 66),
+    return SafeArea(
       child: Scaffold(
         backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(moreIsActive: false),
+        appBar: MyAppBar(buttonMore: false, buttonBack: false, buttonMenu: true, padding: 11,),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Collections(
-                items: [],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 44.0),
-                child: AudioPreview(
-                  items: [
-                    AudioItem(
-                        name: 'Малыш Кокки 1',
-                        time: Duration(minutes: 1, seconds: 8000)),
-                    AudioItem(
-                        name: 'Малыш Кокки 1',
-                        time: Duration(minutes: 1, seconds: 8000)),
-                    AudioItem(
-                        name: 'Малыш Кокки 1',
-                        time: Duration(minutes: 1, seconds: 8000)),
-                    AudioItem(
-                        name: 'Малыш Кокки 1',
-                        time: Duration(minutes: 1, seconds: 8000))
-                  ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Column(
+              children: [
+                Collections(
+                  items: [],
                 ),
-              ),
-              SizedBox(
-                height: 60,
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(top: 44.0),
+                  child: AudioPreview(
+                    items: [
+                      AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 3)),
+                      AudioItem(name: 'Малыш Кокки 1',  time: Duration(minutes: 3)),
+                      AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 3)),
+                      AudioItem(name: 'Малыш Кокки 1',  time: Duration(minutes: 3))
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 60,
+                )
+              ],
+            ),
           ),
         ),
       ),

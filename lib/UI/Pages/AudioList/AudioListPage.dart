@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recorder/Models/AudioModel.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
+import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
 
@@ -22,30 +22,32 @@ class AudioLisPage extends StatefulWidget {
 class _AudioLisPageState extends State<AudioLisPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: cBackground.withOpacity(0.0),
-      appBar: MyAppBar(moreIsActive: false),
-      body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 43,
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 25.0, right: 19.0),
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [playlistInfo(), playlistButton(context)],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: cBackground.withOpacity(0.0),
+        appBar: MyAppBar(buttonMore: false, buttonBack: false, buttonMenu: true, top: 18, height: 100,),
+        body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 43,
                 ),
-              ),
-              SizedBox(
-                height: 33,
-              ),
-              playlistPreview()
-            ],
-          )),
+                Container(
+                  padding: EdgeInsets.only(left: 25.0, right: 19.0),
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [playlistInfo(), playlistButton(context)],
+                  ),
+                ),
+                SizedBox(
+                  height: 33,
+                ),
+                playlistPreview()
+              ],
+            )),
+      ),
     );
   }
 
@@ -73,7 +75,11 @@ class _AudioLisPageState extends State<AudioLisPage> {
                   ),
                   Text(
                     S.of(context).play_all,
-                    style: playlistPanelTextStyle(isButton: true),
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: cBlueSoso,
+                        fontFamily: fontFamilyMedium),
                   ),
                 ],
               ),
@@ -83,7 +89,7 @@ class _AudioLisPageState extends State<AudioLisPage> {
             ),
             GestureDetector(
               child: IconSvg(
-                IconsSvg.audiosRepeat,
+                IconsSvg.audioRepeat,
                 width: 30,
               ),
             )
@@ -110,11 +116,19 @@ class _AudioLisPageState extends State<AudioLisPage> {
       children: [
         Text(
           '${widget.playlist.length} ${S.of(context).audio}',
-          style: playlistPanelTextStyle(isButton: false),
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: cBackground,
+              fontFamily: fontFamilyMedium),
         ),
         Text(
           '10:30 часов',
-          style: playlistPanelTextStyle(isButton: false),
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: cBackground,
+              fontFamily: fontFamilyMedium),
         )
       ],
     );

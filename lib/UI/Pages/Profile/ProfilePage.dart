@@ -27,16 +27,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 66),
+    return SafeArea(
       child: Scaffold(
         backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(moreIsActive: false),
+        appBar: MyAppBar(buttonMore: false, buttonBack: isEdit, buttonMenu: true, padding: 18, top: 16, height: 90,),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: isEdit ? profileIsEdit() : profileNotEdit(context),
+          child: Column(
+            children: [
+              SizedBox(height: 66,),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: isEdit ? profileIsEdit() : profileNotEdit(context),
+              ),
+            ],
           ),
         ),
       ),

@@ -53,72 +53,77 @@ class _CollectionsPageState extends State<CollectionsPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 56.0, left: 16.0, right: 16.0),
-      child: Scaffold(
-        backgroundColor: cBlack.withOpacity(0.0),
-        appBar: MyAppBar(
-          moreIsActive: true,
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(
-                      leftColumn.length,
-                      (index) => Column(
-                            children: [
-                              CollectionItemOne(
-                                onTap: () {},
-                                length: 1,
-                                height: MediaQuery.of(context).size.height *
-                                    240 /
-                                    896,
-                                width: MediaQuery.of(context).size.width *
-                                    183 /
-                                    414,
-                                img: leftColumn[index].image,
-                                timeOfCollection:
-                                    leftColumn[index].timeOfCollection,
-                                title: leftColumn[index].title,
-                                audioQuantity: leftColumn[index].audioQuantity,
-                              ),
-                              SizedBox(height: 16)
-                            ],
-                          )),
-                ),
-                SizedBox(width: 15.5),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(
-                      leftColumn.length,
-                      (index) => Column(
-                            children: [
-                              CollectionItemOne(
-                                onTap: () {},
-                                length: 1,
-                                height: MediaQuery.of(context).size.height *
-                                    240 /
-                                    896,
-                                width: MediaQuery.of(context).size.width *
-                                    183 /
-                                    414,
-                                img: rightColumn[index].image,
-                                timeOfCollection:
-                                    rightColumn[index].timeOfCollection,
-                                title: rightColumn[index].title,
-                                audioQuantity: rightColumn[index].audioQuantity,
-                              ),
-                              SizedBox(height: 16)
-                            ],
-                          )),
-                )
-              ],
-            )
-          ]),
+      padding: const EdgeInsets.only(top: 0.0, left: 16.0, right: 16.0),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: cBlack.withOpacity(0.0),
+          appBar: MyAppBar(
+            buttonMore: true,
+            buttonMenu: true,
+            buttonBack: false,
+          ),
+          body: SingleChildScrollView(
+            child: Column(children: [
+              SizedBox(height: 56,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                        leftColumn.length,
+                        (index) => Column(
+                              children: [
+                                CollectionItemOne(
+                                  onTap: () {},
+                                  length: 1,
+                                  height: MediaQuery.of(context).size.height *
+                                      240 /
+                                      896,
+                                  width: MediaQuery.of(context).size.width *
+                                      183 /
+                                      414,
+                                  img: leftColumn[index].image,
+                                  timeOfCollection:
+                                      leftColumn[index].timeOfCollection,
+                                  title: leftColumn[index].title,
+                                  audioQuantity: leftColumn[index].audioQuantity,
+                                ),
+                                SizedBox(height: 16)
+                              ],
+                            )),
+                  ),
+                  SizedBox(width: 15.5),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                        leftColumn.length,
+                        (index) => Column(
+                              children: [
+                                CollectionItemOne(
+                                  onTap: () {},
+                                  length: 1,
+                                  height: MediaQuery.of(context).size.height *
+                                      240 /
+                                      896,
+                                  width: MediaQuery.of(context).size.width *
+                                      183 /
+                                      414,
+                                  img: rightColumn[index].image,
+                                  timeOfCollection:
+                                      rightColumn[index].timeOfCollection,
+                                  title: rightColumn[index].title,
+                                  audioQuantity: rightColumn[index].audioQuantity,
+                                ),
+                                SizedBox(height: 16)
+                              ],
+                            )),
+                  )
+                ],
+              )
+            ]),
+          ),
         ),
       ),
     );

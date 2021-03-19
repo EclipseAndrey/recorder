@@ -284,6 +284,26 @@ class S {
       args: [],
     );
   }
+
+  /// `аудио`
+  String get audio {
+    return Intl.message(
+      'аудио',
+      name: 'audio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Запустить все`
+  String get play_all {
+    return Intl.message(
+      'Запустить все',
+      name: 'play_all',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
