@@ -28,10 +28,18 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(top: 44.0),
                 child: AudioPreview(
                   items: [
-                    AudioItem(name: 'Малыш Кокки 1', time: "30"),
-                    AudioItem(name: 'Малыш Кокки 1', time: "30"),
-                    AudioItem(name: 'Малыш Кокки 1', time: "30"),
-                    AudioItem(name: 'Малыш Кокки 1', time: "30")
+                    AudioItem(
+                        name: 'Малыш Кокки 1',
+                        time: Duration(minutes: 1, seconds: 8000)),
+                    AudioItem(
+                        name: 'Малыш Кокки 1',
+                        time: Duration(minutes: 1, seconds: 8000)),
+                    AudioItem(
+                        name: 'Малыш Кокки 1',
+                        time: Duration(minutes: 1, seconds: 8000)),
+                    AudioItem(
+                        name: 'Малыш Кокки 1',
+                        time: Duration(minutes: 1, seconds: 8000))
                   ],
                 ),
               ),
