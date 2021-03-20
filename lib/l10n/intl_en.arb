@@ -25,5 +25,8 @@
   "delete_profile": "Удалить аккаунт", 
   "save": "Сохранить",
   "audio": "аудио",
-  "play_all" : "Запустить все"
+  "play_all" : "Запустить все",
+  "audio_appbar" : "Аудиозаписи",
+  "audio_appbar_subtitle" : "Все в одном месте",
+  "more_detailed" : "Подробнее"
 }

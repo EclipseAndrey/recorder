@@ -5,7 +5,8 @@ import 'package:recorder/Utils/Svg/IconSVG.dart';
 
 class AudioItemWidget extends StatefulWidget {
   AudioItem item;
-  AudioItemWidget({@required this.item});
+  Color colorPlay;
+  AudioItemWidget({@required this.item, this.colorPlay = cBlueSoso});
   @override
   _AudioItemWidgetState createState() => _AudioItemWidgetState();
 }
@@ -23,7 +24,8 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         children: [
           Padding(
             padding: const EdgeInsets.all(5.0),
-            child: IconSvg(IconsSvg.play, width: 50, height: 50),
+            child: IconSvg(IconsSvg.play,
+                width: 50, height: 50, color: widget.colorPlay),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 18),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:recorder/Models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/AudioList/AudioListPage.dart';
-import 'package:recorder/UI/Pages/Collections/CollectionsPage.dart';
 import 'package:recorder/UI/Pages/Profile/ProfilePage.dart';
 import 'package:recorder/UI/Pages/Record/RecordPage.dart';
 import 'package:recorder/UI/widgets/Background.dart';
 import 'package:recorder/UI/widgets/MainPanel.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 
+import 'Pages/Collections/OpenCollection/OpenCollection.dart';
 import 'Pages/Home/HomePage.dart';
 
 class General extends StatefulWidget {
@@ -19,8 +19,8 @@ class General extends StatefulWidget {
 class _GeneralState extends State<General> {
   Color colorActive = cBlue;
   Color colorInactive = cBlack.withOpacity(0.8);
-  int currentIndex = 0;
-  PageController pageController = PageController(initialPage: 0);
+  int currentIndex = 1;
+  PageController pageController = PageController(initialPage: 1);
   setPage(int index) {
     pageController.animateToPage(index,
         duration: Duration(milliseconds: 300), curve: Curves.easeOut);
@@ -32,13 +32,18 @@ class _GeneralState extends State<General> {
       children: [
         Align(
             alignment: Alignment.topCenter,
-            child: Background(color: currentIndex == 1 ? cSwamp : null)),
+            child: Background(
+                color: currentIndex == 1
+                    ? cSwamp
+                    : currentIndex == 3
+                        ? cBlue
+                        : null)),
         PageView(
           physics: NeverScrollableScrollPhysics(),
           controller: pageController,
           children: [
             HomePage(),
-            CollectionsPage(),
+            OpenColletion(),
             RecordPage(),
             AudioLisPage(),
             ProfilePage(),

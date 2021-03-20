@@ -304,6 +304,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Аудиозаписи`
+  String get audio_appbar {
+    return Intl.message(
+      'Аудиозаписи',
+      name: 'audio_appbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Все в одном месте`
+  String get audio_appbar_subtitle {
+    return Intl.message(
+      'Все в одном месте',
+      name: 'audio_appbar_subtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Подробнее`
+  String get more_detailed {
+    return Intl.message(
+      'Подробнее',
+      name: 'more_detailed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

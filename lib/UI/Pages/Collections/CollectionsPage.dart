@@ -4,8 +4,10 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/FirstCollectionItem.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 
+import 'OpenCollection/OpenCollection.dart';
+
 class CollectionsPage extends StatefulWidget {
-  List<CollectionItem> items = [
+  final List<CollectionItem> items = [
     CollectionItem(
         image: 'https://i.imgur.com/RlGN70F.jpg',
         title: 'Золотая рыбка',
@@ -64,7 +66,9 @@ class _CollectionsPageState extends State<CollectionsPage> {
           ),
           body: SingleChildScrollView(
             child: Column(children: [
-              SizedBox(height: 56,),
+              SizedBox(
+                height: 56,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -75,20 +79,30 @@ class _CollectionsPageState extends State<CollectionsPage> {
                         leftColumn.length,
                         (index) => Column(
                               children: [
-                                CollectionItemOne(
-                                  onTap: () {},
-                                  length: 1,
-                                  height: MediaQuery.of(context).size.height *
-                                      240 /
-                                      896,
-                                  width: MediaQuery.of(context).size.width *
-                                      183 /
-                                      414,
-                                  img: leftColumn[index].image,
-                                  timeOfCollection:
-                                      leftColumn[index].timeOfCollection,
-                                  title: leftColumn[index].title,
-                                  audioQuantity: leftColumn[index].audioQuantity,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                OpenColletion()));
+                                  },
+                                  child: CollectionItemOne(
+                                    onTap: () {},
+                                    length: 1,
+                                    height: MediaQuery.of(context).size.height *
+                                        240 /
+                                        896,
+                                    width: MediaQuery.of(context).size.width *
+                                        183 /
+                                        414,
+                                    img: leftColumn[index].image,
+                                    timeOfCollection:
+                                        leftColumn[index].timeOfCollection,
+                                    title: leftColumn[index].title,
+                                    audioQuantity:
+                                        leftColumn[index].audioQuantity,
+                                  ),
                                 ),
                                 SizedBox(height: 16)
                               ],
@@ -101,20 +115,30 @@ class _CollectionsPageState extends State<CollectionsPage> {
                         leftColumn.length,
                         (index) => Column(
                               children: [
-                                CollectionItemOne(
-                                  onTap: () {},
-                                  length: 1,
-                                  height: MediaQuery.of(context).size.height *
-                                      240 /
-                                      896,
-                                  width: MediaQuery.of(context).size.width *
-                                      183 /
-                                      414,
-                                  img: rightColumn[index].image,
-                                  timeOfCollection:
-                                      rightColumn[index].timeOfCollection,
-                                  title: rightColumn[index].title,
-                                  audioQuantity: rightColumn[index].audioQuantity,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                OpenColletion()));
+                                  },
+                                  child: CollectionItemOne(
+                                    onTap: () {},
+                                    length: 1,
+                                    height: MediaQuery.of(context).size.height *
+                                        240 /
+                                        896,
+                                    width: MediaQuery.of(context).size.width *
+                                        183 /
+                                        414,
+                                    img: rightColumn[index].image,
+                                    timeOfCollection:
+                                        rightColumn[index].timeOfCollection,
+                                    title: rightColumn[index].title,
+                                    audioQuantity:
+                                        rightColumn[index].audioQuantity,
+                                  ),
                                 ),
                                 SizedBox(height: 16)
                               ],

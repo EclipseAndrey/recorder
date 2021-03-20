@@ -25,7 +25,38 @@ class _AudioLisPageState extends State<AudioLisPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(buttonMore: false, buttonBack: false, buttonMenu: true, top: 18, height: 100,),
+        appBar: MyAppBar(
+          buttonMore: false,
+          buttonBack: false,
+          buttonMenu: true,
+          top: 25,
+          height: 100,
+          child: Container(
+            child: Column(
+              children: [
+                Text(
+                  S.of(context).audio_appbar,
+                  style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: fontFamilyMedium,
+                      letterSpacing: 2),
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  S.of(context).audio_appbar_subtitle,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: fontFamilyMedium,
+                      letterSpacing: 2),
+                )
+              ],
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Column(
@@ -44,7 +75,7 @@ class _AudioLisPageState extends State<AudioLisPage> {
                 SizedBox(
                   height: 33,
                 ),
-                playlistPreview()
+                playlistPreview(widget.playlist)
               ],
             )),
       ),
@@ -99,17 +130,6 @@ class _AudioLisPageState extends State<AudioLisPage> {
     );
   }
 
-  Widget playlistPreview() {
-    return Column(
-        children: List.generate(widget.playlist.length, (index) {
-      return Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: AudioItemWidget(
-            item: widget.playlist[index],
-          ));
-    }));
-  }
-
   Widget playlistInfo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,4 +153,19 @@ class _AudioLisPageState extends State<AudioLisPage> {
       ],
     );
   }
+}
+
+Widget playlistPreview(List<AudioItem> list, {Color colorPlay}) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20.0, right: 12),
+    child: Column(
+        children: List.generate(list.length, (index) {
+      return Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: AudioItemWidget(
+            item: list[index],
+            colorPlay: colorPlay,
+          ));
+    })),
+  );
 }

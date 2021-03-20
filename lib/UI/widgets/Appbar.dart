@@ -4,7 +4,6 @@ import 'package:recorder/Utils/Svg/IconSVG.dart';
 
 const double appbarHeight = 56.0;
 
-
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool buttonMore;
   final bool buttonMenu;
@@ -35,38 +34,45 @@ class _MyAppBarState extends State<MyAppBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.only(left: widget.padding, right: widget.padding, top: widget.top),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          widget.buttonBack?Container(
-            decoration: BoxDecoration(
-              color: cBackground,
-              borderRadius: BorderRadius.all(Radius.circular(15))
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: IconSvg(IconsSvg.back, width: 27, height: 27),
-            ),
-          ):widget.buttonMenu?GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical:20.0, horizontal: 11),
-                child: IconSvg(IconsSvg.menu,
-                    width: 28, height: 21, color: cBackground),
-              )):SizedBox(),
-          widget.child != null?widget.child:SizedBox(),
-          widget.buttonMore
-              ? GestureDetector(
-                  onTap: () {},
-                  child: IconSvg(IconsSvg.more,
-                      width: 41, height: 8, color: cBackground))
-              : SizedBox(
-                  width: 28,
-                )
-        ],
+      padding: EdgeInsets.only(
+          left: widget.padding, right: widget.padding, top: widget.top),
+      child: Container(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            widget.buttonBack
+                ? Container(
+                    decoration: BoxDecoration(
+                        color: cBackground,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: IconSvg(IconsSvg.back, width: 27, height: 27),
+                    ),
+                  )
+                : widget.buttonMenu
+                    ? GestureDetector(
+                        behavior: HitTestBehavior.deferToChild,
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 11),
+                          child: IconSvg(IconsSvg.menu,
+                              width: 28, height: 21, color: cBackground),
+                        ))
+                    : SizedBox(),
+            widget.child != null ? widget.child : SizedBox(),
+            widget.buttonMore
+                ? GestureDetector(
+                    onTap: () {},
+                    child: IconSvg(IconsSvg.more,
+                        width: 41, height: 8, color: cBackground))
+                : SizedBox(
+                    width: 28,
+                  )
+          ],
+        ),
       ),
     );
   }
