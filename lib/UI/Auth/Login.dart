@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:recorder/Controllers/LoginController.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Background.dart';
+import 'package:recorder/UI/widgets/ButtonOrange.dart';
 import 'package:recorder/UI/widgets/DefaultTitle.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
+import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/generated/l10n.dart';
 
 class Login extends StatefulWidget {
@@ -12,22 +15,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  PageController controllerPages = PageController(initialPage: 0);
 
-  var maskFormatter = new MaskTextInputFormatter(
-      mask: '+7 (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
-  var maskFormatterCode = new MaskTextInputFormatter(
-      mask: '# # # #', filter: {"#": RegExp(r'[0-9]')});
-  TextEditingController controllerNum = TextEditingController();
-  TextEditingController controllerCode = TextEditingController();
+
+  LoginController controller;
+
 
   @override
   void initState() {
     super.initState();
-
-    controllerNum.addListener(() {
-      print(controllerNum.text);
-    });
+    controller = LoginController();
   }
 
   @override
@@ -37,18 +33,24 @@ class _LoginState extends State<Login> {
         color: Theme.of(context).backgroundColor,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children: [
-            Background(title: DefaultTitle(), body: body()),
-          ],
+        child:  Scaffold(
+          key: AppKeys.scaffoldKey,
+          body: Stack(
+              children: [
+                Background(title: DefaultTitle(), body: body()),
+              ],
+            ),
         ),
+
       ),
     );
   }
 
   Widget body() {
     return PageView(
-      controller: controllerPages,
+      physics: BouncingScrollPhysics(),
+      // allowImplicitScrolling: true,
+      controller: controller.controllerPages,
       children: [stepOne(), stepTwo(), stepThree(), stepFour()],
     );
   }
@@ -84,9 +86,8 @@ class _LoginState extends State<Login> {
             ),
           ],
         ),
-        buttonNext(onTap: () {
-          controllerPages.animateToPage(1,
-              duration: Duration(milliseconds: 300), curve: Curves.ease);
+        ButtonOrange(onTap: () {
+          controller.stepOneTap();
         }),
         SizedBox(),
         SizedBox(),
@@ -131,8 +132,8 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: TextField(
                       textAlign: TextAlign.center,
-                      controller: controllerNum,
-                      inputFormatters: [maskFormatter],
+                      controller: controller.controllerNum,
+                      inputFormatters: [controller.maskFormatter],
                       keyboardType: TextInputType.number,
                       style: TextStyle(
                         color: cBlack,
@@ -162,9 +163,8 @@ class _LoginState extends State<Login> {
           ),
           Column(
             children: [
-              buttonNext(onTap: () {
-                controllerPages.animateToPage(2,
-                    duration: Duration(milliseconds: 300), curve: Curves.ease);
+              ButtonOrange(onTap: () {
+                controller.stepTwoTap();
               }),
               SizedBox(
                 height: 24,
@@ -248,8 +248,8 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: TextField(
                       textAlign: TextAlign.center,
-                      controller: controllerCode,
-                      inputFormatters: [maskFormatterCode],
+                      controller: controller.controllerCode,
+                      inputFormatters: [controller.maskFormatterCode],
                       keyboardType: TextInputType.number,
                       style: TextStyle(
                         color: cBlack,
@@ -279,9 +279,8 @@ class _LoginState extends State<Login> {
           ),
           Column(
             children: [
-              buttonNext(onTap: () {
-                controllerPages.animateToPage(3,
-                    duration: Duration(milliseconds: 300), curve: Curves.ease);
+              ButtonOrange(onTap: () {
+                controller.stepThreeTap();
               }),
               SizedBox(
                 height: 24,

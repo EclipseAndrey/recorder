@@ -3,6 +3,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Background.dart';
 import 'package:recorder/UI/widgets/DefaultTitle.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
+import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/generated/l10n.dart';
 
 class OldPerson extends StatefulWidget {
@@ -14,17 +15,20 @@ class _OldPersonState extends State<OldPerson> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Container(
-        color: Theme.of(context).backgroundColor,
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children: [
-            Background(
-              title: DefaultTitle(),
-              body: body()
-            ),
-          ],
+      child: Scaffold(
+        key: AppKeys.scaffoldKey,
+        body: Container(
+          color: Theme.of(context).backgroundColor,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            children: [
+              Background(
+                title: DefaultTitle(),
+                body: body()
+              ),
+            ],
+          ),
         ),
       ),
     );

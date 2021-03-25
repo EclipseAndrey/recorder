@@ -19,8 +19,8 @@ class General extends StatefulWidget {
 class _GeneralState extends State<General> {
   Color colorActive = cBlue;
   Color colorInactive = cBlack.withOpacity(0.8);
-  int currentIndex = 1;
-  PageController pageController = PageController(initialPage: 1);
+  int currentIndex = 0;
+  PageController pageController = PageController(initialPage:0 );
   setPage(int index) {
     pageController.animateToPage(index,
         duration: Duration(milliseconds: 300), curve: Curves.easeOut);

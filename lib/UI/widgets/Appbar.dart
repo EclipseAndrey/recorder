@@ -38,7 +38,7 @@ class _MyAppBarState extends State<MyAppBar> {
           left: widget.padding, right: widget.padding, top: widget.top),
       child: Container(
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             widget.buttonBack
@@ -52,22 +52,38 @@ class _MyAppBarState extends State<MyAppBar> {
                     ),
                   )
                 : widget.buttonMenu
-                    ? GestureDetector(
-                        behavior: HitTestBehavior.deferToChild,
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 11),
-                          child: IconSvg(IconsSvg.menu,
-                              width: 28, height: 21, color: cBackground),
-                        ))
+                    ? Container(
+                        child: GestureDetector(
+                            behavior: HitTestBehavior.deferToChild,
+                            onTap: () {},
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 11),
+                              child: Container(
+                                width: 27,
+                                height: 27,
+                                child: IconSvg(IconsSvg.menu,
+                                    width: 28, height: 21, color: cBackground),
+                              ),
+                            )),
+                      )
                     : SizedBox(),
             widget.child != null ? widget.child : SizedBox(),
             widget.buttonMore
-                ? GestureDetector(
-                    onTap: () {},
-                    child: IconSvg(IconsSvg.more,
-                        width: 41, height: 8, color: cBackground))
+                ? Padding(
+                  padding: const  EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 11),
+                  child: Container(
+                      width: 27,
+                      height: 27,
+                      child: Center(
+                        child: GestureDetector(
+                            onTap: () {},
+                            child: IconSvg(IconsSvg.more,
+                                width: 41, height: 8, color: cBackground)),
+                      ),
+                    ),
+                )
                 : SizedBox(
                     width: 28,
                   )

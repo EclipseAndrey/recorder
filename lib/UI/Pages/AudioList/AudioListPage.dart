@@ -26,7 +26,7 @@ class _AudioLisPageState extends State<AudioLisPage> {
       child: Scaffold(
         backgroundColor: cBackground.withOpacity(0.0),
         appBar: MyAppBar(
-          buttonMore: false,
+          buttonMore: true,
           buttonBack: false,
           buttonMenu: true,
           top: 25,

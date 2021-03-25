@@ -6,7 +6,6 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
 import 'package:recorder/UI/General.dart';
-
 import 'generated/l10n.dart';
 
 void main() {
@@ -16,6 +15,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,9 +30,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
       home: General(),
-      initialRoute: Routes.home,
+      initialRoute: Routes.welcomeOld,
       routes: <String, WidgetBuilder>{
-        Routes.welcomeNew: (BuildContext context) => Login(),
+        Routes.welcomeNew: (BuildContext context, ) => Login(),
         Routes.welcomeOld: (BuildContext context) => OldPerson(),
         Routes.home: (BuildContext context) => General(),
       },
