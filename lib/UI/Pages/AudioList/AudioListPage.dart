@@ -6,7 +6,7 @@ import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
 
-class AudioLisPage extends StatefulWidget {
+class AudioListPage extends StatefulWidget {
   List<AudioItem> playlist = [
     AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 8000)),
     AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 8000)),
@@ -16,10 +16,10 @@ class AudioLisPage extends StatefulWidget {
   ];
 
   @override
-  _AudioLisPageState createState() => _AudioLisPageState();
+  _AudioListPageState createState() => _AudioListPageState();
 }
 
-class _AudioLisPageState extends State<AudioLisPage> {
+class _AudioListPageState extends State<AudioListPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

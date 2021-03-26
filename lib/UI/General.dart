@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recorder/Models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/AudioList/AudioListPage.dart';
+import 'package:recorder/UI/Pages/Collections/CollectionsPage.dart';
 import 'package:recorder/UI/Pages/Profile/ProfilePage.dart';
 import 'package:recorder/UI/Pages/Record/RecordPage.dart';
 import 'package:recorder/UI/widgets/Background.dart';
@@ -20,7 +21,7 @@ class _GeneralState extends State<General> {
   Color colorActive = cBlue;
   Color colorInactive = cBlack.withOpacity(0.8);
   int currentIndex = 0;
-  PageController pageController = PageController(initialPage:0 );
+  PageController pageController = PageController(initialPage: 0);
   setPage(int index) {
     pageController.animateToPage(index,
         duration: Duration(milliseconds: 300), curve: Curves.easeOut);
@@ -43,9 +44,9 @@ class _GeneralState extends State<General> {
           controller: pageController,
           children: [
             HomePage(),
-            OpenColletion(),
+            CollectionsPage(),
             RecordPage(),
-            AudioLisPage(),
+            AudioListPage(),
             ProfilePage(),
           ],
         ),

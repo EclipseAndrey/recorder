@@ -4,7 +4,7 @@ import 'package:recorder/generated/l10n.dart';
 
 class ButtonOrange extends StatefulWidget {
   final Function onTap;
-  ButtonOrange({this.onTap });
+  ButtonOrange({this.onTap});
   @override
   _ButtonOrangeState createState() => _ButtonOrangeState();
 }
@@ -12,47 +12,40 @@ class ButtonOrange extends StatefulWidget {
 class _ButtonOrangeState extends State<ButtonOrange> {
   bool longTap = false;
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.onTap != null ?widget.onTap(): null;
+        widget.onTap != null ? widget.onTap() : null;
       },
-
-      onLongPressStart: (i){
+      onLongPressStart: (i) {
         longTap = true;
         setState(() {});
       },
-      onLongPressEnd: (i){
+      onLongPressEnd: (i) {
         longTap = false;
         setState(() {});
-
       },
-      onTapDown: (i){
+      onTapDown: (i) {
         longTap = true;
         setState(() {});
-
       },
-      onTapUp: (e){
+      onTapUp: (e) {
         longTap = false;
         setState(() {});
-
       },
-      onPanStart: (i){
+      onPanStart: (i) {
         longTap = true;
         setState(() {});
-
       },
-      onPanEnd: (e){
+      onPanEnd: (e) {
         longTap = false;
         setState(() {});
       },
-
       child: AnimatedPadding(
         duration: Duration(milliseconds: 200),
-
-        padding:  EdgeInsets.symmetric(horizontal: longTap?2:0, vertical: longTap?1:0),
+        padding: EdgeInsets.symmetric(
+            horizontal: longTap ? 2 : 0, vertical: longTap ? 1 : 0),
         child: AnimatedContainer(
           duration: Duration(milliseconds: 200),
           decoration: BoxDecoration(
@@ -60,8 +53,9 @@ class _ButtonOrangeState extends State<ButtonOrange> {
               borderRadius: BorderRadius.all(Radius.circular(51))),
           child: AnimatedPadding(
             duration: Duration(milliseconds: 200),
-
-            padding:  EdgeInsets.symmetric(horizontal: 75 - (longTap?2:0).toDouble(), vertical: 16- (longTap?1:0).toDouble()),
+            padding: EdgeInsets.symmetric(
+                horizontal: 75 - (longTap ? 2 : 0).toDouble(),
+                vertical: 16 - (longTap ? 1 : 0).toDouble()),
             child: Text(
               S.of(context).btn_next,
               style: TextStyle(

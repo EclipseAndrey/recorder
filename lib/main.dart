@@ -15,8 +15,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,7 +30,10 @@ class MyApp extends StatelessWidget {
       home: General(),
       initialRoute: Routes.welcomeOld,
       routes: <String, WidgetBuilder>{
-        Routes.welcomeNew: (BuildContext context, ) => Login(),
+        Routes.welcomeNew: (
+          BuildContext context,
+        ) =>
+            Login(),
         Routes.welcomeOld: (BuildContext context) => OldPerson(),
         Routes.home: (BuildContext context) => General(),
       },

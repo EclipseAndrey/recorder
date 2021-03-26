@@ -8,26 +8,8 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import '../../../../Style.dart';
 
 class OpenColletion extends StatefulWidget {
-  final CollectionItem item = CollectionItem(
-      title: 'Сказка о малыше Кокки',
-      description:
-          'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
-      publicationDate: '24.09.20',
-      playlist: [
-        AudioItem(
-            name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
-        AudioItem(
-            name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
-        AudioItem(
-            name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
-        AudioItem(
-            name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
-        AudioItem(
-            name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
-      ],
-      image: 'https://i.imgur.com/RlGN70F.jpg',
-      audioQuantity: '7',
-      timeOfCollection: '30');
+  final CollectionItem item;
+  OpenColletion({this.item});
 
   @override
   _OpenColletionState createState() => _OpenColletionState();

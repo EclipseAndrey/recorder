@@ -16,4 +16,5 @@ class IconsSvg {
   static int get changePhoto => 12;
   static int get back => 13;
   static int get audioRepeat => 14;
+  static int get pause => 15;
 }

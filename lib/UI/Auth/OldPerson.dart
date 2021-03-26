@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recorder/Controllers/LoginController.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Background.dart';
 import 'package:recorder/UI/widgets/DefaultTitle.dart';
@@ -12,8 +13,17 @@ class OldPerson extends StatefulWidget {
 }
 
 class _OldPersonState extends State<OldPerson> {
+  LoginController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = LoginController();
+  }
+
   @override
   Widget build(BuildContext context) {
+    controller.transitionToHome();
     return Material(
       child: Scaffold(
         key: AppKeys.scaffoldKey,
@@ -23,10 +33,7 @@ class _OldPersonState extends State<OldPerson> {
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
-              Background(
-                title: DefaultTitle(),
-                body: body()
-              ),
+              Background(title: DefaultTitle(), body: body()),
             ],
           ),
         ),
@@ -34,34 +41,34 @@ class _OldPersonState extends State<OldPerson> {
     );
   }
 
-
-
-
-
-  Widget body(){
+  Widget body() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
           decoration: BoxDecoration(
-            color: cBackground,
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0,4),
-                blurRadius: 7,
-                spreadRadius: 0,
-                color: Color.fromRGBO(0,0,0,0.11)
-              )
-            ]
-          ),
+              color: cBackground,
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset(0, 4),
+                    blurRadius: 7,
+                    spreadRadius: 0,
+                    color: Color.fromRGBO(0, 0, 0, 0.11))
+              ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 21),
-            child: Text(S.of(context).hello_old, style: TextStyle(fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 24, color: cBlack),),
+            child: Text(
+              S.of(context).hello_old,
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontFamily: fontFamily,
+                  fontSize: 24,
+                  color: cBlack),
+            ),
           ),
         ),
-
-        IconSvg( IconsSvg.heart, width: 45, color: cOrange),
+        IconSvg(IconsSvg.heart, width: 45, color: cOrange),
         SizedBox(),
         SizedBox(),
         Container(
@@ -70,21 +77,25 @@ class _OldPersonState extends State<OldPerson> {
               borderRadius: BorderRadius.all(Radius.circular(15)),
               boxShadow: [
                 BoxShadow(
-                    offset: Offset(0,4),
+                    offset: Offset(0, 4),
                     blurRadius: 7,
                     spreadRadius: 0,
-                    color: Color.fromRGBO(0,0,0,0.11)
-                )
-              ]
-          ),
+                    color: Color.fromRGBO(0, 0, 0, 0.11))
+              ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 21),
-            child: Text(S.of(context).hello_old_desc,  textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 14, color: cBlack),),
+            child: Text(
+              S.of(context).hello_old_desc,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontFamily: fontFamily,
+                  fontSize: 14,
+                  color: cBlack),
+            ),
           ),
         ),
       ],
     );
   }
-
-
 }
