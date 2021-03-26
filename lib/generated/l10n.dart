@@ -334,6 +334,126 @@ class S {
       args: [],
     );
   }
+
+  /// `Расширь возможности`
+  String get more_opportunity {
+    return Intl.message(
+      'Расширь возможности',
+      name: 'more_opportunity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Выбери подписку`
+  String get choose_subscription {
+    return Intl.message(
+      'Выбери подписку',
+      name: 'choose_subscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `300р`
+  String get price_for_month {
+    return Intl.message(
+      '300р',
+      name: 'price_for_month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1800р`
+  String get price_for_year {
+    return Intl.message(
+      '1800р',
+      name: 'price_for_year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `в месяц`
+  String get for_month {
+    return Intl.message(
+      'в месяц',
+      name: 'for_month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `в год`
+  String get for_year {
+    return Intl.message(
+      'в год',
+      name: 'for_year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Что дает подписка:`
+  String get subscription_preference {
+    return Intl.message(
+      'Что дает подписка:',
+      name: 'subscription_preference',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Неограниченая память`
+  String get no_limit_memory {
+    return Intl.message(
+      'Неограниченая память',
+      name: 'no_limit_memory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Все файлы хранятся в облаке`
+  String get cloud_storage {
+    return Intl.message(
+      'Все файлы хранятся в облаке',
+      name: 'cloud_storage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Возможность скачивать без ограничений`
+  String get no_limit_downloads {
+    return Intl.message(
+      'Возможность скачивать без ограничений',
+      name: 'no_limit_downloads',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Подписаться на месяц`
+  String get subscription_for_month {
+    return Intl.message(
+      'Подписаться на месяц',
+      name: 'subscription_for_month',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Подписаться на год`
+  String get subscription_for_year {
+    return Intl.message(
+      'Подписаться на год',
+      name: 'subscription_for_year',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

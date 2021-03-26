@@ -4,7 +4,8 @@ import 'package:recorder/generated/l10n.dart';
 
 class ButtonOrange extends StatefulWidget {
   final Function onTap;
-  ButtonOrange({this.onTap});
+  final String text;
+  ButtonOrange({this.onTap, @required this.text});
   @override
   _ButtonOrangeState createState() => _ButtonOrangeState();
 }
@@ -57,7 +58,8 @@ class _ButtonOrangeState extends State<ButtonOrange> {
                 horizontal: 75 - (longTap ? 2 : 0).toDouble(),
                 vertical: 16 - (longTap ? 1 : 0).toDouble()),
             child: Text(
-              S.of(context).btn_next,
+              widget.text,
+              // S.of(context).btn_next,
               style: TextStyle(
                 color: cBackground,
                 fontSize: 18,

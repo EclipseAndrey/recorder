@@ -6,6 +6,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
 import 'package:recorder/UI/General.dart';
+import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'generated/l10n.dart';
 
 void main() {

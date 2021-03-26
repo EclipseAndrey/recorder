@@ -17,4 +17,10 @@ class IconsSvg {
   static int get back => 13;
   static int get audioRepeat => 14;
   static int get pause => 15;
+  static int get cloudStorage => 16;
+  static int get infinity => 17;
+  static int get download => 18;
+  static int get activeSubscription => 19;
+
+  static int get disactiveSubscription => 20;
 }

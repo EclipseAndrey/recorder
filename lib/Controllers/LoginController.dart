@@ -52,7 +52,7 @@ class LoginController {
     var curveTween = CurveTween(curve: curve);
 
     return PageRouteBuilder(
-      transitionDuration: Duration(milliseconds: 1500),
+      transitionDuration: Duration(milliseconds: 2500),
       pageBuilder: (context, animation, secondaryAnimation) => General(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(0.0, 1.0);

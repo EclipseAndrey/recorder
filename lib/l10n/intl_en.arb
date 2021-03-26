@@ -28,5 +28,17 @@
   "play_all" : "Запустить все",
   "audio_appbar" : "Аудиозаписи",
   "audio_appbar_subtitle" : "Все в одном месте",
-  "more_detailed" : "Подробнее"
+  "more_detailed" : "Подробнее",
+  "more_opportunity": "Расширь возможности",
+  "choose_subscription": "Выбери подписку",
+  "price_for_month": "300р",
+  "price_for_year": "1800р",
+  "for_month":"в месяц",
+  "for_year":"в год",
+  "subscription_preference": "Что дает подписка:",
+  "no_limit_memory": "Неограниченая память",
+  "cloud_storage": "Все файлы хранятся в облаке",
+  "no_limit_downloads": "Возможность скачивать без ограничений",
+  "subscription_for_month": "Подписаться на месяц",
+  "subscription_for_year":"Подписаться на год"
 }

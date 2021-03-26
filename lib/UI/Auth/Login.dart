@@ -15,10 +15,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
-
   LoginController controller;
-
 
   @override
   void initState() {
@@ -33,15 +30,14 @@ class _LoginState extends State<Login> {
         color: Theme.of(context).backgroundColor,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child:  Scaffold(
+        child: Scaffold(
           key: AppKeys.scaffoldKey,
           body: Stack(
-              children: [
-                Background(title: DefaultTitle(), body: body()),
-              ],
-            ),
+            children: [
+              Background(title: DefaultTitle(), body: body()),
+            ],
+          ),
         ),
-
       ),
     );
   }
@@ -86,9 +82,12 @@ class _LoginState extends State<Login> {
             ),
           ],
         ),
-        ButtonOrange(onTap: () {
-          controller.stepOneTap();
-        }),
+        ButtonOrange(
+          onTap: () {
+            controller.stepOneTap();
+          },
+          text: S.of(context).btn_next,
+        ),
         SizedBox(),
         SizedBox(),
       ],
@@ -163,9 +162,11 @@ class _LoginState extends State<Login> {
           ),
           Column(
             children: [
-              ButtonOrange(onTap: () {
-                controller.stepTwoTap();
-              }),
+              ButtonOrange(
+                  onTap: () {
+                    controller.stepTwoTap();
+                  },
+                  text: S.of(context).btn_next),
               SizedBox(
                 height: 24,
               ),
@@ -279,9 +280,11 @@ class _LoginState extends State<Login> {
           ),
           Column(
             children: [
-              ButtonOrange(onTap: () {
-                controller.stepThreeTap();
-              }),
+              ButtonOrange(
+                  onTap: () {
+                    controller.stepThreeTap();
+                  },
+                  text: S.of(context).btn_next),
               SizedBox(
                 height: 24,
               ),
@@ -353,9 +356,10 @@ class _LoginState extends State<Login> {
             ),
           ),
         ),
-        SizedBox(height: 70,),
+        SizedBox(
+          height: 70,
+        ),
         IconSvg(IconsSvg.heart, width: 45, color: cOrange),
-
       ],
     );
   }

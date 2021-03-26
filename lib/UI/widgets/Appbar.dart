@@ -42,13 +42,18 @@ class _MyAppBarState extends State<MyAppBar> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             widget.buttonBack
-                ? Container(
-                    decoration: BoxDecoration(
-                        color: cBackground,
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: IconSvg(IconsSvg.back, width: 27, height: 27),
+                ? GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: cBackground,
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: IconSvg(IconsSvg.back, width: 27, height: 27),
+                      ),
                     ),
                   )
                 : widget.buttonMenu
@@ -71,9 +76,9 @@ class _MyAppBarState extends State<MyAppBar> {
             widget.child != null ? widget.child : SizedBox(),
             widget.buttonMore
                 ? Padding(
-                  padding: const  EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 11),
-                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20.0, horizontal: 11),
+                    child: Container(
                       width: 27,
                       height: 27,
                       child: Center(
@@ -83,7 +88,7 @@ class _MyAppBarState extends State<MyAppBar> {
                                 width: 41, height: 8, color: cBackground)),
                       ),
                     ),
-                )
+                  )
                 : SizedBox(
                     width: 28,
                   )
