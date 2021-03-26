@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recorder/Models/AudioModel.dart';
 import 'package:recorder/Models/CollectionModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/FirstCollectionItem.dart';
@@ -11,23 +12,83 @@ class CollectionsPage extends StatefulWidget {
     CollectionItem(
         image: 'https://i.imgur.com/RlGN70F.jpg',
         title: 'Золотая рыбка',
+        description:
+            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
+        publicationDate: '24.09.20',
+        playlist: [
+          AudioItem(
+              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
+        ],
         audioQuantity: '7',
         timeOfCollection: '30'),
     CollectionItem(
         image: 'https://i.imgur.com/RlGN70F.jpg',
         title: 'Золотая рыбка',
+        description:
+            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
+        publicationDate: '24.09.20',
+        playlist: [
+          AudioItem(
+              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
+        ],
         audioQuantity: '7',
         timeOfCollection: '30'),
     CollectionItem(
         image: 'https://i.imgur.com/RlGN70F.jpg',
         title: 'Золотая рыбка',
+        description:
+            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
+        publicationDate: '24.09.20',
+        playlist: [
+          AudioItem(
+              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
+        ],
         audioQuantity: '7',
         timeOfCollection: '30'),
     CollectionItem(
         image: 'https://i.imgur.com/RlGN70F.jpg',
         title: 'Золотая рыбка',
+        description:
+            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
+        publicationDate: '24.09.20',
+        playlist: [
+          AudioItem(
+              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
+          AudioItem(
+              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
+        ],
         audioQuantity: '7',
-        timeOfCollection: '30')
+        timeOfCollection: '30'),
   ];
   // CollectionsPage({this.length});
   @override
@@ -81,11 +142,13 @@ class _CollectionsPageState extends State<CollectionsPage> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                OpenColletion()));
+                                    // Navigator.pushNamed(
+                                    //     context, "/openColletion");
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => OpenColletion(
+                                    //             item: leftColumn[index])));
                                   },
                                   child: CollectionItemOne(
                                     onTap: () {},
@@ -117,11 +180,11 @@ class _CollectionsPageState extends State<CollectionsPage> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                OpenColletion()));
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => OpenColletion(
+                                    //             item: rightColumn[index])));
                                   },
                                   child: CollectionItemOne(
                                     onTap: () {},
