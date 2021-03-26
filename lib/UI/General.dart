@@ -5,6 +5,7 @@ import 'package:recorder/UI/Pages/AudioList/AudioListPage.dart';
 import 'package:recorder/UI/Pages/Collections/CollectionsPage.dart';
 import 'package:recorder/UI/Pages/Profile/ProfilePage.dart';
 import 'package:recorder/UI/Pages/Record/RecordPage.dart';
+import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'package:recorder/UI/widgets/Background.dart';
 import 'package:recorder/UI/widgets/MainPanel.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
@@ -54,7 +55,7 @@ class _GeneralState extends State<General> {
           alignment: Alignment.bottomCenter,
           child: MainPanel(
             currentIndex: currentIndex,
-            onChacge: (index) {
+            onChange: (index) {
               setPage(index);
               currentIndex = index;
               setState(() {});
