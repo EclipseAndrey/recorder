@@ -30,7 +30,12 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
   Widget build(BuildContext context) {
     return widget.length < 1
         ? GestureDetector(
-            onTap: () {},
+      behavior: HitTestBehavior.deferToChild,
+            onTap: () {
+              if(widget.onTap != null){
+                widget.onTap();
+              }
+            },
             child: Container(
               width: widget.width,
               height: widget.height,
@@ -81,7 +86,11 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
             ),
           )
         : GestureDetector(
-            onTap: () {},
+            onTap: () {
+              if(widget.onTap != null){
+                widget.onTap();
+              }
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Stack(alignment: Alignment.bottomLeft, children: [

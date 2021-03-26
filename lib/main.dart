@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
       home: General(),
-      initialRoute: Routes.welcomeOld,
+      initialRoute: Routes.welcomeNew,
       routes: <String, WidgetBuilder>{
         Routes.welcomeNew: (
           BuildContext context,

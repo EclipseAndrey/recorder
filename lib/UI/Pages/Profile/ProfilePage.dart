@@ -30,7 +30,31 @@ class _ProfilePageState extends State<ProfilePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(buttonMore: false, buttonBack: isEdit, buttonMenu: true, padding: 18, top: 16, height: 90,),
+        appBar: MyAppBar(buttonMore: false, buttonBack: isEdit, buttonMenu: false, padding: 18, top: 16, height: 90, child:Container(
+          child: Column(
+            children: [
+              Text(
+               "Профиль",
+                style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: fontFamilyMedium,
+                    letterSpacing: 2),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Text(
+               "Твоя частичка",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: fontFamilyMedium,
+                    letterSpacing: 2),
+              )
+            ],
+          ),
+        ) ,),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
