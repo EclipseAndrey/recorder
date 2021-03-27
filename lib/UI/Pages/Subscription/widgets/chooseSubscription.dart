@@ -17,7 +17,7 @@ class SubscriptionPrice {
 class ChooseSubscription extends StatefulWidget {
   final List<SubscriptionPrice> items;
   final int currentIndex;
-  Function(int index) onChange;
+  final Function(int index) onChange;
   ChooseSubscription(
       {@required this.items, this.currentIndex = 0, this.onChange});
   @override

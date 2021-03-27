@@ -5,6 +5,7 @@ import 'package:recorder/UI/Pages/AudioList/AudioListPage.dart';
 import 'package:recorder/UI/Pages/Collections/OpenCollection/widgets/CollectionPhotoWidget.dart';
 import 'package:recorder/UI/Pages/Collections/OpenCollection/widgets/DesriptionWidget.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
+import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/UI/widgets/Background.dart';
 import '../../../../Style.dart';
 
@@ -17,6 +18,8 @@ class OpenColletion extends StatefulWidget {
 }
 
 class _OpenColletionState extends State<OpenColletion> {
+  int currentIndex;
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -65,7 +68,17 @@ class _OpenColletionState extends State<OpenColletion> {
               SizedBox(height: 14),
               Column(
                 children: [
-                  playlistPreview(widget.item.playlist, colorPlay: cSwamp)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 12),
+                    child: AudioPreviewGenerate(
+                        items: widget.item.playlist,
+                        colorPlay: cSwamp,
+                        onChange: (index) {
+                          currentIndex = index;
+                          setState(() {});
+                          print('index $index');
+                        }),
+                  ),
                 ],
               ),
               SizedBox(height: 110)

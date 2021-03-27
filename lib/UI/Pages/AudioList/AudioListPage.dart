@@ -3,6 +3,7 @@ import 'package:recorder/Models/AudioModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
+import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
 
@@ -20,6 +21,8 @@ class AudioListPage extends StatefulWidget {
 }
 
 class _AudioListPageState extends State<AudioListPage> {
+  int currentIndex;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -153,19 +156,18 @@ class _AudioListPageState extends State<AudioListPage> {
       ],
     );
   }
-}
 
-Widget playlistPreview(List<AudioItem> list, {Color colorPlay}) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 20.0, right: 12),
-    child: Column(
-        children: List.generate(list.length, (index) {
-      return Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: AudioItemWidget(
-            item: list[index],
-            colorPlay: colorPlay,
-          ));
-    })),
-  );
+  Widget playlistPreview(List<AudioItem> list, {Color colorPlay}) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 12),
+      child: AudioPreviewGenerate(
+          items: list,
+          colorPlay: cBlue,
+          onChange: (index) {
+            currentIndex = index;
+            setState(() {});
+            print('index $index');
+          }),
+    );
+  }
 }

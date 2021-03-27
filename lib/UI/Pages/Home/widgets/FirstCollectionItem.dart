@@ -26,13 +26,14 @@ class CollectionItemOne extends StatefulWidget {
 }
 
 class _CollectionItemOneState extends State<CollectionItemOne> {
+  bool longTap = false;
   @override
   Widget build(BuildContext context) {
     return widget.length < 1
         ? GestureDetector(
-      behavior: HitTestBehavior.deferToChild,
+            behavior: HitTestBehavior.deferToChild,
             onTap: () {
-              if(widget.onTap != null){
+              if (widget.onTap != null) {
                 widget.onTap();
               }
             },
@@ -87,9 +88,36 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
           )
         : GestureDetector(
             onTap: () {
-              if(widget.onTap != null){
+              if (widget.onTap != null) {
                 widget.onTap();
               }
+            },
+            onLongPressStart: (i) {
+              longTap = true;
+              setState(() {});
+            },
+            onLongPressEnd: (i) {
+              longTap = false;
+              if (widget.onTap != null) {
+                widget.onTap();
+              }
+              setState(() {});
+            },
+            onTapDown: (i) {
+              longTap = true;
+              setState(() {});
+            },
+            onTapUp: (e) {
+              longTap = false;
+              setState(() {});
+            },
+            onPanStart: (i) {
+              longTap = true;
+              setState(() {});
+            },
+            onPanEnd: (e) {
+              longTap = false;
+              setState(() {});
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
@@ -155,7 +183,19 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
                           ],
                         ),
                       ],
-                    ))
+                    )),
+                AnimatedOpacity(
+                  duration: Duration(milliseconds: 500),
+                  opacity: longTap ? 0.2 : 0.0,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 240 / 896,
+                    width: MediaQuery.of(context).size.width * 183 / 414,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                )
               ]),
             ));
   }

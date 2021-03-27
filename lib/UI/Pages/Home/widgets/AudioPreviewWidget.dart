@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recorder/Models/AudioModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
+import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
 
@@ -14,6 +15,8 @@ class AudioPreview extends StatefulWidget {
 }
 
 class _AudioPreviewState extends State<AudioPreview> {
+  int currentIndex;
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -93,15 +96,16 @@ class _AudioPreviewState extends State<AudioPreview> {
           )
         : Padding(
             padding: const EdgeInsets.only(top: 14.0),
-            child: Column(
-              children: List.generate(
-                  widget.items.length < 5 ? widget.items.length : 5, (index) {
-                return Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: AudioItemWidget(
-                      item: widget.items[index],
-                    ));
-              }),
+            child: AudioPreviewGenerate(
+              isHome: true,
+              items: widget.items,
+              currentIndex: currentIndex,
+              onChange: (index) {
+                currentIndex = index;
+                setState(() {});
+                print('index $index');
+                print('currentIndex $currentIndex');
+              },
             ),
           );
   }

@@ -8,7 +8,16 @@ import 'ButtonPlay.dart';
 class AudioItemWidget extends StatefulWidget {
   final AudioItem item;
   final Color colorPlay;
-  AudioItemWidget({@required this.item, this.colorPlay = cBlueSoso});
+  final int index;
+  final int currentIndex;
+  final Function(int index) onChange;
+
+  AudioItemWidget(
+      {@required this.item,
+      this.colorPlay = cBlueSoso,
+      this.index,
+      this.currentIndex,
+      this.onChange});
   @override
   _AudioItemWidgetState createState() => _AudioItemWidgetState();
 }
@@ -26,7 +35,13 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         children: [
           Padding(
             padding: const EdgeInsets.all(5.0),
-            child: ButtonPlay(colorPlay: widget.colorPlay),
+            child: ButtonPlay(
+              colorPlay: widget.colorPlay,
+              item: widget.item,
+              index: widget.index,
+              currentIndex: widget.currentIndex,
+              onChange: widget.onChange,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0, bottom: 12.0, left: 18),

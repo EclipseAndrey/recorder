@@ -16,7 +16,12 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(buttonMore: false, buttonBack: false, buttonMenu: true, padding: 11,),
+        appBar: MyAppBar(
+          buttonMore: false,
+          buttonBack: false,
+          buttonMenu: true,
+          padding: 11,
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -29,15 +34,19 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(top: 44.0),
                   child: AudioPreview(
                     items: [
-                      AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 3)),
-                      AudioItem(name: 'Малыш Кокки 1',  time: Duration(minutes: 3)),
-                      AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 3)),
-                      AudioItem(name: 'Малыш Кокки 1',  time: Duration(minutes: 3))
+                      AudioItem(
+                          name: 'Малыш Кокки 1', time: Duration(minutes: 3)),
+                      AudioItem(
+                          name: 'Малыш Кокки 1', time: Duration(minutes: 3)),
+                      AudioItem(
+                          name: 'Малыш Кокки 1', time: Duration(minutes: 3)),
+                      AudioItem(
+                          name: 'Малыш Кокки 1', time: Duration(minutes: 3))
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 60,
+                  height: 110,
                 )
               ],
             ),

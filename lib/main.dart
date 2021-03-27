@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
       home: General(),
-      initialRoute: Routes.welcomeNew,
+      initialRoute: Routes.home,
       routes: <String, WidgetBuilder>{
         Routes.welcomeNew: (
           BuildContext context,
