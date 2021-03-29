@@ -163,6 +163,7 @@ class _AudioListPageState extends State<AudioListPage> {
       child: AudioPreviewGenerate(
           items: list,
           colorPlay: cBlue,
+          currentIndex: currentIndex,
           onChange: (index) {
             currentIndex = index;
             setState(() {});

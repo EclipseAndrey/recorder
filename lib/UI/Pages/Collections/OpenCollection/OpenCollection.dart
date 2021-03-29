@@ -73,6 +73,7 @@ class _OpenColletionState extends State<OpenColletion> {
                     child: AudioPreviewGenerate(
                         items: widget.item.playlist,
                         colorPlay: cSwamp,
+                        currentIndex: currentIndex,
                         onChange: (index) {
                           currentIndex = index;
                           setState(() {});
