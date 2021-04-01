@@ -21,7 +21,7 @@ class AudioListPage extends StatefulWidget {
 }
 
 class _AudioListPageState extends State<AudioListPage> {
-  int currentIndex;
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {

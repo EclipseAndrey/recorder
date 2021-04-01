@@ -6,6 +6,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
 import 'package:recorder/UI/General.dart';
+import 'package:recorder/UI/Pages/Splash.dart';
 import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'generated/l10n.dart';
 
@@ -28,15 +29,13 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: mainTheme,
-      home: General(),
-      initialRoute: Routes.welcomeOld,
+      home: Splash(),
+      initialRoute: Routes.initial,
       routes: <String, WidgetBuilder>{
-        Routes.welcomeOld: (
-          BuildContext context,
-        ) =>
-            Login(),
+        Routes.welcomeNew: (BuildContext context) => Login(),
         Routes.welcomeOld: (BuildContext context) => OldPerson(),
         Routes.home: (BuildContext context) => General(),
+        Routes.initial: (BuildContext context) => Splash(),
       },
     );
   }

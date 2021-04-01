@@ -35,12 +35,17 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         children: [
           Padding(
             padding: const EdgeInsets.all(5.0),
-            child: ButtonPlay(
-              colorPlay: widget.colorPlay,
-              item: widget.item,
-              index: widget.index,
-              currentIndex: widget.currentIndex,
-              onChange: widget.onChange,
+            child: Container(
+              width: 50,
+              height: 50,
+              child: ButtonPlay(
+                colorPlay: widget.colorPlay,
+                item: widget.item,
+                index: widget.index,
+                currentIndex: widget.currentIndex,
+                onChange: (index){
+                  widget.onChange(index);},
+              ),
             ),
           ),
           Padding(

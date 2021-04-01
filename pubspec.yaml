@@ -23,21 +23,30 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.16.1
+  intl: ^0.17.0
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^0.19.1
   mask_text_input_formatter: ^1.0.6
   percent_indicator: ^2.1.9+1
-
+  http: ^0.12.0
+  shared_preferences: ^0.5.7
+  dio: ^3.0.9
+  provider: ^5.0.0
+  audioplayers: ^0.18.3
+  path_provider: ^2.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  flutter_audio_recorder:
+    path: ../flutter_audio_recorder-master
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

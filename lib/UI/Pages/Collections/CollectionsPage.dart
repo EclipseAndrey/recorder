@@ -8,89 +8,10 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'OpenCollection/OpenCollection.dart';
 
 class CollectionsPage extends StatefulWidget {
-  final List<CollectionItem> items = [
-    CollectionItem(
-        image: 'https://i.imgur.com/RlGN70F.jpg',
-        title: 'Золотая рыбка',
-        description:
-            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
-        publicationDate: '24.09.20',
-        playlist: [
-          AudioItem(
-              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
-        ],
-        audioQuantity: '7',
-        timeOfCollection: '30'),
-    CollectionItem(
-        image: 'https://i.imgur.com/RlGN70F.jpg',
-        title: 'Золотая рыбка',
-        description:
-            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
-        publicationDate: '24.09.20',
-        playlist: [
-          AudioItem(
-              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
-        ],
-        audioQuantity: '7',
-        timeOfCollection: '30'),
-    CollectionItem(
-        image: 'https://i.imgur.com/RlGN70F.jpg',
-        title: 'Золотая рыбка',
-        description:
-            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
-        publicationDate: '24.09.20',
-        playlist: [
-          AudioItem(
-              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
-        ],
-        audioQuantity: '7',
-        timeOfCollection: '30'),
-    CollectionItem(
-        image: 'https://i.imgur.com/RlGN70F.jpg',
-        title: 'Золотая рыбка',
-        description:
-            'Сказка о маленьком принце. Он родился в старой деревне и задавался всего-лишь одним вопросом - “Кто я такой?”.\nОн познакомился со старенькой бабушкой, которая рассказала ему легенду о малыше Кокки...',
-        publicationDate: '24.09.20',
-        playlist: [
-          AudioItem(
-              name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 2', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 3', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 4', time: Duration(minutes: 1, seconds: 1740)),
-          AudioItem(
-              name: 'Малыш Кокки 5', time: Duration(minutes: 1, seconds: 1740)),
-        ],
-        audioQuantity: '7',
-        timeOfCollection: '30'),
-  ];
-  // CollectionsPage({this.length});
+
+  List<CollectionItem> items;
+
+  CollectionsPage({this.items});
   @override
   _CollectionsPageState createState() => _CollectionsPageState();
 }
@@ -183,12 +104,12 @@ class _CollectionsPageState extends State<CollectionsPage> {
                                   width: MediaQuery.of(context).size.width *
                                       183 /
                                       414,
-                                  img: leftColumn[index].image,
+                                  img: leftColumn[index].picture,
                                   timeOfCollection:
                                       leftColumn[index].timeOfCollection,
-                                  title: leftColumn[index].title,
+                                  title: leftColumn[index].name,
                                   audioQuantity:
-                                      leftColumn[index].audioQuantity,
+                                      leftColumn[index].count,
                                 ),
                                 SizedBox(height: 16)
                               ],
@@ -216,12 +137,12 @@ class _CollectionsPageState extends State<CollectionsPage> {
                                   width: MediaQuery.of(context).size.width *
                                       183 /
                                       414,
-                                  img: rightColumn[index].image,
+                                  img: rightColumn[index].picture,
                                   timeOfCollection:
                                       rightColumn[index].timeOfCollection,
-                                  title: rightColumn[index].title,
+                                  title: rightColumn[index].name,
                                   audioQuantity:
-                                      rightColumn[index].audioQuantity,
+                                      rightColumn[index].count,
                                 ),
                                 SizedBox(height: 16)
                               ],

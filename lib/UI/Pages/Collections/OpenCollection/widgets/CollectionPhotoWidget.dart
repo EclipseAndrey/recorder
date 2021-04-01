@@ -27,7 +27,7 @@ class _CollectionPhotoWidgetState extends State<CollectionPhotoWidget> {
                 height: MediaQuery.of(context).size.height * 240 / 896,
                 color: cBlack,
                 child: Image(
-                    image: NetworkImage(widget.item.image), fit: BoxFit.fill),
+                    image: NetworkImage(widget.item.picture), fit: BoxFit.fill),
               ),
               Container(
                 width: MediaQuery.of(context).size.width * 382 / 414,
@@ -62,7 +62,7 @@ class _CollectionPhotoWidgetState extends State<CollectionPhotoWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${widget.item.audioQuantity} аудио',
+                                Text('${widget.item.count} аудио',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400)),

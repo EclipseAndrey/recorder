@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Scaffold(
-          key: AppKeys.scaffoldKey,
+          key: AppKeys.scaffoldKeyAuth,
           body: Stack(
             children: [
               Background(title: DefaultTitle(), body: body()),

@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:recorder/Models/Put.dart';
+import 'package:recorder/Rest/Auth/AuthProvider.dart';
 import 'package:recorder/UI/General.dart';
 import 'package:recorder/Utils/app_keys.dart';
 
@@ -16,35 +18,49 @@ class LoginController {
   TextEditingController controllerCode = TextEditingController();
 
   stepOneTap() {
-    controllerPages.animateToPage(1,
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
+      controllerPages.animateToPage(1,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
-  stepTwoTap() {
-    controllerPages.animateToPage(2,
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
-    getCode();
+  stepTwoTap() async {
+    if (maskFormatter.getUnmaskedText().length == 10) {
+        controllerPages.animateToPage(2,
+            duration: Duration(milliseconds: 300), curve: Curves.ease);
+        getCode();
+    }
   }
 
   stepThreeTap() async {
-    controllerPages.animateToPage(3,
-        duration: Duration(milliseconds: 300), curve: Curves.ease);
-    checkCode();
-    await Future.delayed(Duration(milliseconds: 700));
-    pushHome();
+    if (maskFormatterCode.getUnmaskedText().length == 4) {
+      Put response = await AuthProvider.checkCode(
+          "7${maskFormatter.getUnmaskedText()}",
+          maskFormatterCode.getUnmaskedText());
+      if (response.error == 200) {
+        controllerPages.animateToPage(3,
+            duration: Duration(milliseconds: 300), curve: Curves.ease);
+        checkCode();
+        await Future.delayed(Duration(milliseconds: 700));
+        pushHome(AppKeys.scaffoldKeyAuth.currentContext);
+      } else {
+        controllerCode.text = "";
+      }
+    }
   }
 
   transitionToHome() async {
     await Future.delayed(Duration(seconds: 2, milliseconds: 500));
-    pushHome();
+    pushHome(AppKeys.scaffoldKeyAuthOld.currentContext);
   }
 
-  getCode() async {}
+  getCode() async {
+    AuthProvider.sendCode("7${maskFormatter.getUnmaskedText()}");
+  }
 
   checkCode() async {}
 
-  pushHome() {
-    Navigator.pushReplacement(AppKeys.scaffoldKey.currentContext, routeHome());
+
+  pushHome(BuildContext context) {
+    Navigator.pushAndRemoveUntil(context, routeHome(), (Route<dynamic> route) => false);
   }
 
   Route routeHome() {
@@ -59,9 +75,7 @@ class LoginController {
         var end = Offset.zero;
         var tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
         var offsetAnimation = animation.drive(tween);
-
         var curvedAnimation = CurvedAnimation(
           parent: animation,
           curve: curve,

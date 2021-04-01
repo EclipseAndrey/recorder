@@ -50,7 +50,7 @@ class _OpenColletionState extends State<OpenColletion> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    widget.item.title,
+                    widget.item.name,
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,

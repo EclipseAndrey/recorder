@@ -8,8 +8,9 @@ import 'package:recorder/generated/l10n.dart';
 
 class AudioPreview extends StatefulWidget {
   List<AudioItem> items;
+  bool loading;
 
-  AudioPreview({@required this.items});
+  AudioPreview({@required this.items, this.loading});
   @override
   _AudioPreviewState createState() => _AudioPreviewState();
 }
@@ -63,7 +64,7 @@ class _AudioPreviewState extends State<AudioPreview> {
                     ],
                   ),
                 ),
-                audiosPreview(context)
+                widget.loading??true?Center(child: CircularProgressIndicator(),):audiosPreview(context)
               ],
             ),
           ),

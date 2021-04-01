@@ -15,18 +15,25 @@ class OldPerson extends StatefulWidget {
 class _OldPersonState extends State<OldPerson> {
   LoginController controller;
 
+  goHome()async{
+    await Future.delayed(Duration(milliseconds: 2));
+    controller.transitionToHome();
+
+  }
+
   @override
   void initState() {
     super.initState();
     controller = LoginController();
+    goHome();
   }
 
   @override
   Widget build(BuildContext context) {
-    controller.transitionToHome();
+
     return Material(
       child: Scaffold(
-        key: AppKeys.scaffoldKey,
+        key: AppKeys.scaffoldKeyAuthOld,
         body: Container(
           color: Theme.of(context).backgroundColor,
           height: MediaQuery.of(context).size.height,

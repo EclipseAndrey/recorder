@@ -8,8 +8,10 @@ class Collections extends StatefulWidget {
   List<CollectionItem> items;
   Function(int index) onTapCollection;
   Function onAddCollection;
+  bool loading;
+
   Collections(
-      {@required this.items, this.onAddCollection, this.onTapCollection});
+      {@required this.items, this.onAddCollection, this.onTapCollection, this.loading});
   @override
   _CollectionsState createState() => _CollectionsState();
 }
@@ -41,7 +43,7 @@ class _CollectionsState extends State<Collections> {
               ],
             ),
           ),
-          collectionsPreview()
+          widget.loading??true?Center(child: CircularProgressIndicator(),):collectionsPreview()
         ],
       ),
     );
@@ -53,13 +55,11 @@ class _CollectionsState extends State<Collections> {
       child: Row(
         children: [
           CollectionItemOne(
-            length: 0,
+            length: widget.items.length,
             width: (MediaQuery.of(context).size.width / 2 - 43 / 2),
-            height:
-                ((MediaQuery.of(context).size.width / 2 - 43 / 2)) * 240 / 183,
-            img:
-                'https://www.sunhome.ru/i/wallpapers/57/chert-kartinka.orig.jpg',
-            title: 'Сказки  про Черт ',
+            height: ((MediaQuery.of(context).size.width / 2 - 43 / 2)) * 240 / 183,
+            img: widget.items.length ==0?null:widget.items[0].picture,
+            title:  widget.items.length ==0?null:widget.items[0].name,
             audioQuantity: '13',
             timeOfCollection: '1:30',
             onTap: () {

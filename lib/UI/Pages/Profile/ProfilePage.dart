@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/Image.dart';
@@ -8,6 +9,8 @@ import 'package:recorder/UI/Pages/Profile/widgets/SubscribtionProgress.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/generated/l10n.dart';
 import 'package:recorder/main.dart';
+import 'package:provider/provider.dart';
+
 
 class ProfilePage extends StatefulWidget {
   ProfileModel person = ProfileModel(
@@ -152,15 +155,22 @@ class _ProfilePageState extends State<ProfilePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              print('tap out');
+              context.read<GeneralController>().profileController.comeOut();
+            },
             behavior: HitTestBehavior.deferToChild,
-            child: Text(
-              S.of(context).log_out,
-              style: bottomProfileTextStyle(isLogOut: true),
+            child: Container(
+              child: Text(
+                S.of(context).log_out,
+                style: bottomProfileTextStyle(isLogOut: true),
+              ),
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              print('tap delete account');
+            },
             behavior: HitTestBehavior.deferToChild,
             child: Text(
               S.of(context).delete_profile,

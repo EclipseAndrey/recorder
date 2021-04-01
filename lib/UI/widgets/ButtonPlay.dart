@@ -58,7 +58,7 @@ class _ButtonPlayState extends State<ButtonPlay> {
       child: IconSvg(
           widget.index == widget.currentIndex
               ? widget.item.activeIcon
-              : widget.item.disactiveIcon ?? widget.item.activeIcon,
+              : widget.item.inActiveIcon ?? widget.item.activeIcon,
           width: 50,
           height: 50,
           color: widget.colorPlay),
