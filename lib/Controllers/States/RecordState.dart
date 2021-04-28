@@ -6,10 +6,15 @@ part of '../GeneralController.dart';
 3 - стоп
  */
 
+
+
 class RecordState{
+  bool loading;
   RecordingStatus  status;
   List<int> power;
+  int maxPower;
   AudioItem audio;
-
-  RecordState(this.status, this.power, {this.audio});
+  Duration duration;
+  PlayerState playerState;
+  RecordState(this.status, this.power, this.duration, this.maxPower, {this.audio, this.playerState, this.loading});
 }

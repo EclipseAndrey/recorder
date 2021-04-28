@@ -21,6 +21,20 @@ class IconsSvg {
   static int get infinity => 17;
   static int get download => 18;
   static int get activeSubscription => 19;
-
   static int get disactiveSubscription => 20;
+  static int get next => 21;
+  static int get back15 => 22;
+  static int get next15 => 23;
+  static int get delete => 24;
+  static int get upload => 25;
+  static int get add => 26;
+  static int get photoCollection => 27;
+  static int get camera => 28;
+  static int get selectedOn => 29;
+  static int get selectedOff => 30;
+  static int get search => 31;
+  static int get edit => 32;
+  static int get wallet => 33;
+  static int get arrowBottom => 34;
+  static int get swap => 35;
 }

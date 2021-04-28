@@ -82,3 +82,25 @@ String month(String month) {
       break;
   }
 }
+
+String time(Duration duration){
+  String nullCheck(int c){
+    if(c<10){
+      return "0${c}";
+    }else{return c.toString();};
+  }
+  String t= "";
+  if(duration == null){
+    return t;
+  }else{
+    if(duration.inHours > 0){
+      t+="${duration.inHours}:${nullCheck(duration.inMinutes%60)}:${nullCheck(duration.inSeconds%60)}";
+    }else if(duration.inMinutes>0){
+      t+="${duration.inMinutes%60}:${nullCheck(duration.inSeconds%60)}";
+    }else{
+      t+="00:${nullCheck(duration.inSeconds%60)}";
+    }
+
+  }
+  return t;
+}

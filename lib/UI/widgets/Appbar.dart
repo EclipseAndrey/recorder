@@ -8,19 +8,31 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool buttonMore;
   final bool buttonMenu;
   final bool buttonBack;
+  final bool buttonAdd;
+  final bool buttonDone;
   final double height;
   final Widget child;
   final double padding;
   final double top;
+  final Function tapLeftButton;
+  final Function tapRightButton;
+  final String textRightButton;
+  final Widget childRight;
 
   MyAppBar({
     this.buttonMore = false,
     this.buttonBack = true,
     this.buttonMenu = true,
+    this.buttonAdd = false,
+    this.buttonDone = false,
     this.height = 64,
     this.child,
     this.padding = 5,
     this.top = 0,
+    this.tapLeftButton,
+    this.tapRightButton,
+    this.textRightButton,
+    this.childRight
   });
 
   @override
@@ -44,7 +56,9 @@ class _MyAppBarState extends State<MyAppBar> {
             widget.buttonBack
                 ? GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      if(widget.tapLeftButton != null){
+                        widget.tapLeftButton();
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -60,7 +74,11 @@ class _MyAppBarState extends State<MyAppBar> {
                     ? Container(
                         child: GestureDetector(
                             behavior: HitTestBehavior.deferToChild,
-                            onTap: () {},
+                            onTap: () {
+                              if(widget.tapLeftButton != null){
+                                widget.tapLeftButton();
+                              }
+                            },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 20.0, horizontal: 11),
@@ -72,24 +90,50 @@ class _MyAppBarState extends State<MyAppBar> {
                               ),
                             )),
                       )
-                    : SizedBox(),
-            widget.child != null ? widget.child : SizedBox(),
-            widget.buttonMore
-                ? Padding(
+                    : widget.buttonAdd?Container(
+              child: GestureDetector(
+                  behavior: HitTestBehavior.deferToChild,
+                  onTap: () {
+                    if(widget.tapLeftButton != null){
+                      widget.tapLeftButton();
+                    }
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 20.0, horizontal: 11),
                     child: Container(
                       width: 27,
                       height: 27,
+                      child: IconSvg(IconsSvg.add,
+                          width: 28, height: 21, color: cBackground),
+                    ),
+                  )),
+            ):SizedBox(),
+            widget.child != null ? widget.child : SizedBox(),
+            widget.childRight != null?widget.childRight:widget.buttonMore
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
+                    child: Container(
+                      width: 27,
+                      height: 27,
                       child: Center(
                         child: GestureDetector(
-                            onTap: () {},
+                          behavior: HitTestBehavior.deferToChild,
+                            onTap: () {
+                              widget.tapRightButton == null?null:widget.tapRightButton();
+                            },
                             child: IconSvg(IconsSvg.more,
-                                width: 41, height: 8, color: cBackground)),
+                                width: 41, height: 8, color: cBackground),
+                        ),
                       ),
                     ),
                   )
-                : SizedBox(
+                : widget.buttonDone?GestureDetector(
+                behavior: HitTestBehavior.deferToChild,
+                onTap: () {
+                  widget.tapRightButton == null?null:widget.tapRightButton();
+                },
+                child: Center(child: Text(widget.textRightButton??"Готово", style: TextStyle(color: cBackground, fontSize: 16, fontFamily: fontFamily),))): SizedBox(
                     width: 28,
                   )
           ],

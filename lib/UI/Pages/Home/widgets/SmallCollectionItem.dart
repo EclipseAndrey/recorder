@@ -7,7 +7,7 @@ class SmallCollectionItem extends StatefulWidget {
   double width;
   String img;
   String title;
-  String audioQuantity;
+  int audioQuantity;
   String timeOfCollection;
   int length;
   Color contColor;
@@ -35,7 +35,11 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
   Widget build(BuildContext context) {
     return widget.length < 2
         ? GestureDetector(
-            onTap: () {},
+      behavior: HitTestBehavior.deferToChild,
+
+      onTap: () {
+              widget.onTap == null?null:widget.onTap();
+            },
             child: Container(
               width: widget.width,
               height: widget.height,
@@ -64,7 +68,11 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
             ),
           )
         : GestureDetector(
-            onTap: () {},
+      behavior: HitTestBehavior.deferToChild,
+            onTap: () {
+              widget.onTap == null?null:widget.onTap();
+
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Stack(alignment: Alignment.bottomLeft, children: [
@@ -73,7 +81,7 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
                   height: widget.height,
                   color: cBlack,
                   child: Image(
-                      image: NetworkImage("${widget.img}"), fit: BoxFit.fill),
+                      image: NetworkImage("${widget.img}"), fit: BoxFit.cover),
                 ),
                 Container(
                   width: widget.width,
@@ -99,7 +107,7 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
                           children: [
                             Container(
                               width: widget.width / 2.3,
-                              child: Text("${widget.title}",
+                              child: Text("${widget.text}",
                                   overflow: TextOverflow.clip,
                                   style: TextStyle(
                                       fontSize: 16,

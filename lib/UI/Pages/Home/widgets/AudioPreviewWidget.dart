@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/AudioModel.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
+import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
+import 'package:provider/provider.dart';
 
 class AudioPreview extends StatefulWidget {
   List<AudioItem> items;
@@ -16,7 +18,6 @@ class AudioPreview extends StatefulWidget {
 }
 
 class _AudioPreviewState extends State<AudioPreview> {
-  int currentIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +55,17 @@ class _AudioPreviewState extends State<AudioPreview> {
                             fontSize: 24,
                             fontWeight: FontWeight.w400),
                       ),
-                      Text(
-                        S.of(context).open_all,
-                        style: TextStyle(
-                            color: cBlack,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
+                      GestureDetector(
+                        onTap: (){
+                          context.read<GeneralController>().setPage(3);
+                        },
+                        child: Text(
+                          S.of(context).open_all,
+                          style: TextStyle(
+                              color: cBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                        ),
                       )
                     ],
                   ),
@@ -100,13 +106,6 @@ class _AudioPreviewState extends State<AudioPreview> {
             child: AudioPreviewGenerate(
               isHome: true,
               items: widget.items,
-              currentIndex: currentIndex,
-              onChange: (index) {
-                currentIndex = index;
-                setState(() {});
-                print('index $index');
-                print('currentIndex $currentIndex');
-              },
             ),
           );
   }

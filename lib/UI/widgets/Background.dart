@@ -23,9 +23,27 @@ class _BackgroundState extends State<Background> {
         children: [
           Align(
             alignment: Alignment.topCenter,
-            child: IconSvg(IconsSvg.backEllipse,
-                width: MediaQuery.of(context).size.width,
-                color: widget.color == null ? cBlueSoso : widget.color),
+            child: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 414 / 369,
+                        child: IconSvg(IconsSvg.backEllipse,
+                            width: MediaQuery.of(context).size.width,
+                            color: widget.color == null ? cBlueSoso : widget.color),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height - (MediaQuery.of(context).size.width*369/414),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           Align(
             alignment: Alignment.topCenter,
@@ -40,13 +58,18 @@ class _BackgroundState extends State<Background> {
                     ),
                   ),
                 ),
-                Container(
-                    height: MediaQuery.of(context).size.height -
-                        (MediaQuery.of(context).size.width * 369 / 414),
-                    child: widget.body ?? SizedBox())
+
               ],
             ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child:   Container(
+                height: MediaQuery.of(context).size.height -
+                    (MediaQuery.of(context).size.width * 369 / 414),
+                child: widget.body ?? SizedBox()),
           )
+
         ],
       ),
     );

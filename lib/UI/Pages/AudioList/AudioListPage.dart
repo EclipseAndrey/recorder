@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/AudioModel.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
+import 'package:recorder/Controllers/HomeController.dart';
+import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
-
+import 'package:provider/provider.dart';
 class AudioListPage extends StatefulWidget {
-  List<AudioItem> playlist = [
-    AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 8000)),
-    AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 8000)),
-    AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 8000)),
-    AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 8000)),
-    AudioItem(name: 'Малыш Кокки 1', time: Duration(minutes: 1, seconds: 8000)),
-  ];
 
   @override
   _AudioListPageState createState() => _AudioListPageState();
 }
 
 class _AudioListPageState extends State<AudioListPage> {
-  int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<GeneralController>().homeController.load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,9 @@ class _AudioListPageState extends State<AudioListPage> {
           buttonMore: true,
           buttonBack: false,
           buttonMenu: true,
+          tapLeftButton: (){
+            context.read<GeneralController>().setMenu(true);
+          },
           top: 25,
           height: 100,
           child: Container(
@@ -62,40 +65,50 @@ class _AudioListPageState extends State<AudioListPage> {
         ),
         body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 43,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 25.0, right: 19.0),
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [playlistInfo(), playlistButton(context)],
-                  ),
-                ),
-                SizedBox(
-                  height: 33,
-                ),
-                playlistPreview(widget.playlist)
-              ],
+            child: StreamBuilder<HomeState>(
+              stream: context.read<GeneralController>().homeController.stream,
+              builder: (context, snapshot) {
+                return (!snapshot.hasData || snapshot.data.loading)?Center(child: CircularProgressIndicator(),):Column(
+                  children: [
+                    SizedBox(
+                      height: 43,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 25.0, right: 19.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [playlistInfo(snapshot.data), playlistButton(snapshot.data.audios)],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 33,
+                    ),
+                    playlistPreview(snapshot.data.audios),
+                    SizedBox(
+                      height: 110,
+                    ),
+                  ],
+                );
+              }
             )),
       ),
     );
   }
 
-  Container playlistButton(BuildContext context) {
+  Container playlistButton(List<AudioItem> list) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.54,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           color: cBackground.withOpacity(0.5)),
-      child: GestureDetector(
-        child: Row(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.4,
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: (){
+              // List<AudioItem> list = context.read<GeneralController>().homeController.audios;
+              context.read<GeneralController>().playerController.play(list);
+            },
+            child: Container(
               decoration: BoxDecoration(
                   color: cBackground, borderRadius: BorderRadius.circular(50)),
               child: Row(
@@ -104,41 +117,44 @@ class _AudioListPageState extends State<AudioListPage> {
                       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                       child: IconSvg(IconsSvg.play,
                           width: 38, color: Color.fromRGBO(140, 132, 226, 1))),
-                  SizedBox(
-                    width: 7,
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 7),
+                    child: Text(
+                      S.of(context).play_all,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: cBlueSoso,
+                          fontFamily: fontFamilyMedium),
+                    ),
                   ),
-                  Text(
-                    S.of(context).play_all,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: cBlueSoso,
-                        fontFamily: fontFamilyMedium),
-                  ),
+                  SizedBox(width: 10,),
                 ],
               ),
             ),
-            SizedBox(
-              width: 9,
-            ),
-            GestureDetector(
+          ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: GestureDetector(
               child: IconSvg(
                 IconsSvg.audioRepeat,
                 width: 30,
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Widget playlistInfo() {
+  Widget playlistInfo(HomeState stste) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${widget.playlist.length} ${S.of(context).audio}',
+          '${stste.audios.length} ${S.of(context).audio}',
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -163,12 +179,7 @@ class _AudioListPageState extends State<AudioListPage> {
       child: AudioPreviewGenerate(
           items: list,
           colorPlay: cBlue,
-          currentIndex: currentIndex,
-          onChange: (index) {
-            currentIndex = index;
-            setState(() {});
-            print('index $index');
-          }),
+         ),
     );
   }
 }

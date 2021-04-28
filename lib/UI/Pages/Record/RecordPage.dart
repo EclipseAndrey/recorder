@@ -3,8 +3,7 @@ import 'package:recorder/Controllers/GeneralController.dart';
 
 class RecordPage extends StatefulWidget {
 
-  RecordPage(this.state);
-  RecordState state;
+
   @override
   _RecordPageState createState() => _RecordPageState();
 }

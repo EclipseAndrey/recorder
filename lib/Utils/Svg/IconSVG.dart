@@ -13,10 +13,7 @@ Widget IconSvg(int id,
     return path + name + ex;
   }
 
-  String iconName;
-
-  int count = 21;
-  if (id < 0 || id >= count) id = 0;
+  String iconName = "next";
 
   switch (id) {
     case 0:
@@ -82,6 +79,43 @@ Widget IconSvg(int id,
     case 20:
       iconName = icon('disactive_subscription');
       break;
+    case 21:
+      iconName = icon('next');
+      break;
+
+    case 22:
+      iconName = icon('back15');
+      break;
+
+    case 23:
+      iconName = icon('to15');
+      break;
+    case 24:
+      iconName = icon('delete');
+      break;
+    case 25:
+      iconName = icon('upload');
+      break;
+    case 26:
+      iconName = icon('add');
+      break;
+      case 27:
+      iconName = icon('photoCollection');
+      break;
+    case 28:
+      iconName = icon('camera');
+      break;
+    case 29:
+      iconName = icon('selectedOn');
+      break;
+    case 30:
+      iconName = icon('selectedOff');
+      break;
+    case 31:iconName = icon('search');break;
+    case 32:iconName = icon('edit');break;
+    case 33:iconName = icon('wallet');break;
+    case 34:iconName = icon('arrowBottom');break;
+    case 35:iconName = icon('swap');break;
     default:
       iconName = icon('heart');
       break;

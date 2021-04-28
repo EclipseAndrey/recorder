@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/ProfileModel.dart';
+import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/ProgressBar.dart';
 import 'package:recorder/generated/l10n.dart';
@@ -22,15 +22,15 @@ class _SubcriptionProgressState extends State<SubcriptionProgress> {
           height: 20,
         ),
         MyProgressBar(
-          usage: widget.person.usMemory,
-          available: widget.person.avMemory,
+          usage:  widget.person.free,
+          available: widget.person.max,
           width: MediaQuery.of(context).size.width * 0.74,
           height: MediaQuery.of(context).size.height * 0.03,
         ),
         SizedBox(
           height: 8,
         ),
-        Text('${widget.person.usMemory}/${widget.person.avMemory} мб',
+        Text('${widget.person.max - widget.person.free}/${widget.person.max} мб',
             style: subscriptionTextStyle)
       ],
     );

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/ProfileModel.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
+import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
-
+import 'package:provider/provider.dart';
 class ProfileName extends StatefulWidget {
   bool isEdit;
   ProfileModel person;
@@ -16,7 +17,7 @@ class _ProfileNameState extends State<ProfileName> {
     return widget.isEdit
         ? nameIsEdit(context)
         : Text(
-            '${widget.person.name}',
+            '${widget.person.name??"Ваше имя"}',
             style: nameTextStyle,
           );
   }
@@ -29,6 +30,7 @@ class _ProfileNameState extends State<ProfileName> {
               bottom: BorderSide(
                   width: 1, color: Color.fromRGBO(58, 58, 85, 0.5)))),
       child: TextField(
+        controller: context.read<GeneralController>().profileController.controllerName,
         textAlign: TextAlign.center,
         cursorColor: Color.fromRGBO(64, 64, 64, 1),
         style: nameTextStyle,

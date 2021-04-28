@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/ProfileModel.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
+import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/generated/l10n.dart';
-
+import 'package:provider/provider.dart';
 class PhoneNumber extends StatefulWidget {
   bool isEdit;
   ProfileModel person;
@@ -38,7 +39,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: Text(
-                  '${widget.person.phoneNumber}',
+                  '${widget.person.phone??"Нет номера"}',
                   style: phoneTextStyle(isPhone: true),
                 ),
               ),
@@ -69,12 +70,16 @@ class _PhoneNumberState extends State<PhoneNumber> {
               // ????????????? why 10 px not 20?????????????????
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: TextField(
+                controller: context.read<GeneralController>().profileController.controllerNum,
+                inputFormatters: [
+                  context.read<GeneralController>().profileController.maskFormatter
+                ],
                 textAlign: TextAlign.center,
                 cursorColor: Color.fromRGBO(64, 64, 64, 1),
                 style: phoneTextStyle(isPhone: true),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: widget.person.phoneNumber,
+                  hintText: widget.person.phone,
                   hintStyle: phoneTextStyle(isPhone: true),
                 ),
               ),

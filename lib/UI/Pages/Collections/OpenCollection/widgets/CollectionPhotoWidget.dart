@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/CollectionModel.dart';
+import 'package:recorder/Style.dart';
+import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
 
-import '../../../../../Style.dart';
 
 class CollectionPhotoWidget extends StatefulWidget {
   final CollectionItem item;
@@ -66,7 +66,7 @@ class _CollectionPhotoWidgetState extends State<CollectionPhotoWidget> {
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400)),
-                                Text('${widget.item.timeOfCollection} минут',
+                                Text('${widget.item.duration} минут',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400))

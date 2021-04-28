@@ -8,7 +8,7 @@ class CollectionItemOne extends StatefulWidget {
   double width;
   String img;
   String title;
-  String audioQuantity;
+  int audioQuantity;
   String timeOfCollection;
   int length;
   Function onTap;
@@ -127,7 +127,7 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
                   height: widget.height,
                   color: cBlack,
                   child: Image(
-                      image: NetworkImage("${widget.img}"), fit: BoxFit.fill),
+                      image: NetworkImage("${widget.img}"), fit: BoxFit.cover),
                 ),
                 Container(
                   width: widget.width,

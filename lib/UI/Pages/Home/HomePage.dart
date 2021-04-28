@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/HomeController.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
-import 'package:recorder/Models/AudioModel.dart';
+import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/AudioPreviewWidget.dart';
 import 'package:recorder/UI/Pages/Home/widgets/CollectionsWidget.dart';
@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     context.read<GeneralController>().homeController.load();
-
   }
 
 
@@ -35,8 +34,12 @@ class _HomePageState extends State<HomePage> {
           buttonBack: false,
           buttonMenu: true,
           padding: 11,
+          tapLeftButton: (){
+            context.read<GeneralController>().setMenu(true);
+          },
         ),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: StreamBuilder<HomeState>(
@@ -45,6 +48,14 @@ class _HomePageState extends State<HomePage> {
                 return Column(
                   children: [
                     Collections(
+                      onAddCollection: (){
+                        context.read<GeneralController>().setPage(1);
+                        context.read<GeneralController>().collectionsController.addCollection();
+                      },
+                      onTapCollection: (item){
+                        context.read<GeneralController>().setPage(1);
+                        context.read<GeneralController>().collectionsController.view(item);
+                      },
                       loading: (snapshot.data == null?true:snapshot.data.loading??false),
                       items: (snapshot.data == null?[]:snapshot.data.collections),
                     ),

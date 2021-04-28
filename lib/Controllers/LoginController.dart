@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:recorder/Models/Put.dart';
+import 'package:recorder/Routes.dart';
+import 'package:recorder/Utils/tokenDB.dart';
+import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/Auth/AuthProvider.dart';
 import 'package:recorder/UI/General.dart';
 import 'package:recorder/Utils/app_keys.dart';
@@ -46,6 +48,15 @@ class LoginController {
       }
     }
   }
+
+  futureAuthSet(bool state, {BuildContext restartContext})async{
+    await futureAuth(state: state);
+    if(restartContext != null){
+      Navigator.pushReplacementNamed(restartContext, Routes.initial);
+    }
+  }
+
+
 
   transitionToHome() async {
     await Future.delayed(Duration(seconds: 2, milliseconds: 500));

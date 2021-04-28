@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/AudioModel.dart';
-import 'package:recorder/Models/CollectionModel.dart';
-import 'package:recorder/UI/Pages/AudioList/AudioListPage.dart';
+import 'package:recorder/Style.dart';
+import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/UI/Pages/Collections/OpenCollection/widgets/CollectionPhotoWidget.dart';
 import 'package:recorder/UI/Pages/Collections/OpenCollection/widgets/DesriptionWidget.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/UI/widgets/Background.dart';
-import '../../../../Style.dart';
 
 class OpenColletion extends StatefulWidget {
   final CollectionItem item;
@@ -73,12 +71,7 @@ class _OpenColletionState extends State<OpenColletion> {
                     child: AudioPreviewGenerate(
                         items: widget.item.playlist,
                         colorPlay: cSwamp,
-                        currentIndex: currentIndex,
-                        onChange: (index) {
-                          currentIndex = index;
-                          setState(() {});
-                          print('index $index');
-                        }),
+                    ),
                   ),
                 ],
               ),

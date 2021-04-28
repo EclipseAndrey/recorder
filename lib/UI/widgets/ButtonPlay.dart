@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Models/AudioModel.dart';
+import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 
 class ButtonPlay extends StatefulWidget {
   final Color colorPlay;
   final AudioItem item;
-  final int index;
-  final int currentIndex;
-  final Function(int index) onChange;
+  final bool play;
+  final Function onTap;
 
   ButtonPlay(
       {@required this.colorPlay,
       this.item,
-      this.index,
-      this.currentIndex,
-      this.onChange});
+      @required this.play,
+  @required this.onTap});
   @override
   _ButtonPlayState createState() => _ButtonPlayState();
 }
@@ -24,12 +22,7 @@ class _ButtonPlayState extends State<ButtonPlay> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.index == widget.currentIndex
-            ? widget.onChange(null)
-            : widget.onChange != null
-                ? widget.onChange(widget.index)
-                : null;
-        setState(() {});
+        widget.onTap == null?null:widget.onTap();
       },
       // onLongPressStart: (i) {
       //   tap = true;
@@ -56,7 +49,7 @@ class _ButtonPlayState extends State<ButtonPlay> {
       //   setState(() {});
       // },
       child: IconSvg(
-          widget.index == widget.currentIndex
+          widget.play
               ? widget.item.activeIcon
               : widget.item.inActiveIcon ?? widget.item.activeIcon,
           width: 50,

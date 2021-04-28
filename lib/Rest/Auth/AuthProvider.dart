@@ -1,4 +1,4 @@
-import 'package:recorder/Models/Put.dart';
+import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/API.dart';
 import 'package:recorder/Rest/Rest.dart';
 import 'package:recorder/Utils/tokenDB.dart';
@@ -30,8 +30,4 @@ class AuthProvider{
       return Put(error: 200, mess: "ok", localError: false);
     }
   }
-
-
-
-
 }

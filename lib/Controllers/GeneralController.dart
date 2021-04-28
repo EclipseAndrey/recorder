@@ -1,129 +1,124 @@
 import 'dart:async';
-
-import 'dart:io' as io;
-import 'package:audioplayers/audioplayers.dart';
+import 'package:recorder/Controllers/CollectionsController.dart';
+import 'package:recorder/Controllers/RestoreController.dart';
+import 'package:recorder/UI/Player.dart';
+import 'package:rxdart/rxdart.dart';
+import 'States/PlayerState.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:recorder/Controllers/HomeController.dart';
-import 'package:recorder/Controllers/LoginController.dart';
+import 'package:recorder/Controllers/PlayerController.dart';
 import 'package:recorder/Controllers/ProfileController.dart';
-import 'package:flutter/services.dart';
-import 'package:file/local.dart';
-import 'package:recorder/Models/AudioModel.dart';
-
+import 'package:recorder/Controllers/RecordController.dart';
+import 'package:recorder/UI/Pages/Record/showRecord.dart';
+import 'package:recorder/Utils/app_keys.dart';
+import 'package:recorder/models/AudioModel.dart';
 
 part 'States/RecordState.dart';
 
-
-
-class GeneralController{
+class GeneralController {
   ///Home
-  HomeController homeController ;
+  HomeController homeController;
+
+  ///Player
+  PlayerController playerController;
 
   ///Profile
   ProfileController profileController;
 
-  ///General
-  FlutterAudioRecorder _recorder;
-  Recording _current;
-  AudioPlayer audioPlayer = AudioPlayer();
-  LocalFileSystem localFileSystem;
-  RecordingStatus _currentStatus = RecordingStatus.Unset;
+  ///Recorder
+  RecordController recordController;
 
-  final _streamControllerRecord = StreamController<RecordState>.broadcast();
-  get streamRecord => _streamControllerRecord.stream;
+  ///Collections
+  CollectionsController collectionsController;
 
-  GeneralController(){
-    print('INIT GENERAL CONTROLLER');
+  ///Restore
+  RestoreController restoreController;
+
+  ///Pages
+  PageController pageController = PageController(initialPage: 0);
+
+  final _streamControllerPage = StreamController<int>.broadcast();
+
+  get streamCurrentPage => _streamControllerPage.stream;
+
+  BehaviorSubject _controllerMenu = BehaviorSubject<bool>();
+  get streamMenu => _controllerMenu.stream;
+
+  bool resume = false;
+
+  GeneralController() {
+    _controllerMenu.sink.add(false);
+    this.collectionsController = CollectionsController(loadCollections);
     this.profileController = ProfileController();
-    this.homeController = HomeController();
+    this.homeController = HomeController(onLoadCollections: (list) {
+      this.collectionsController.setCollections(list);
+    }, onLoadAudios: (list) {
+      this.collectionsController.setAudios(list);
+    });
+    this.playerController = PlayerController();
+    this.recordController = RecordController();
+    this.restoreController = RestoreController();
   }
 
-
-
-
-
-
-
-
-  recordStart(){
-    _streamControllerRecord.sink.add(RecordState(RecordingStatus.Recording, []));
-  }
-  recordPause(){
-    _streamControllerRecord.sink.add(RecordState(RecordingStatus.Paused, []));
-
-  }
-  recordStop(){
-    _streamControllerRecord.sink.add(RecordState(RecordingStatus.Stopped, []));
+  loadCollections(){
+    this.homeController.load();
   }
 
+  setPage(int index, {bool restore}) {
+    if (index != 2 || restore != null ) {
+      pageController.animateToPage(index,
+          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+      _streamControllerPage.sink.add(index);
+    } else {
 
-  _init() async {
-    try {
-      if (await FlutterAudioRecorder.hasPermissions) {
-        String customPath = '/audios';
-        io.Directory appDocDirectory;
-        if (io.Platform.isIOS) {
-          appDocDirectory = await getApplicationDocumentsDirectory();
-        } else {
-          appDocDirectory = await getExternalStorageDirectory();
-        }
-
-        // can add extension like ".mp4" ".wav" ".m4a" ".aac"
-        customPath = appDocDirectory.path +
-            customPath +
-            DateTime.now().millisecondsSinceEpoch.toString();
-        _recorder =
-            FlutterAudioRecorder(customPath, audioFormat: AudioFormat.WAV);
-
-        await _recorder.initialized;
-        // after initialization
-        var current = await _recorder.current(channel: 0);
-        print(current);
-        // should be "Initialized", if all working fine
-          _current = current;
-          _currentStatus = current.status;
-          print(_currentStatus);
-
-
-      } else {
-       //todo no permission
+      if(playerController.playing != null && playerController.playing){
+        playerController.pause();
+        playerController.setHide(false);
+        resume = true;
+      }else{
+        resume = false;
       }
-    } catch (e) {
-      print(e);
+
+      recordController.recordStart(
+          (MediaQuery.of(AppKeys.scaffoldKey.currentContext).size.width *
+                  0.98) ~/
+              3);
+      showRecord(this);
     }
   }
 
-  _start() async {
-    try {
-      await _recorder.start();
-      var recording = await _recorder.current(channel: 0);
-
-        _current = recording;
-
-
-      const tick = const Duration(milliseconds: 50);
-      new Timer.periodic(tick, (Timer t) async {
-        if (_currentStatus == RecordingStatus.Stopped) {
-          t.cancel();
-        }
-
-        var current = await _recorder.current(channel: 0);
-        // print(current.status);
-
-          _current = current;
-          _currentStatus = _current.status;
-
-      });
-    } catch (e) {
-      print(e);
+  closeRecord(){
+    if(resume){
+      playerController.setHide(true);
+      playerController.resume();
+      resume = false;
     }
+
+    recordController.closeSheet();
+  }
+
+  setMenu(bool status){
+    _controllerMenu.sink.add(status);
+  }
+  openPlayer(){
+
+    showPlayer(this);
+  }
+
+  openSubscribe(){
+    //todo
   }
 
 
-  dispose(){
-    _streamControllerRecord.close();
+
+  dispose() {
+    _streamControllerPage.close();
+    homeController.dispose();
+    profileController.dispose();
+    playerController.dispose();
+    recordController.dispose();
+    collectionsController.dispose();
+    _controllerMenu.close();
   }
-
-
 }

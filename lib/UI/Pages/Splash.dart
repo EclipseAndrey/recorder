@@ -12,7 +12,7 @@ class _SplashState extends State<Splash> {
 
   initHome()async{
     String token = await tokenDB();
-    if(token == "null"){
+    if(token == "null" && !await futureAuth()){
       Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeNew,(Route<dynamic> route) => false);
     }else{
       Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeOld,(Route<dynamic> route) => false);

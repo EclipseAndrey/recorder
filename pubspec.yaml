@@ -35,6 +35,10 @@ dependencies:
   provider: ^5.0.0
   audioplayers: ^0.18.3
   path_provider: ^2.0.1
+  rxdart: ^0.25.0
+  image_picker: ^0.6.7+17
+  sqflite: any
+  connectivity: ^0.4.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

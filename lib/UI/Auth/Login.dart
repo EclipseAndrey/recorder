@@ -31,12 +31,9 @@ class _LoginState extends State<Login> {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Scaffold(
+          resizeToAvoidBottomInset: true,
           key: AppKeys.scaffoldKeyAuth,
-          body: Stack(
-            children: [
-              Background(title: DefaultTitle(), body: body()),
-            ],
-          ),
+          body: SingleChildScrollView(child: Background(title: DefaultTitle(), body: body())),
         ),
       ),
     );
@@ -96,7 +93,7 @@ class _LoginState extends State<Login> {
 
   Widget stepTwo() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.only(left:12.0, right: 12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -160,6 +157,7 @@ class _LoginState extends State<Login> {
               ),
             ],
           ),
+
           Column(
             children: [
               ButtonOrange(
@@ -170,13 +168,18 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 24,
               ),
-              Text(
-                S.of(context).later,
-                style: TextStyle(
-                    color: cBlack,
-                    fontSize: 24,
-                    fontFamily: fontFamily,
-                    fontWeight: FontWeight.w400),
+              InkWell(
+                onTap: (){
+                  controller.futureAuthSet(true, restartContext: context);
+                },
+                child: Text(
+                  S.of(context).later,
+                  style: TextStyle(
+                      color: cBlack,
+                      fontSize: 24,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
             ],
           ),
@@ -285,9 +288,6 @@ class _LoginState extends State<Login> {
                     controller.stepThreeTap();
                   },
                   text: S.of(context).btn_next),
-              SizedBox(
-                height: 24,
-              ),
               Text(
                 "",
                 style: TextStyle(
