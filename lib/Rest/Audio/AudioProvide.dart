@@ -88,34 +88,39 @@ class AudioProvider {
   }
 
   static Future<Put> delete(int id, {int ids}) async {
+    print("DELETE AUDIO ${id.toString()} ${ids.toString()}");
     if (await futureAuth() || !await checkConnection()) {
       await DBProvider.db.audioDelete(id);
       return Put(error: 200, mess: "ok", localError: true);
     } else {
-      AudioItem item = await DBProvider.db.audioGet(id);
-      await DBProvider.db.audioDelete(item.id);
-      if (item.idS != null || ids != null) {
-        String urlQuery = urlConstructor(Methods.audio.delete);
-        String token = await tokenDB();
+      if(ids != null) {
+          String urlQuery = urlConstructor(Methods.audio.delete);
+          print(urlQuery);
+          String token = await tokenDB();
 
-        Map<String, dynamic> body = Map();
-        body['id'] = ids ?? item.idS;
-        var response;
-        response = await Rest.post(urlQuery, body, token: token);
-        if (response is Put) {
-          return response;
-        } else {
-          return Put(error: 200, mess: "ok", localError: false);
+          Map<String, dynamic> body = Map();
+          body['id'] = ids;
+          var response;
+          response = await Rest.post(urlQuery, body, token: token);
+          if (response is Put) {
+            return response;
+          } else {
+            return Put(error: 200, mess: "ok", localError: false);
+          }
+
+      }else{
+        try {
+          AudioItem item = await DBProvider.db.audioGet(id);
+          await DBProvider.db.audioDelete(item.id);
+        }catch(e){
+
         }
-      } else {
         return Put(error: 200, mess: "ok", localError: false);
       }
     }
   }
 
-  static Future<Put> create(
-      String name, String description, int duration, String pathFileAudio,
-      {String image}) async {
+  static Future<Put> create(String name, String description, int duration, String pathFileAudio, {String image}) async {
     print('save');
 
     if (await futureAuth() || !await checkConnection()) {
@@ -204,6 +209,7 @@ class AudioProvider {
   static Future<Put> restore(int ids) async {
     String urlQuery = urlConstructor(Methods.audio.restore);
     String token = await tokenDB();
+    print(urlQuery);
 
     Map<String, dynamic> body = Map();
     body['id'] = ids;
@@ -310,14 +316,18 @@ class AudioProvider {
 
   /// Новая версия
   static Future<List<AudioItem>> getAll() async {
+    print("GET AUDIOS (getAll)");
     if (await futureAuth()) {
+      print("future auth get audio");
       return await DBProvider.db.audiosGet();
-    } else if (await checkConnection()) {
+    } else if (!await checkConnection()) {
+      print("no connection get audios");
       return await DBProvider.db.audiosGet();
     } else {
       String token = await tokenDB();
       String urlQuery = urlConstructor(Methods.audio.getUserAudio);
       Map<String, dynamic> body = Map();
+      print("-=-=-=-=-=-"+urlQuery);
       var response;
       response = await Rest.post(urlQuery, body, token: token);
       List<AudioItem> listS =
@@ -340,10 +350,11 @@ class AudioProvider {
     }
   }
 
-  static Future<int> createLocal(String name, String description, int duration, String pathFileAudio, {String image}) async {
+  static Future<int> createLocal(String name, String description, int duration, String pathFileAudio, {String image, int ids}) async {
     print('save A L');
     return await DBProvider.db.audioAdd(AudioItem(
         name: name,
+        idS: ids,
         description: description,
         pathAudio: pathFileAudio,
         picture: image,
@@ -352,20 +363,21 @@ class AudioProvider {
         duration: Duration(milliseconds: duration)));
   }
 
-  static Future<int> upload(int id) async {
+  static Future<int> upload(int id, {AudioItem audioItem}) async {
     print('upload A');
 
-    AudioItem item = await DBProvider.db.audioGet(id);
+    AudioItem item = audioItem??await DBProvider.db.audioGet(id);
 
     String token = await tokenDB();
     String urlQuery = urlConstructor(Methods.audio.upload);
     var dio = Dio();
     dio.options.headers['Authorization'] = 'Bearer $token';
 
+    print(urlQuery);
     var formData = FormData.fromMap({
       "name": item.name,
       "description": item.description,
-      "duration": item.duration,
+      "duration": item.duration.inMilliseconds,
       "Accept": "application/json",
       "Content-Type": "multipart/form-data;",
       "audio": await MultipartFile.fromFile(item.pathAudio,
@@ -383,10 +395,11 @@ class AudioProvider {
       urlQuery,
       data: formData,
     );
+
     print(response.statusCode);
     if (response.statusCode == 201) {
       print(response.data);
-      await DBProvider.db.audioEdit(id,ids: response.data['id']);
+      //await DBProvider.db.audioEdit(id,ids: response.data['id']);
       return response.data['id'];
     } else {
       // return Put(error: response.statusCode, mess: "", localError: true);
@@ -394,22 +407,52 @@ class AudioProvider {
     }
   }
 
-  static Future<Put> edit(int id, {String name, String desc, String imagePath}) async {
+  static Future<Put> edit(int id, {bool isLocal = true,String name, String desc, String imagePath}) async {
     if (name != null || desc != null || imagePath != null) {
-      await DBProvider.db.audioEdit(
-        id,
-        name: name,
-        desc: desc,
-        picture: imagePath,
-        isLocalPicture: true,
-      );
-      if (!await futureAuth() && await checkConnection()) {
-        await syncAudio();
+      if(isLocal) {
+        await DBProvider.db.audioEdit(
+          id,
+          name: name,
+          desc: desc,
+          picture: imagePath,
+          isLocalPicture: true,
+        );
+      }else {
+        await editOnlyS(id);
       }
       return Put(error: 200, mess: "ok", localError: true);
     }
     return Put(error: 200, mess: "ok", localError: true);
   }
+
+  static Future<AudioItem> getFromServer(int idS)async{
+    String token = await tokenDB();
+    String urlQuery = urlConstructor(Methods.audio.get);
+    Map<String, dynamic> body = Map();
+    body['id'] = idS;
+    var response;
+    response = await Rest.post(urlQuery, body, token: token);
+    if (response.runtimeType.toString() == "Put") {
+      Put r = response;
+      if (r.error == 401) {
+        tokenDB(token: "null");
+        return null;
+      }
+      return null;
+    } else {
+      List<AudioItem> listS = response
+          .map((i) => AudioItem.fromMap(i))
+          .toList()
+          .cast<AudioItem>();
+      if (listS == null) {
+        listS = [];
+      }
+      return listS.length>0?listS[0]:null;
+    }
+  }
+
+
+
 
 
 

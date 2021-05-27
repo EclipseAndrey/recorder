@@ -79,7 +79,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
                   if(controllerName.text != "") n=controllerName.text;
                   if(controllerDesc.text != "") d=controllerDesc.text;
                   showDialogLoading(context);
-                  await AudioProvider.edit(widget.item.id, name: n, desc: d, imagePath: path);
+                  await AudioProvider.edit(widget.item.id??widget.item.idS, isLocal: widget.item.id ==null?false:true, name: n, desc: d, imagePath: path);
                   closeDialog(context);
                   closeDialog(context);
                   widget.controller.homeController.load();
@@ -107,7 +107,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
                   child: Container(
                     width: MediaQuery.of(context).size.width/1.8,
                     height: MediaQuery.of(context).size.width/1.8,
-                    child: path == null?Image.network(widget.item.picture, fit: BoxFit.cover,):Image.file(File(path), fit: BoxFit.cover,),
+                    child: path == null?widget.item.picture == null?Image.asset("assets/images/play.png", fit: BoxFit.cover,):widget.item.id==null?Image.network(widget.item.picture, fit: BoxFit.cover,):Image.file(File(widget.item.picture),fit: BoxFit.cover,):Image.file(File(path), fit: BoxFit.cover,),
                   ),
                 ),
               ),

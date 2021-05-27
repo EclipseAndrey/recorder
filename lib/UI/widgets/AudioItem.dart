@@ -7,6 +7,7 @@ import 'package:recorder/UI/AddToPlaylist.dart';
 import 'package:recorder/UI/EditingAudio.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMunu.dart';
+import 'package:recorder/Utils/time/TimeParse.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
@@ -33,6 +34,7 @@ class AudioItemWidget extends StatefulWidget {
 }
 
 class _AudioItemWidgetState extends State<AudioItemWidget> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,11 +66,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                             .playerController
                             .tapButton(widget.item);
                       },
-                      play: !snapshot.hasData
-                          ? false
-                          : !(snapshot.data.state == AudioPlayerState.PLAYING)
-                              ? false
-                              : snapshot.data.item.id == widget.item.id,
+                      play: !snapshot.hasData ? false : !(snapshot.data.state == AudioPlayerState.PLAYING) ? false : snapshot.data.item.id == null?snapshot.data.item.idS == widget.item.idS:snapshot.data.item.id == widget.item.id,
                     );
                   }),
             ),
@@ -89,7 +87,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
-                    '${widget.item.duration.inMinutes} мин',
+                    '${time(widget.item.duration)}',
                     style: TextStyle(
                         color: cBlack.withOpacity(0.5),
                         fontSize: 14,

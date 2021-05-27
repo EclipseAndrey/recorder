@@ -59,7 +59,9 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                 context.read<GeneralController>().collectionsController.edit();
               }, title: Text("Редактировать",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
               FocusedMenuItem(onPressed: (){}, title: Text("Выбрать несколько",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
-              FocusedMenuItem(onPressed: (){}, title: Text("Удалить подборку",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
+              FocusedMenuItem(onPressed: (){
+                context.read<GeneralController>().collectionsController.deleteCurrent();
+              }, title: Text("Удалить подборку",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
               FocusedMenuItem(onPressed: (){}, title: Text("Поделиться",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
             ],
             onPressed: (){},
@@ -122,6 +124,14 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
     );
   }
   Widget _image(){
+
+    String timeInfo(Duration duration){
+      Duration all =duration;
+
+      return "${all.inHours < 10?"0"+all.inHours.toString():all.inHours.toString()}:${all.inMinutes%60 < 10?"0"+(all.inMinutes%60).toString():(all.inMinutes%60).toString()}";
+
+    }
+
     return StreamBuilder<CollectionsState>(
         stream: context.read<GeneralController>().collectionsController.streamCollections,
         builder: (context, snapshot) {
@@ -151,7 +161,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                     Container(
                         width: MediaQuery.of(context).size.width-32,
                         height: (MediaQuery.of(context).size.width-32)*240/382,
-                        child: Image.network(snapshot.data.currentItem.picture, fit: BoxFit.cover,)),
+                        child: snapshot.data.currentItem.isLocalPicture?Image.file(File(snapshot.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot.data.currentItem.picture), fit: BoxFit.cover)),
                     Container(
                         width: MediaQuery.of(context).size.width-32,
                         height: (MediaQuery.of(context).size.width-32)*240/382,
@@ -176,7 +186,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                       alignment: Alignment.bottomLeft,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 30),
-                        child: Text("${snapshot.data.currentItem.count} аудио\n${time(snapshot.data.currentItem.duration)}", style: TextStyle(color: cBackground, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),
+                        child: Text("${snapshot.data.currentItem.count} аудио\n${timeInfo(snapshot.data.currentItem.duration)}", style: TextStyle(color: cBackground, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),
                       ),
                     ),
                     snapshot.data.currentItem.playlist == null ||snapshot.data.currentItem.playlist.length == 0?SizedBox():Align(

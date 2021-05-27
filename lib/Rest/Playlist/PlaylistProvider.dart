@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:recorder/DB/DB.dart';
+import 'package:recorder/Rest/Audio/AudioProvide.dart';
 import 'package:recorder/Utils/checkConnection.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/CollectionModel.dart';
@@ -9,6 +11,10 @@ import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/API.dart';
 import 'package:recorder/Rest/Rest.dart';
 import 'package:recorder/Utils/tokenDB.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class PlaylistProvider{
   static Future<List<dynamic>> get({int id, int ids}) async {
@@ -120,6 +126,7 @@ class PlaylistProvider{
       return Put(error: 201, mess: "ok" , localError: true);
     }else {
 
+
       CollectionItem collectionItem = await DBProvider.db.collectionGet(idPlaylist);
 
       String token = await tokenDB();
@@ -152,22 +159,83 @@ class PlaylistProvider{
     }
   }
 
+  static Future<Put> addAudioToPlaylist(int idPlaylist, int idAudio ,{bool isLocalPlaylist = true, bool isLocalAudio= true}) async {
+    //todo
+    if(!isLocalPlaylist){
+      if(isLocalAudio) {
+        print("Попытка добавить локальное аудио в плейлист на сервере");
+        return Put(error: 500, mess: "ok", localError: false);
+
+        // CollectionItem item = await getFromId(idS: idPlaylist);
+        // var response = await http.get(item.picture);
+        // Directory documentDirectory = await getApplicationDocumentsDirectory();
+        // String pathImage = join(documentDirectory.path, '${idPlaylist}playlistimage.png');
+        // File file = new File(pathImage);
+        // file.writeAsBytesSync(response.bodyBytes);
+        // item.picture = pathImage;
+        // item.isLocalPicture = true;
+        // int idLocal = await DBProvider.db.collectionAdd(item);
+        // await DBProvider.db.collectionAddAudio(idLocal, idAudio);
+        // return Put(error: 201, mess: "ok", localError: false);
+      }else{
+        String token = await tokenDB();
+        String urlQuery = urlConstructor(Methods.playlist.addTo);
+        Map <String, dynamic> body = Map();
+        body['id'] = idPlaylist;
+        var response;
+        String au = "$idAudio";
+        response = await Rest.post(urlQuery, body, token: token);
+        print(response.runtimeType);
+        if (response.runtimeType.toString() == "Put") {
+          Put r = response;
+          if (r.error == 401) {
+            tokenDB(token: "null");
+            return null;
+          }else{
+            return Put(error: 201, mess: "ok", localError: false);
+          }
+        } else {
+          return Put(error: 201, mess: "ok", localError: false);
+        }
+      }
+    }else{
+      if(isLocalAudio){
+        await DBProvider.db.collectionAddAudio(idPlaylist, idAudio);
+        return Put(error: 201, mess: "ok", localError: false);
+      }else{
+        print("Попытка добавить  аудио на сервере в локальный плейлист ");
+        return Put(error: 500, mess: "ok", localError: false);
+        ///будут выгружены все аудио
+        ///--------v2
+        // CollectionItem collectionItem = await DBProvider.db.collectionGet(idPlaylist);
+        // if(collectionItem == null)return Put(error: 500, mess:"Не удалось получить данные подборки", localError: true );
+        // createOnlyS(collectionItem.name, collectionItem.description, collectionItem.picture);
+        ///--------v1
+        // AudioItem audioItem = await AudioProvider.getFromServer(idAudio);
+        // if(audioItem == null)return Put(error: 500, mess:"Не удалось получить данные аудио", localError: true );
+        // var response = await http.get(audioItem.picture);
+        // Directory documentDirectory = await getApplicationDocumentsDirectory();
+        // String pathImage = join(documentDirectory.path, '${idPlaylist}audioItem.png');
+        // File file = new File(pathImage);
+        // file.writeAsBytesSync(response.bodyBytes);
 
 
+      }
+    }
 
-  static Future<Put> create(String name, String desc, String file)async{
-    print("create playlist === === === ===");
-      await  DBProvider.db.collectionAdd(CollectionItem(picture: file, name: name, count: 0, duration: Duration(milliseconds: 0), isLocalPicture: true, uploadPicture: false, description: desc));
-      await syncCollections();
-      return Put(error: 200 , mess: "ok", localError: true);
+
   }
+
+
+
+
+
 
 
   static Future<Put> edit(int id, {String name, String desc, String imagePath}) async {
     if (name != null|| desc!= null|| imagePath != null) {
       // if(await futureAuth()){
         await DBProvider.db.collectionEdit(id, name: name, desc:desc ,picture: imagePath);
-        await syncCollections();
       // }else {
       //   await DBProvider.db.collectionEdit(id, name: name, desc:desc ,picture: imagePath);
       //   CollectionItem item = await DBProvider.db.collectionGet(id);
@@ -197,6 +265,26 @@ class PlaylistProvider{
   static Future<Put> deleteFromPlaylist()async{
     //todo
   }
+
+  static Future<Put> deleteS(int idsPlaylist)async{
+    String token = await  tokenDB();
+    String urlQuery = urlConstructor(Methods.playlist.deletePlaylist(idsPlaylist));
+    Map <String, dynamic> body = Map();
+    var response;
+    response = await Rest.post(urlQuery, body, token: token);
+    if(response is Put){
+      return response;
+    }else{
+      return Put(error: 401, mess: "ok", localError: false);
+    }
+  }
+
+  static Future<Put> deleteLocal(int idPlaylist)async{
+    await DBProvider.db.collectionDelete(idPlaylist);
+    return Put(error: 401, mess: "ok", localError: false);
+  }
+
+
 
   static Future<int> createOnlyS(String name, String desc, String file)async{
     print("create playlist == = == = == = ==");
@@ -398,6 +486,88 @@ class PlaylistProvider{
         }
 
     }
+  }
+  ///================================================================================
+  static Future<List<CollectionItem>> getAll()async{
+    if(!await checkConnection() || await futureAuth()){
+      return await DBProvider.db.collectionsGet();
+    }else{
+      List<CollectionItem> out = [];
+      List<CollectionItem> l = await DBProvider.db.collectionsGet();
+      List<CollectionItem> s = [];
+      String token = await tokenDB();
+      String urlQuery = urlConstructor(Methods.playlist.get);
+      Map<String, dynamic> body = Map();
+      var response;
+      response = await Rest.post(urlQuery, body, token: token);
+      if(response is Put){
+        if (response.error == 401) {
+          tokenDB(token: "null");
+          return null;
+        }
+        return l;
+      }else{
+        s = response.map((i) => CollectionItem.fromMap(i)).toList().cast<CollectionItem>();
+      }
+      out = l;
+      for(int i = 0; i < s.length; i++){
+        bool find = false;
+        for(int j = 0; j< out.length; j++){
+          if(out[j].idS != null){
+            if(out[j].idS == s[i].idS){
+              find = true;
+            }
+          }
+        }
+        if(!find){
+          out.add(s[i]);
+        }
+      }
+      return out;
+    }
+  }
+  static Future<List<AudioItem>> getAudioFromId({int id, int idS})async{
+    if(id != null){
+      // return await DBProvider.db.collectionGet(id);
+      return [];
+    }else if(idS != null){
+      String token = await tokenDB();
+      String urlQuery = urlConstructor(Methods.playlist.getAudioFromPlaylist(idS));
+      Map <String, dynamic> body = Map();
+      body['id'] = idS??(await DBProvider.db.collectionGet(id)).idS;
+      var response;
+      response = await Rest.post(urlQuery, body, token: token);
+      print(response.runtimeType);
+      if (response.runtimeType.toString() == "Put") {
+        Put r = response;
+        if (r.error == 401) {
+          tokenDB(token: "null");
+          return [];
+        }
+        return [];
+      }
+      return response['audios'].map((i) => AudioItem.fromMap(i)).toList().cast<AudioItem>();
+    }
+  }
+
+
+  static Future<int> create(String name, String desc, String file)async{
+    print("create playlist === === === ===");
+    int dbId = await  DBProvider.db.collectionAdd(
+      CollectionItem(
+          picture: file,
+          name: name,
+          count: 0,
+          duration: Duration(milliseconds: 0),
+          isLocalPicture: true,
+          uploadPicture: false,
+          description: desc),
+    );
+    if(await checkConnection() && !await futureAuth()){
+      int res = await createOnlyS(name, desc, file);
+      DBProvider.db.collectionEdit(dbId, ids: res);
+    }
+    return dbId;
   }
 
 }

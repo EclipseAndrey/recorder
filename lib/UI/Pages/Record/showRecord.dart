@@ -246,7 +246,11 @@ class _RecordPageState extends State<RecordPage> {
               SizedBox(
                 width: 30,
               ),
-              IconSvg(IconsSvg.upload, width: 30, height: 30),
+              InkWell(
+                  onTap: ()async{
+                    Put res = await widget.controller.recordController.share();
+                  },
+                  child: IconSvg(IconsSvg.upload, width: 30, height: 30)),
               Spacer(),
               IconSvg(IconsSvg.download, width: 30, height: 30),
               Spacer(),

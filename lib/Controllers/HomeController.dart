@@ -36,7 +36,8 @@ class HomeController{
   HomeController({this.onLoadCollections, this.onLoadAudios}){load();}
 
   load()async{
-    collections = await PlaylistProvider.syncCollections();
+    collections = await PlaylistProvider.getAll();
+    print("loaded ${collections.length} collections");
     audios = await AudioProvider.getAll();
     onLoadCollections(collections);
     onLoadAudios(audios);

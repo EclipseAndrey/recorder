@@ -156,7 +156,8 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                 child: !snapshot.hasData || snapshot.data == null?StreamBuilder<CollectionsState>(
                   stream: context.read<GeneralController>().collectionsController.streamCollections,
                   builder: (context, snapshot1) {
-                    return Image.network(snapshot1.data.currentItem.picture, fit: BoxFit.cover,);
+                    //                        child: snapshot.data.currentItem.isLocalPicture?Image.file(File(snapshot.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot.data.currentItem.picture), fit: BoxFit.cover)),
+                    return  snapshot1.data.currentItem.isLocalPicture?Image.file(File(snapshot1.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot1.data.currentItem.picture), fit: BoxFit.cover);
                   }
                 ):Image.file(File(snapshot.data), fit: BoxFit.cover,),
               ),

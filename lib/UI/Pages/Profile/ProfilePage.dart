@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/ProfileState.dart';
+import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/Image.dart';
@@ -22,71 +23,74 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: StreamBuilder<ProfileState>(
-          stream: context.read<GeneralController>().profileController.streamProfile,
-          builder: (context, snapshot) {
+    return Navigator(
+      key: AppKeys.navigatorKey,
+      onGenerateRoute: (route)=> MaterialPageRoute(settings: route, builder: (context)=>SafeArea(
+        child: StreamBuilder<ProfileState>(
+            stream: context.read<GeneralController>().profileController.streamProfile,
+            builder: (context, snapshot) {
 
 
-          return Scaffold(
-            backgroundColor: cBackground.withOpacity(0.0),
-            appBar: MyAppBar(
-              buttonMore: false,
-              buttonBack: snapshot.hasData && snapshot.data.edit,
-              buttonMenu: !(snapshot.hasData && snapshot.data.edit),
-              padding: 18,
-              top: 16,
-              height: 90,
-              tapLeftButton: (){
-                if(snapshot.hasData && snapshot.data.edit){
-                  context.read<GeneralController>().profileController.closeEdit();
-                }else{
-                  context.read<GeneralController>().setMenu(true);
-                }
-              },
-              child: Container(
+            return Scaffold(
+              backgroundColor: cBackground.withOpacity(0.0),
+              appBar: MyAppBar(
+                buttonMore: false,
+                buttonBack: snapshot.hasData && snapshot.data.edit,
+                buttonMenu: !(snapshot.hasData && snapshot.data.edit),
+                padding: 18,
+                top: 16,
+                height: 90,
+                tapLeftButton: (){
+                  if(snapshot.hasData && snapshot.data.edit){
+                    context.read<GeneralController>().profileController.closeEdit();
+                  }else{
+                    context.read<GeneralController>().setMenu(true);
+                  }
+                },
+                child: Container(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Профиль",
+                        style: TextStyle(
+                            fontSize: 36,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: fontFamilyMedium,
+                            letterSpacing: 2),
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        "Твоя частичка",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: fontFamilyMedium,
+                            letterSpacing: 2),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              body: (!snapshot.hasData || snapshot.data.loading)?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    Text(
-                      "Профиль",
-                      style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: fontFamilyMedium,
-                          letterSpacing: 2),
-                    ),
                     SizedBox(
-                      height: 4,
+                      height: 66,
                     ),
-                    Text(
-                      "Твоя частичка",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: fontFamilyMedium,
-                          letterSpacing: 2),
-                    )
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: snapshot.data.edit ? profileIsEdit(snapshot.data) : profileNotEdit(snapshot.data),
+                    ),
                   ],
                 ),
               ),
-            ),
-            body: (!snapshot.hasData || snapshot.data.loading)?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 66,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: snapshot.data.edit ? profileIsEdit(snapshot.data) : profileNotEdit(snapshot.data),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
-      ),
+            );
+          }
+        ),
+      )),
     );
   }
 

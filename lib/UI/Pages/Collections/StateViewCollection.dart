@@ -99,27 +99,9 @@ class _StateViewCollectionState extends State<StateViewCollection> {
                           (index) => Column(
                         children: [
                           CollectionItemOne(
-                            onTap: () {
-                              context.read<GeneralController>().collectionsController.view(leftColumn[index]);
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => OpenColletion(
-                              //             item: leftColumn[index])));
-                            },
-                            length: 1,
-                            height: MediaQuery.of(context).size.height *
-                                240 /
-                                896,
-                            width: MediaQuery.of(context).size.width *
-                                183 /
-                                414,
-                            img: leftColumn[index].picture,
-                            timeOfCollection:
-                            time(leftColumn[index].duration),
-                            title: leftColumn[index].name,
-                            audioQuantity:
-                            leftColumn[index].count,
+                            onTap: () {context.read<GeneralController>().collectionsController.view(leftColumn[index]);},
+                            item: leftColumn[index],
+
                           ),
                           SizedBox(height: 16)
                         ],
@@ -133,24 +115,8 @@ class _StateViewCollectionState extends State<StateViewCollection> {
                           (index) => Column(
                         children: [
                           CollectionItemOne(
-                            onTap: () {
-                              context.read<GeneralController>().collectionsController.view(rightColumn[index]);
-
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => OpenColletion(
-                              //             item: rightColumn[index])));
-                            },
-                            length: 1,
-                            height: MediaQuery.of(context).size.height * 240 / 896,
-                            width: MediaQuery.of(context).size.width * 183 / 414,
-                            img: rightColumn[index].picture,
-                            timeOfCollection:
-                            time(rightColumn[index].duration),
-                            title: rightColumn[index].name,
-                            audioQuantity:
-                            rightColumn[index].count,
+                            onTap: () {context.read<GeneralController>().collectionsController.view(rightColumn[index]);},
+                             item: rightColumn[index],
                           ),
                           SizedBox(height: 16)
                         ],

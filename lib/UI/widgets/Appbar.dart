@@ -54,7 +54,12 @@ class _MyAppBarState extends State<MyAppBar> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             widget.buttonBack
-                ? GestureDetector(
+                ? InkWell(
+              hoverColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              enableFeedback: false,
                     onTap: () {
                       if(widget.tapLeftButton != null){
                         widget.tapLeftButton();
@@ -72,8 +77,12 @@ class _MyAppBarState extends State<MyAppBar> {
                   )
                 : widget.buttonMenu
                     ? Container(
-                        child: GestureDetector(
-                            behavior: HitTestBehavior.deferToChild,
+                        child: InkWell(
+                            hoverColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            enableFeedback: false,
                             onTap: () {
                               if(widget.tapLeftButton != null){
                                 widget.tapLeftButton();

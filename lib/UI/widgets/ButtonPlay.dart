@@ -9,10 +9,12 @@ class ButtonPlay extends StatefulWidget {
   final Function onTap;
 
   ButtonPlay(
-      {@required this.colorPlay,
-      this.item,
-      @required this.play,
-  @required this.onTap});
+      {
+        @required this.colorPlay,
+        this.item,
+        @required this.play,
+        @required this.onTap
+      });
   @override
   _ButtonPlayState createState() => _ButtonPlayState();
 }

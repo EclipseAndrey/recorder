@@ -149,12 +149,22 @@ class _AudioListPageState extends State<AudioListPage> {
     );
   }
 
-  Widget playlistInfo(HomeState stste) {
+  Widget playlistInfo(HomeState state) {
+
+    String timeInfo(){
+      Duration all = Duration(seconds: 0);
+      for(int i = 0; i < state.audios.length; i++){
+        all = Duration(seconds: all.inSeconds+state.audios[i].duration.inSeconds);
+      }
+      return "${all.inHours < 10?"0"+all.inHours.toString():all.inHours.toString()}:${all.inMinutes%60 < 10?"0"+(all.inMinutes%60).toString():(all.inMinutes%60).toString()}";
+
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${stste.audios.length} ${S.of(context).audio}',
+          '${state.audios.length} ${S.of(context).audio}',
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
@@ -162,7 +172,7 @@ class _AudioListPageState extends State<AudioListPage> {
               fontFamily: fontFamilyMedium),
         ),
         Text(
-          '10:30 часов',
+          timeInfo(),
           style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,

@@ -144,7 +144,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
                   selected: true,
                   onSelect: (){
                     //todo select
-                    context.read<GeneralController>().collectionsController.selectAudio(list[index].id);
+                    context.read<GeneralController>().collectionsController.selectAudio(list[index]);
                   },
                   item: list[index],
                 ),

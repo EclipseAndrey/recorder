@@ -26,7 +26,7 @@ class DBProvider{
 
   Future<Database> _initDB()async {
     Directory dir = await getApplicationDocumentsDirectory();
-    String path  = dir.path+"base24.db";
+    String path  = dir.path+"base26.db";
     return await openDatabase(path, version: 1, onCreate : _createDB);
   }
   void _createDB (Database db, int version)async{
@@ -113,7 +113,9 @@ class DBProvider{
     List<AudioItem> audios = [];
     List<int> audiosIds = json.decode(list[0][TableCollection.audios]).cast<int>();
     for(int i = 0; i< audiosIds.length; i++){
-      await  audios.add(await audioGet(audiosIds[i]));
+      AudioItem step = await audioGet(audiosIds[i]);
+      if(step!= null) audios.add(step);
+      print("id audio "+step.id.toString());
     }
     item.playlist = audios;
     print(" === Collection ${item.playlist.length}");
@@ -192,24 +194,26 @@ class DBProvider{
       List<AudioItem> audios = [];
       List<int> audiosIds = (json.decode(element[TableCollection.audios])).cast<int>();
       for(int i = 0; i< audiosIds.length; i++){
-        audios.add(await audioGet(audiosIds[i]));
+        AudioItem a = await  audioGet(audiosIds[i]);
+        if(a!= null) audios.add(a);
       }
       item.playlist = audios;
       item.count = audios.length;
       int time = 0;
       for(int i = 0; i < audios.length; i++){
-        time += audios[i].duration.inMilliseconds;
+        //time += audios[i].duration.inMilliseconds;
       }
       item.duration = Duration(milliseconds: time);
       items.add(item);
     });
+    print("Db ${items.length} collections");
     return items;
   }
-  Future<void> collectionAdd(CollectionItem item)async{
+  Future<int> collectionAdd(CollectionItem item)async{
     Database db = await this.database;
     item.createAt = DateTime.now();
     item.updateAt = DateTime.now();
-    await db.insert(TableCollection.table, item.toMap());
+    return await db.insert(TableCollection.table, item.toMap());
   }
   Future<bool> collectionEdit(int id, { String name, String picture, String desc , int ids, bool isLocalPicture, bool uploadPicture })async{
     Database db = await this.database;

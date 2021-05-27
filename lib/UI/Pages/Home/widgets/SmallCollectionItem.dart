@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/generated/l10n.dart';
+import 'package:recorder/models/CollectionModel.dart';
 
 class SmallCollectionItem extends StatefulWidget {
-  double height;
-  double width;
+
   String img;
   String title;
   int audioQuantity;
@@ -13,10 +15,10 @@ class SmallCollectionItem extends StatefulWidget {
   Color contColor;
   Function onTap;
   String text;
+  final CollectionItem item;
 
   SmallCollectionItem(
-      {this.height,
-      this.width,
+      {
       this.img,
       this.title,
       this.audioQuantity,
@@ -24,25 +26,35 @@ class SmallCollectionItem extends StatefulWidget {
       @required this.text,
       @required this.length,
       @required this.contColor,
-      @required this.onTap});
+      @required this.onTap,
+        @required this.item});
 
   @override
   _SmallCollectionItemState createState() => _SmallCollectionItemState();
 }
 
 class _SmallCollectionItemState extends State<SmallCollectionItem> {
+
+  double height;
+  double width;
+
   @override
   Widget build(BuildContext context) {
-    return widget.length < 2
-        ? GestureDetector(
+
+    width= (MediaQuery.of(context).size.width / 2 - 43 / 2);
+    height= (MediaQuery.of(context).size.width / 2 - 43 / 2) * 113 / 183;
+
+
+    return widget.text!=null?
+        GestureDetector(
       behavior: HitTestBehavior.deferToChild,
 
       onTap: () {
               widget.onTap == null?null:widget.onTap();
             },
             child: Container(
-              width: widget.width,
-              height: widget.height,
+              width: width,
+              height: height,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: widget.contColor),
@@ -77,15 +89,14 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
               borderRadius: BorderRadius.circular(15),
               child: Stack(alignment: Alignment.bottomLeft, children: [
                 Container(
-                  width: widget.width,
-                  height: widget.height,
+                  width: width,
+                  height: height,
                   color: cBlack,
-                  child: Image(
-                      image: NetworkImage("${widget.img}"), fit: BoxFit.cover),
+                  child: widget.item.isLocalPicture?Image.file(File(widget.item.picture),fit: BoxFit.cover,):Image(image: NetworkImage(widget.item.picture), fit: BoxFit.cover),
                 ),
                 Container(
-                  width: widget.width,
-                  height: widget.height,
+                  width: width,
+                  height: height,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
@@ -106,31 +117,23 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: widget.width / 2.3,
-                              child: Text("${widget.text}",
+                              width: width / 2.3,
+                              child: Text("${widget.item.name}",
                                   overflow: TextOverflow.clip,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700)),
                             ),
                             Container(
-                              width: widget.width / 2.4,
+                              width: width / 2.4,
                               alignment: Alignment.bottomRight,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text("${widget.audioQuantity} аудио",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400)),
-                                  Text("${widget.timeOfCollection} часа",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400)),
+                                  SizedBox(height: 15,),
+                                  Text("${widget.audioQuantity} аудио", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
+                                  Text("${widget.item.duration.inHours} часа", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
                                 ],
                               ),
                             )

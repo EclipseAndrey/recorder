@@ -73,10 +73,15 @@ class _MainMenuState extends State<MainMenu> {
                       context.read<GeneralController>().setMenu(false);
                     }),
                     SizedBox(height: 30,),
-                    item(IconSvg(IconsSvg.wallet, height: 30, width: 30, color: cBlack), "Подписка"),
+                    item(IconSvg(IconsSvg.wallet, height: 30, width: 30, color: cBlack), "Подписка", onTap: (){
+                      context.read<GeneralController>().openSubscribe();
+
+                    }),
                     SizedBox(height: 30,),
 
-                    item(IconSvg(IconsSvg.edit, height: 30, width: 30, color: cBlack), "Написать в поддержку"),
+                    item(IconSvg(IconsSvg.edit, height: 30, width: 30, color: cBlack), "Написать в поддержку", onTap: (){
+                      context.read<GeneralController>().support();
+                    }),
                   ],
                 ),
               ),

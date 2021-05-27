@@ -6,7 +6,7 @@ import 'package:recorder/models/AudioModel.dart';
 
 class CollectionItem {
   final int id;
-  final String picture;
+  String picture;
   final String name;
   final String description;
   List<AudioItem> playlist;
@@ -39,9 +39,9 @@ class CollectionItem {
     return new CollectionItem(
       idS: map['id'] as int,
       picture: map['picture'] as String,
-      name: map['name'] as String,
+      name: map['name'] == null?"":map['name'].toString(),
       description: map['description'] as String,
-      playlist: map['playlist'] as List<AudioItem>,
+      playlist: null,
       publicationDate: map['publicationDate'] as String,
       count: map['count'] as int,
       duration: Duration(milliseconds: 0),
@@ -59,7 +59,7 @@ class CollectionItem {
         idS: map[TableCollection.idS] as int,
         id: map[TableCollection.id] as int,
         picture: map[TableCollection.picture] as String,
-        name: map[TableCollection.name] as String,
+        name: map[TableCollection.name] == null?"":map[TableCollection.name].toString(),
         description: map[TableCollection.desc] as String,
         playlist: [],
         publicationDate: "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().day}",
@@ -77,7 +77,7 @@ class CollectionItem {
       TableCollection.picture: this.picture,
       TableCollection.name: this.name,
       TableCollection.desc: this.description,
-      TableCollection.audios: json.encode(this.playlist == null? []:this.playlist.map((e) => e.id).toList().cast<int>()),
+      TableCollection.audios: json.encode(this.playlist == null? []:this.playlist.map((e){if(e == null){return null;}else return e.id;}).toList().cast<int>()),
       TableCollection.duration: this.duration.inMilliseconds.toString(),
       TableCollection.uploadPicture: this.uploadPicture?1:0,
       TableCollection.isLocalPicture:  this.isLocalPicture?1:0,
@@ -85,4 +85,10 @@ class CollectionItem {
       TableCollection.updateAt: this.updateAt.toString()
     } ;
   }
+
+  @override
+  String toString() {
+    return toMap().toString();
+  }
+
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:recorder/Controllers/CollectionsController.dart';
 import 'package:recorder/Controllers/RestoreController.dart';
+import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'package:recorder/UI/Player.dart';
 import 'package:rxdart/rxdart.dart';
 import 'States/PlayerState.dart';
@@ -13,7 +14,7 @@ import 'package:recorder/Controllers/RecordController.dart';
 import 'package:recorder/UI/Pages/Record/showRecord.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioModel.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 part 'States/RecordState.dart';
 
 class GeneralController {
@@ -106,9 +107,25 @@ class GeneralController {
     showPlayer(this);
   }
 
-  openSubscribe(){
+  openSubscribe()async{
     //todo
+    pageController.jumpToPage(4);
+    setMenu(false);
+    Navigator.push(AppKeys.navigatorKey.currentContext, MaterialPageRoute(builder: (context)=> SubscriptionPage()));
   }
+
+  support()async{
+    final Uri _emailLaunchUri = Uri(
+        scheme: 'mailto',
+        path: 'love@hugsy.ru',
+        queryParameters: {
+          'subject': ''
+        }
+    );
+    launch(_emailLaunchUri.toString());
+
+  }
+
 
 
 

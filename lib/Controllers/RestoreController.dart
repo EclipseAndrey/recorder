@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/States/RestoreState.dart';
+import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/Audio/AudioProvide.dart';
+import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
+import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/Put.dart';
@@ -35,7 +39,7 @@ class RestoreController{
 
   tapSelect(AudioItem item){
     for(int i = 0; i < _items.length; i++){
-      if(_items[i].id == item.id){
+      if(item.id == null?item.idS == _items[i].idS:item.id == _items[i].id){
         if(_items[i].select == null || !_items[i].select){
           _items[i].select = true;
         }else{
@@ -56,7 +60,7 @@ class RestoreController{
 
     if(out.length > 0){
       for(int i =0; i< out.length; i++){
-        Put response = await AudioProvider.delete(out[i].id);
+        Put response = await AudioProvider.delete(null, ids:out[i].idS);
         if(response.error == 200){
           ///ok
         }else{
@@ -122,12 +126,14 @@ class RestoreController{
       showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
+
   deleteAll()async{
+    print("a");
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     Put error;
     if(_items.length > 0){
       for(int i =0; i< _items.length; i++){
-        Put response = await AudioProvider.delete(_items[i].idS);
+        Put response = await AudioProvider.delete(null, ids:_items[i].idS);
         if(response.error == 200){
           ///ok
         }else{
@@ -145,14 +151,46 @@ class RestoreController{
   }
 
   delete(AudioItem item)async{
-    showDialogLoading(AppKeys.scaffoldKey.currentContext);
-    Put response = await AudioProvider.delete(item.id);
-    closeDialog(AppKeys.scaffoldKey.currentContext);
-    if(response.error == 200){
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Перемещено в корзину");
+    if(item.idS == null ){
+      showDialogRecorder(
+          context: AppKeys.scaffoldKey.currentContext,
+          title: Text(
+            "Точно удалить?",
+            style: TextStyle(
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 20,
+                fontFamily: fontFamily),
+          ),
+          body: Text("Запись будет безвозвратно удалена ", textAlign: TextAlign.center, style: TextStyle(color: cBlack.withOpacity(0.7), fontFamily: fontFamily, fontSize: 14),),
+          buttons: [
+            DialogIntegronButton(onPressed: ()async{
+              await DBProvider.db.audioDelete(item.id);
+              closeDialog(AppKeys.scaffoldKey.currentContext);
+            }, textButton: Text("Удалить", style: TextStyle(color: cBackground, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w500),), background: cRed, borderColor: cRed),
+            DialogIntegronButton(onPressed: (){
+              closeDialog(AppKeys.scaffoldKey.currentContext);
+            }, textButton: Text("Нет", style: TextStyle(color: cBlueSoso, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w400),), borderColor: cBlueSoso),
+          ]
+      );
     }else{
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
+      showDialogLoading(AppKeys.scaffoldKey.currentContext);
+      Put response = await AudioProvider.delete(item.id, ids:item.idS);
+      if(item.id != null){
+        await DBProvider.db.audioDelete(item.id);
+      }
+      closeDialog(AppKeys.scaffoldKey.currentContext);
+      if(response.error == 200){
+        showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Удалено");
+      }else{
+        showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
+      }
+      load();
+
     }
+
+
+
   }
 
 

@@ -54,8 +54,7 @@ class _AddAudioContentState extends State<AddAudioContent> {
 
   add(CollectionItem collectionItem)async{
     showDialogLoading(context);
-    Put response = await PlaylistProvider.addAudio(collectionItem.id, [widget.item.id
-    ]);
+    Put response = await PlaylistProvider.addAudioToPlaylist(collectionItem.id??collectionItem.idS, widget.item.id??widget.item.idS, isLocalAudio: widget.item.id==null?false:true, isLocalPlaylist: collectionItem.id == null?false:true);
     closeDialog(context);
     closeDialog(context);
     if( response.error == 201){
@@ -106,20 +105,8 @@ class _AddAudioContentState extends State<AddAudioContent> {
                         CollectionItemOne(
                           onTap: () {
                             add(leftColumn[index]);
-                          },
-                          length: 1,
-                          height: MediaQuery.of(context).size.height *
-                              240 /
-                              896,
-                          width: MediaQuery.of(context).size.width *
-                              183 /
-                              414,
-                          img: leftColumn[index].picture,
-                          timeOfCollection:
-                          time(leftColumn[index].duration),
-                          title: leftColumn[index].name,
-                          audioQuantity:
-                          leftColumn[index].count,
+                          }, item: leftColumn[index],
+
                         ),
                         SizedBox(height: 16)
                       ],
@@ -137,20 +124,8 @@ class _AddAudioContentState extends State<AddAudioContent> {
                             //todo
                             add(rightColumn[index]);
 
-                          },
-                          length: 1,
-                          height: MediaQuery.of(context).size.height *
-                              240 /
-                              896,
-                          width: MediaQuery.of(context).size.width *
-                              183 /
-                              414,
-                          img: rightColumn[index].picture,
-                          timeOfCollection:
-                          time(rightColumn[index].duration),
-                          title: rightColumn[index].name,
-                          audioQuantity:
-                          rightColumn[index].count,
+                          }, item: rightColumn[index],
+
                         ),
                         SizedBox(height: 16)
                       ],

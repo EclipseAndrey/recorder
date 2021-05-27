@@ -44,7 +44,7 @@ class AudioItem extends Select {
 
   factory AudioItem.fromMap(Map<String, dynamic> map) {
     return new AudioItem(
-      name: map['name'] as String,
+      name: map['name']==null?"":map['name'].toString(),
       description: map['description'] as String,
       pathAudio: map['url'] as String,
       picture: map['picture'] as String,
@@ -63,12 +63,12 @@ class AudioItem extends Select {
 
   factory AudioItem.fromDB(Map<String, dynamic> map) {
     return new AudioItem(
-      name: map[TableAudio.name] as String,
+      name: map[TableAudio.name] == null?"":map[TableAudio.name].toString(),
       description: map[TableAudio.desc] as String,
       pathAudio: map[TableAudio.pathAudio] as String,
       picture: map[TableAudio.picture] as String,
       id: map[TableAudio.id] as int,
-      duration:  Duration(seconds: int.parse(map[TableAudio.duration])),
+      duration:  Duration(milliseconds: int.parse(map[TableAudio.duration])),
       activeIcon: IconsSvg.pause,
       inActiveIcon: IconsSvg.play,
       isLocalAudio: map[TableAudio.isLocalAudio] == 0?false:true,

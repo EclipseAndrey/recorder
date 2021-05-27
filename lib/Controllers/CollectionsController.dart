@@ -59,9 +59,9 @@ class CollectionsController {
     setState();
   }
 
-  selectAudio(int id) {
+  selectAudio(AudioItem item) {
     for (int i = 0; i < _audiosAll.length; i++) {
-      if (_audiosAll[i].id == id) {
+      if (_audiosAll[i].id == null?_audiosAll[i].idS == item.idS:_audiosAll[i].id==item.id) {
         if (_audiosAll[i].select != null && _audiosAll[i].select) {
           _audiosAll[i].select = false;
         } else {
@@ -81,6 +81,7 @@ class CollectionsController {
 
   setAudios(List<AudioItem> audios) {
     _audiosAll = audios;
+    setState();
   }
 
   addCollection() async {
@@ -103,11 +104,15 @@ class CollectionsController {
   }
 
   view(CollectionItem item) async {
+    print(item.toString());
     _stateSelect = CollectionsSelection.loading;
     setState();
+
     _currentItem = item;
+    print("=============================================="
+        "\n ${_currentItem.toMap().toString()}");
     if (_currentItem.playlist == null)
-      _currentItem.playlist = await PlaylistProvider.get(id: item.id);
+      _currentItem.playlist = await PlaylistProvider.getAudioFromId(idS: item.idS);
     _stateSelect = CollectionsSelection.viewItem;
     setState();
   }
@@ -145,19 +150,23 @@ class CollectionsController {
     if (controllerHeader.text.isNotEmpty) {
       if (controllerComment.text.isNotEmpty) {
         if (_pathPhoto != null && _pathPhoto != "") {
-          Put response = await PlaylistProvider.create(
+          _stateSelect = CollectionsSelection.loading;
+          setState();
+          int response = await PlaylistProvider.create(
               controllerHeader.text, controllerComment.text, _pathPhoto);
-          //todo complete create
-          if (response.error == 200) {
-            controllerComment.text = "";
-            controllerHeader.text = "";
-            _pathPhoto = null;
-            updateData();
-
-            back();
-          } else {
-            showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Не получилось создать плейлист, что-то пошло не так :(");
+          _stateSelect = CollectionsSelection.add;
+          setState();
+          for(int i = 0 ; i < _audios.length; i++) {
+            await PlaylistProvider.addAudioToPlaylist(
+                response, _audios[i].id??_audios[i].idS, isLocalPlaylist: true, isLocalAudio: _audios[i].id != null );
           }
+          controllerComment.text = "";
+          controllerHeader.text = "";
+          _pathPhoto = null;
+          update();
+
+          back();
+
         } else {
           showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Выберите обложку плейлиста");
         }
@@ -190,6 +199,18 @@ class CollectionsController {
       print('No image selected.');
     }
     setState();
+  }
+
+  deleteCurrent()async{
+    _stateSelect = CollectionsSelection.loading;
+    setState();
+    if(_currentItem.id != null){
+      await PlaylistProvider.deleteLocal(_currentItem.id);
+    }
+    if(_currentItem.idS != null){
+      await PlaylistProvider.deleteS(_currentItem.idS);
+    }
+    update();
   }
 
   setState() {

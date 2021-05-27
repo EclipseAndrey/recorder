@@ -68,15 +68,7 @@ class _CollectionsState extends State<Collections> {
       child: Row(
         children: [
           CollectionItemOne(
-            length: widget.items.length,
-            width: (MediaQuery.of(context).size.width / 2 - 43 / 2),
-            height:
-                ((MediaQuery.of(context).size.width / 2 - 43 / 2)) * 240 / 183,
-            img: widget.items.length == 0 ? null : widget.items[0].picture,
-            title: widget.items.length == 0 ? null : widget.items[0].name,
-            audioQuantity:
-                widget.items.length == 0 ? null : widget.items[0].count,
-            timeOfCollection: '1:30',
+            title: widget.items == null||widget.items.length==0? S.current.titleOfEmptyCollection:null,
             onTap: () {
               if (widget.items.length < 1) {
                 if (widget.onAddCollection != null) {
@@ -85,7 +77,7 @@ class _CollectionsState extends State<Collections> {
               } else if (widget.onTapCollection != null) {
                 widget.onTapCollection(widget.items[0]);
               }
-            },
+            }, item: widget.items == null?null:widget.items.length>0?widget.items[0]:null,
           ),
           SizedBox(
             width: 11,
@@ -96,6 +88,7 @@ class _CollectionsState extends State<Collections> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SmallCollectionItem(
+                    item: widget.items == null?null:widget.items.length>1?widget.items[1]:null,
                     audioQuantity:
                         widget.items.length > 1 ? widget.items[1].count : null,
                     img: widget.items.length > 1
@@ -104,13 +97,11 @@ class _CollectionsState extends State<Collections> {
                     text: widget.items.length == 0
                         ? S.of(context).here
                         : widget.items.length > 1
-                            ? widget.items[1].name
+                            ? null
                             : S.of(context).add,
                     length: widget.items.length,
-                    width: (MediaQuery.of(context).size.width / 2 - 43 / 2),
-                    height: ((MediaQuery.of(context).size.width / 2 - 43 / 2)) *
-                        113 /
-                        183,
+
+
                     contColor: Color.fromRGBO(241, 180, 136, 0.8),
                     onTap: () {
                       if (widget.items.length < 2) {
@@ -125,14 +116,13 @@ class _CollectionsState extends State<Collections> {
                   height: 16,
                 ),
                 SmallCollectionItem(
-                  img: widget.items.length > 2 ? widget.items[2].picture:null,
+                    item: widget.items == null?null:widget.items.length>2?widget.items[2]:null,
+
+                    img: widget.items.length > 2 ? widget.items[2].picture:null,
                     audioQuantity: widget.items.length > 2 ? widget.items[2].count:null,
-                    text: widget.items.length == 0 ? S.of(context).and_here : widget.items.length > 2 ? widget.items[2].name : S.of(context).add,
+                    text: widget.items.length == 0 ? S.of(context).and_here : widget.items.length > 2 ? null: S.of(context).add,
                     length: widget.items.length-1,
-                    width: (MediaQuery.of(context).size.width / 2 - 43 / 2),
-                    height: (MediaQuery.of(context).size.width / 2 - 43 / 2) *
-                        113 /
-                        183,
+
                     contColor: Color.fromRGBO(103, 139, 210, 0.8),
                     onTap: () {
                       if (widget.items.length < 3) {

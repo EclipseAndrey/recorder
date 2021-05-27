@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/Rest/Audio/AudioProvide.dart';
 import 'package:recorder/Utils/app_keys.dart';
+import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -34,6 +35,7 @@ class RecordController{
   int bufferPowerSize;
 
   Timer _timer;
+  int _uploadIndex;
 
 
   AudioPlayer _audioPlayer = AudioPlayer();
@@ -51,6 +53,7 @@ class RecordController{
 
 
   recordStart(int bufferSize )async{
+    _uploadIndex = null;
     _open = true;
     maxPower = 70;
     _powerList = [];
@@ -258,23 +261,31 @@ class RecordController{
       int duration = _recorder.recording.duration.inMilliseconds;
       if (textEditingControllerName.text.isEmpty) name = "Аудиозапись 1";
       if (textEditingControllerDesc.text.isEmpty) desc = "Описание";
-      Put res =await AudioProvider.create(name, desc, duration, path);
+      int res =await AudioProvider.createLocal(name, desc, duration, path, ids: _uploadIndex);
       _loading = false;
       setState();
-      if(res.error == 201 && _open){
-
+      if(res !=null && _open){
         Navigator.pop(AppKeys.scaffoldKey.currentState.context);
       }
-
-    }else{
-
     }
   }
-  saveLocal(){
-   //    todo save local
+  saveLocal()async{
+
   }
-  share(){
-    //todo share
+  share()async{
+    if(!_loading && _uploadIndex == null) {
+      _loading  = true;
+      setState();
+      String name = textEditingControllerName.text;
+      String desc = textEditingControllerDesc.text;
+      String path = _recorder.recording.path;
+      int duration = _recorder.recording.duration.inMilliseconds;
+      if (textEditingControllerName.text.isEmpty) name = "Аудиозапись 1";
+      if (textEditingControllerDesc.text.isEmpty) desc = "Описание";
+      _uploadIndex = await AudioProvider.upload(0, audioItem:  AudioItem(name: name, description: desc, duration: Duration(milliseconds:duration ), pathAudio: path, picture: null));
+      _loading = false;
+      setState();
+    }
   }
 
   delete(){
