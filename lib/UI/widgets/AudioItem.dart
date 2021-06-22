@@ -121,7 +121,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             menuItems:[
 
               FocusedMenuItem(onPressed: (){
-                addToPlaylist(widget.item, context.read<GeneralController>());
+                addToPlaylist([widget.item], context.read<GeneralController>());
               }, title: Text("Добавить в подборку",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
               FocusedMenuItem(onPressed: (){
                 editAudio(widget.item, context.read<GeneralController>());

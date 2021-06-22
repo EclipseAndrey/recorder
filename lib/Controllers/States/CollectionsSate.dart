@@ -9,7 +9,9 @@ enum CollectionsSelection{
   add,
   addAudio,
   viewItem,
-  loading
+  loading,
+  select
+
 }
 
 class CollectionsState{

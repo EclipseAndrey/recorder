@@ -43,6 +43,9 @@ class PlayerController {
     ///Status
     _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState s)async {
       if(s == AudioPlayerState.COMPLETED){
+        _currentDuration = _maxDuration;
+      }
+      if(s == AudioPlayerState.COMPLETED){
         queue.removeAt(0);
         if(queue.isNotEmpty){
          await _play(queue.first);

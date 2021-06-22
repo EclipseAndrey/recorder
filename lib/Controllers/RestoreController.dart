@@ -186,12 +186,51 @@ class RestoreController{
         showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
       }
       load();
-
     }
-
-
-
   }
+
+
+  deleteSeveral(List<AudioItem> items)async{
+    if(items.isNotEmpty){
+      bool findLocal = false;
+      items.forEach((element) {if(element.idS == null)findLocal = true;});
+      showDialogRecorder(
+          context: AppKeys.scaffoldKey.currentContext,
+          title: Text(
+            "Точно удалить?",
+            style: TextStyle(
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 20,
+                fontFamily: fontFamily),
+          ),
+          body: Text("Записи будут безвозвратно удалены", textAlign: TextAlign.center, style: TextStyle(color: cBlack.withOpacity(0.7), fontFamily: fontFamily, fontSize: 14),),
+          buttons: [
+            DialogIntegronButton(onPressed: ()async{
+              closeDialog(AppKeys.scaffoldKey.currentContext);
+              showDialogLoading(AppKeys.scaffoldKey.currentContext);
+              //todo delete
+              for(int i = 0; i < items.length; i++){
+                if(items[i].idS != null){
+                  Put response = await AudioProvider.delete(items[i].id, ids:items[i].idS);
+                }
+                if(items[i].id != null){
+                  await DBProvider.db.audioDelete(items[i].id);
+                }
+              }
+
+              closeDialog(AppKeys.scaffoldKey.currentContext);
+              showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Удалено");
+            }, textButton: Text("Удалить", style: TextStyle(color: cBackground, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w500),), background: cRed, borderColor: cRed),
+            DialogIntegronButton(onPressed: (){
+              closeDialog(AppKeys.scaffoldKey.currentContext);
+            }, textButton: Text("Нет", style: TextStyle(color: cBlueSoso, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w400),), borderColor: cBlueSoso),
+          ]
+      );
+    }
+  }
+
+
 
 
   setSelect(bool status){

@@ -66,15 +66,20 @@ class _MainMenuState extends State<MainMenu> {
                       context.read<GeneralController>().setPage(3);
                       context.read<GeneralController>().setMenu(false);
 
+
                     }),
-                    item(IconSvg(IconsSvg.search, height: 30, width: 30, color: cBlack), "Поиск"),
+                    item(IconSvg(IconsSvg.search, height: 30, width: 30, color: cBlack), "Поиск", onTap: (){
+                      context.read<GeneralController>().setPage(5, restore: true);
+
+                    }),
                     item(IconSvg(IconsSvg.delete, height: 30, width: 30, color: cBlack), "Недавно удаленные", onTap: (){
                       context.read<GeneralController>().setPage(2, restore: true);
                       context.read<GeneralController>().setMenu(false);
                     }),
-                    SizedBox(height: 30,),
+                    // SizedBox(height: 30,),
                     item(IconSvg(IconsSvg.wallet, height: 30, width: 30, color: cBlack), "Подписка", onTap: (){
                       context.read<GeneralController>().openSubscribe();
+                      context.read<GeneralController>().setMenu(false);
 
                     }),
                     SizedBox(height: 30,),
@@ -112,7 +117,7 @@ class _MainMenuState extends State<MainMenu> {
               SizedBox(width: 15,),
               Container(
                   width: MediaQuery.of(context).size.width*0.6-40-30-15-10,
-                  child: Text(text, style: TextStyle(color: cBlack, fontWeight: FontWeight.w400,fontSize: 18, fontFamily: fontFamily, ),))
+                  child: Text(text, style: TextStyle(color: cBlack, fontWeight: FontWeight.w400,fontSize: 14, fontFamily: fontFamily, ),))
             ],
           ),
         ),

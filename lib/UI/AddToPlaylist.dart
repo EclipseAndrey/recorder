@@ -11,22 +11,22 @@ import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/models/Put.dart';
 
-addToPlaylist (AudioItem item, GeneralController controller){
+addToPlaylist (List<AudioItem> items, GeneralController controller){
   showModalBottomSheet(
       isScrollControlled: true,
 
       backgroundColor: Colors.transparent,
       context: AppKeys.scaffoldKey.currentContext,
       builder: (context){
-        return AddAudioContent(controller: controller, item: item,);
+        return AddAudioContent(controller: controller, items: items,);
       });
 }
 
 class AddAudioContent extends StatefulWidget {
 
   final GeneralController controller;
-  final AudioItem item;
-  const AddAudioContent({Key key, this.controller , this.item}) : super(key: key);
+  final List<AudioItem> items;
+  const AddAudioContent({Key key, this.controller , this.items}) : super(key: key);
 
   @override
   _AddAudioContentState createState() => _AddAudioContentState();
@@ -53,8 +53,16 @@ class _AddAudioContentState extends State<AddAudioContent> {
   }
 
   add(CollectionItem collectionItem)async{
+
     showDialogLoading(context);
-    Put response = await PlaylistProvider.addAudioToPlaylist(collectionItem.id??collectionItem.idS, widget.item.id??widget.item.idS, isLocalAudio: widget.item.id==null?false:true, isLocalPlaylist: collectionItem.id == null?false:true);
+    Put response;
+    for(int i = 0; i < widget.items.length; i++) {
+      response = await PlaylistProvider.addAudioToPlaylist(
+          collectionItem.id ?? collectionItem.idS,
+          widget.items[i].id ?? widget.items[i].idS,
+          isLocalAudio: widget.items[i].id == null ? false : true,
+          isLocalPlaylist: collectionItem.id == null ? false : true);
+    }
     closeDialog(context);
     closeDialog(context);
     if( response.error == 201){

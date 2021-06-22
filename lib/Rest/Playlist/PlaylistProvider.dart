@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/Audio/AudioProvide.dart';
@@ -203,7 +204,7 @@ class PlaylistProvider{
         await DBProvider.db.collectionAddAudio(idPlaylist, idAudio);
         return Put(error: 201, mess: "ok", localError: false);
       }else{
-        print("Попытка добавить  аудио на сервере в локальный плейлист ");
+        print("попИт ка  добавить  аудио на сервере в локальный плейлист ");
         return Put(error: 500, mess: "ok", localError: false);
         ///будут выгружены все аудио
         ///--------v2
@@ -293,6 +294,9 @@ class PlaylistProvider{
     Map <String, dynamic> body = Map();
     body['name'] = name;
     body['description']= desc;
+    if(file == null || file == ""){
+
+    }
 
     print(urlQuery);
     var dio = Dio();
@@ -302,7 +306,12 @@ class PlaylistProvider{
       // "Authorization":"Bearer $token",
       "Accept":"application/json",
       "Content-Type":"multipart/form-data;",
-      "picture": await MultipartFile.fromFile(file, filename: file.split("/").last),
+      "picture": file == null ? MultipartFile.fromBytes(
+          (await rootBundle.load('assets/images/play.png')).buffer
+              .asUint8List(), filename: "play.png")
+          : await MultipartFile.fromFile(file, filename: file
+          .split("/")
+          .last),
     });
 
 
@@ -553,6 +562,7 @@ class PlaylistProvider{
 
   static Future<int> create(String name, String desc, String file)async{
     print("create playlist === === === ===");
+
     int dbId = await  DBProvider.db.collectionAdd(
       CollectionItem(
           picture: file,
@@ -564,6 +574,7 @@ class PlaylistProvider{
           description: desc),
     );
     if(await checkConnection() && !await futureAuth()){
+
       int res = await createOnlyS(name, desc, file);
       DBProvider.db.collectionEdit(dbId, ids: res);
     }

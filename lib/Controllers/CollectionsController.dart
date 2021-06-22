@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
+import 'package:recorder/Controllers/RestoreController.dart';
 import 'package:recorder/Controllers/States/CollectionsSate.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
+import 'package:recorder/UI/AddToPlaylist.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
@@ -10,15 +13,30 @@ import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
 
+
+class StateSearch{
+  final String input;
+  final List<AudioItem> results;
+
+  StateSearch({
+    @required this.input,
+    @required this.results
+  });
+}
+
 class CollectionsController {
   CollectionsSelection _stateSelect;
   List<CollectionItem> itemsCollection;
   CollectionItem _currentItem;
   List<AudioItem> _audios;
-  List<AudioItem> _audiosAll;
+  List<AudioItem> audiosAll;
   List<AudioItem> _audiosSearch;
   Function update;
   bool _edit;
+  String input = "";
+  List<AudioItem> results =[];
+
+
 
   final _picker = ImagePicker();
   TextEditingController controllerHeader = TextEditingController();
@@ -28,10 +46,13 @@ class CollectionsController {
 
   BehaviorSubject _behaviorSubject = BehaviorSubject<CollectionsState>();
   BehaviorSubject _behaviorSubjectPhoto = BehaviorSubject<String>();
+  BehaviorSubject _behaviorSubjectSearch = BehaviorSubject<StateSearch>();
 
   get streamCollections => _behaviorSubject.stream;
 
   get streamPhoto => _behaviorSubjectPhoto.stream;
+
+  get streamSearch => _behaviorSubjectSearch.stream;
 
   CollectionsController(this.update) {
     _audiosSearch = [];
@@ -48,24 +69,24 @@ class CollectionsController {
 
   _search() {
     _audiosSearch = [];
-    for (int i = 0; i < _audiosAll.length; i++) {
+    for (int i = 0; i < audiosAll.length; i++) {
       RegExp exp = new RegExp(controllerSearch.text.toLowerCase());
-      String str = _audiosAll[i].name.toLowerCase();
-      String str2 = _audiosAll[i].description.toLowerCase();
+      String str = audiosAll[i].name.toLowerCase();
+      String str2 = audiosAll[i].description.toLowerCase();
       if (exp.hasMatch(str) || exp.hasMatch(str2)) {
-        _audiosSearch.add(_audiosAll[i]);
+        _audiosSearch.add(audiosAll[i]);
       }
     }
     setState();
   }
 
   selectAudio(AudioItem item) {
-    for (int i = 0; i < _audiosAll.length; i++) {
-      if (_audiosAll[i].id == null?_audiosAll[i].idS == item.idS:_audiosAll[i].id==item.id) {
-        if (_audiosAll[i].select != null && _audiosAll[i].select) {
-          _audiosAll[i].select = false;
+    for (int i = 0; i < audiosAll.length; i++) {
+      if (audiosAll[i].id == null?audiosAll[i].idS == item.idS:audiosAll[i].id==item.id) {
+        if (audiosAll[i].select != null && audiosAll[i].select) {
+          audiosAll[i].select = false;
         } else {
-          _audiosAll[i].select = true;
+          audiosAll[i].select = true;
         }
       }
     }
@@ -80,7 +101,7 @@ class CollectionsController {
   }
 
   setAudios(List<AudioItem> audios) {
-    _audiosAll = audios;
+    audiosAll = audios;
     setState();
   }
 
@@ -120,9 +141,9 @@ class CollectionsController {
   back() {
     if (_stateSelect == CollectionsSelection.addAudio) {
       _audios = [];
-      for (int i = 0; i < _audiosAll.length; i++) {
-        if (_audiosAll[i].select != null && _audiosAll[i].select) {
-          _audios.add(_audiosAll[i]);
+      for (int i = 0; i < audiosAll.length; i++) {
+        if (audiosAll[i].select != null && audiosAll[i].select) {
+          _audios.add(audiosAll[i]);
         }
       }
       print(_audios.length);
@@ -140,7 +161,10 @@ class CollectionsController {
       _currentItem = null;
       _stateSelect = CollectionsSelection.view;
       setState();
-    } else {
+    } else if(_stateSelect == CollectionsSelection.select){
+      _stateSelect = CollectionsSelection.viewItem;
+      setState();
+    }else {
       _stateSelect = CollectionsSelection.view;
       setState();
     }
@@ -149,7 +173,7 @@ class CollectionsController {
   createCollection() async {
     if (controllerHeader.text.isNotEmpty) {
       if (controllerComment.text.isNotEmpty) {
-        if (_pathPhoto != null && _pathPhoto != "") {
+        if (true) {
           _stateSelect = CollectionsSelection.loading;
           setState();
           int response = await PlaylistProvider.create(
@@ -178,6 +202,34 @@ class CollectionsController {
       showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Некорректное название плейлиста");
     }
   }
+
+  selectSeveral(){
+    audiosAll.forEach((element) {element.select=false;});
+    _stateSelect = CollectionsSelection.select;
+    setState();
+  }
+
+  addToPlaylistSelect(GeneralController generalController){
+    List<AudioItem> selected = [];
+    audiosAll.forEach((element){element.select?selected.add(element):null;});
+    if(selected.isNotEmpty){
+      addToPlaylist(selected, generalController);
+    }
+  }
+
+  deleteSelectAudio(RestoreController restoreController)async{
+    List<AudioItem> selected = [];
+    audiosAll.forEach((element){element.select?selected.add(element):null;});
+    if(selected.isNotEmpty){
+      await restoreController.deleteSeveral(selected,);
+    }
+    updateData();
+
+
+  }
+
+
+
 
   backAndSave() async {
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
@@ -213,20 +265,43 @@ class CollectionsController {
     update();
   }
 
+  searchClean(){
+    input = "";
+    results = [];
+    setState();
+  }
+  search(String input){
+    if(input.isEmpty){
+      results = List.from(audiosAll);
+    }else{
+      List<AudioItem> out = [];
+      audiosAll.forEach((element) {
+        if(element.name.contains(input) || element.description.contains(input)){
+          out.add(element);
+        }
+      });
+      results = out;
+    }
+    setState();
+  }
+
   setState() {
+    StateSearch stateSearch = StateSearch(input: input, results: results);
     CollectionsState state = CollectionsState(
         audios: _audios,
         currentItem: _currentItem,
         items: itemsCollection,
         stateSelect: _stateSelect,
         audiosSearch: _audiosSearch,
-        audiosAll: _audiosAll);
+        audiosAll: audiosAll);
     _behaviorSubject.sink.add(state);
     _behaviorSubjectPhoto.sink.add(_pathPhoto);
+    _behaviorSubjectSearch.sink.add(stateSearch);
   }
 
   dispose() {
     _behaviorSubject.close();
     _behaviorSubjectPhoto.close();
+    _behaviorSubjectSearch.close();
   }
 }

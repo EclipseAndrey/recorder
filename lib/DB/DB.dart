@@ -115,7 +115,7 @@ class DBProvider{
     for(int i = 0; i< audiosIds.length; i++){
       AudioItem step = await audioGet(audiosIds[i]);
       if(step!= null) audios.add(step);
-      print("id audio "+step.id.toString());
+      //print("id audio "+step.id.toString());
     }
     item.playlist = audios;
     print(" === Collection ${item.playlist.length}");

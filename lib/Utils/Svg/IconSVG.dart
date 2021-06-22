@@ -116,6 +116,7 @@ Widget IconSvg(int id,
     case 33:iconName = icon('wallet');break;
     case 34:iconName = icon('arrowBottom');break;
     case 35:iconName = icon('swap');break;
+    case 36:iconName = icon('addOutline');break;
     default:
       iconName = icon('heart');
       break;

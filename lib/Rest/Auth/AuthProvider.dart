@@ -8,6 +8,7 @@ class AuthProvider{
     String urlQuery = urlConstructor(Methods.auth.sendCode);
     Map <String,dynamic> body = Map();
     body['phone'] = phone;
+    
     var response;
     response =await  Rest.post(urlQuery, body);
     if(response is Put) {

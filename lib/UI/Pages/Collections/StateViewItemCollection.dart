@@ -58,7 +58,9 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
               FocusedMenuItem(onPressed: (){
                 context.read<GeneralController>().collectionsController.edit();
               }, title: Text("Редактировать",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
-              FocusedMenuItem(onPressed: (){}, title: Text("Выбрать несколько",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
+              FocusedMenuItem(onPressed: (){
+                context.read<GeneralController>().collectionsController.selectSeveral();
+              }, title: Text("Выбрать несколько",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
               FocusedMenuItem(onPressed: (){
                 context.read<GeneralController>().collectionsController.deleteCurrent();
               }, title: Text("Удалить подборку",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
@@ -161,7 +163,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                     Container(
                         width: MediaQuery.of(context).size.width-32,
                         height: (MediaQuery.of(context).size.width-32)*240/382,
-                        child: snapshot.data.currentItem.isLocalPicture?Image.file(File(snapshot.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot.data.currentItem.picture), fit: BoxFit.cover)),
+                        child:  snapshot.data.currentItem.picture == null?Image.asset('assets/images/play.png', fit: BoxFit.cover,):snapshot.data.currentItem.isLocalPicture?Image.file(File(snapshot.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot.data.currentItem.picture), fit: BoxFit.cover)),
                     Container(
                         width: MediaQuery.of(context).size.width-32,
                         height: (MediaQuery.of(context).size.width-32)*240/382,

@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
+import 'package:recorder/Controllers/States/CollectionsSate.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/Controllers/States/RestoreState.dart';
 import 'package:recorder/Style.dart';
@@ -100,106 +101,198 @@ class _MainPanelState extends State<MainPanel> {
                     child: StreamBuilder<RestoreState>(
                       stream: context.read<GeneralController>().restoreController.streamRestore,
                       builder: (context, snapshot) {
-                        return Stack(
-                          children: [
-                            AnimatedPositioned(
-                              left: (!snapshot.hasData)||!(snapshot.data.select??false)?-MediaQuery.of(context).size.width:0.0,
-                              duration: Duration(milliseconds: 200),
-                              child: Container(
-                                height: (widget.height ?? 100),
-                                width: MediaQuery.of(context).size.width,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        return StreamBuilder<int>(
+                          stream: context.read<GeneralController>().streamCurrentPage,
+                          builder: (context, snapshotPage) {
+                            return StreamBuilder<CollectionsState>(
+                              stream: context.read<GeneralController>().collectionsController.streamCollections,
+                              builder: (context, snapshotCollections) {
+                                return Stack(
                                   children: [
-                                    InkWell(
-                                      onTap: (){
-                                        context.read<GeneralController>().restoreController.restoreSelect();
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                    AnimatedPositioned(
+                                      left: (snapshotCollections.hasData && snapshotCollections.data.stateSelect == CollectionsSelection.select)?0.0:(!snapshot.hasData)||!(snapshot.data.select??false)|| snapshotPage.data != 2?-MediaQuery.of(context).size.width*2:-MediaQuery.of(context).size.width,
+                                      duration: Duration(milliseconds: 200),
+                                      child: Row(
                                         children: [
                                           Container(
-                                            height: 30,
-                                            width: 30,
-                                            child: IconSvg(IconsSvg.swap, width: 30,height: 30),
-                                          ),
-                                          SizedBox(height: 8,),
-                                          Text("Восстановить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
+                                            height: (widget.height ?? 100),
+                                            width: MediaQuery.of(context).size.width,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                InkWell(
+                                                  onTap: (){
+                                                    context.read<GeneralController>().collectionsController.addToPlaylistSelect(context.read<GeneralController>());
+                                                    },
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: IconSvg(IconsSvg.addOutline, width: 30,height: 30),
+                                                      ),
+                                                      SizedBox(height: 8,),
+                                                      Text("Добавить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: (){
+                                                    //todo
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: IconSvg(IconsSvg.upload, width: 30,height: 30),
+                                                      ),
+                                                      SizedBox(height: 8,),
+                                                      Text("Поделиться", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: (){
+                                                    //todo
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: IconSvg(IconsSvg.download, width: 30,height: 30),
+                                                      ),
+                                                      SizedBox(height: 8,),
+                                                      Text("Скачать", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: (){
+                                                    context.read<GeneralController>().collectionsController.deleteSelectAudio(context.read<GeneralController>().restoreController);
 
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: IconSvg(IconsSvg.delete, width: 30,height: 30),
+                                                      ),
+                                                      SizedBox(height: 8,),
+                                                      Text("Удалить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: (widget.height ?? 100),
+                                            width: MediaQuery.of(context).size.width,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                InkWell(
+                                                  onTap: (){
+                                                    context.read<GeneralController>().restoreController.restoreSelect();
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: IconSvg(IconsSvg.swap, width: 30,height: 30),
+                                                      ),
+                                                      SizedBox(height: 8,),
+                                                      Text("Восстановить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: (){
+                                                    context.read<GeneralController>().restoreController.deleteSelect();
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: IconSvg(IconsSvg.delete, width: 30,height: 30),
+                                                      ),
+                                                      SizedBox(height: 8,),
+                                                      Text("Удалить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
+                                                    ],
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: (widget.height ?? 100),
+                                            width: MediaQuery.of(context).size.width,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: List.generate(widget.items.length, (index) {
+                                                Text text = widget.items[index].text;
+                                                if(widget.items[index].text != null)
+                                                  text.style.copyWith(fontSize: 16);
+
+                                                return Container(
+                                                  width:
+                                                  MediaQuery.of(context).size.width / widget.items.length,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      widget.items[index].onTap != null
+                                                          ? widget.items[index].onTap()
+                                                          : null;
+                                                      widget.onChange != null ? widget.onChange(index) : null;
+                                                    },
+                                                    child: Column(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        index == widget.currentIndex
+                                                            ? widget.items[index].icon
+                                                            : widget.items[index].iconInactive ??
+                                                            widget.items[index].icon,
+                                                        SizedBox(
+                                                          height: 12,
+                                                        ),
+                                                        text == null?SizedBox():Text(
+                                                          text.data,
+                                                          style: text.style.copyWith(
+                                                              color: index == widget.currentIndex
+                                                                  ? widget.items[index].colorActive
+                                                                  : widget.items[index].colorInactive),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              }),
+                                            ),
+                                          )
                                         ],
                                       ),
                                     ),
-                                    InkWell(
-
-                                      onTap: (){
-                                        context.read<GeneralController>().restoreController.deleteSelect();
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            height: 30,
-                                            width: 30,
-                                            child: IconSvg(IconsSvg.delete, width: 30,height: 30),
-                                          ),
-                                          SizedBox(height: 8,),
-                                          Text("Удалить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
-                                        ],
-                                      ),
-                                    )
+                                    AnimatedPositioned(
+                                      left: (!snapshot.hasData)||!(snapshot.data.select??false)|| snapshotPage.data != 2?0.0:MediaQuery.of(context).size.width,
+                                      duration: Duration(milliseconds: 200),
+                                      child: SizedBox(),
+                                    ),
                                   ],
-                                ),
-                              ),
-                            ),
-                            AnimatedPositioned(
-                              left: (!snapshot.hasData)||!(snapshot.data.select??false)?0.0:MediaQuery.of(context).size.width,
-                              duration: Duration(milliseconds: 200),
-                              child: Container(
-                                height: (widget.height ?? 100),
-                                width: MediaQuery.of(context).size.width,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: List.generate(widget.items.length, (index) {
-                                    Text text = widget.items[index].text;
-                                    if(widget.items[index].text != null)
-                                    text.style.copyWith(fontSize: 16);
-
-                                    return Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / widget.items.length,
-                                      child: InkWell(
-                                        onTap: () {
-                                          widget.items[index].onTap != null
-                                              ? widget.items[index].onTap()
-                                              : null;
-                                          widget.onChange != null ? widget.onChange(index) : null;
-                                        },
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            index == widget.currentIndex
-                                                ? widget.items[index].icon
-                                                : widget.items[index].iconInactive ??
-                                                    widget.items[index].icon,
-                                            SizedBox(
-                                              height: 12,
-                                            ),
-                                            text == null?SizedBox():Text(
-                                              text.data,
-                                              style: text.style.copyWith(
-                                                  color: index == widget.currentIndex
-                                                      ? widget.items[index].colorActive
-                                                      : widget.items[index].colorInactive),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ),
-                          ],
+                                );
+                              }
+                            );
+                          }
                         );
                       }
                     ),

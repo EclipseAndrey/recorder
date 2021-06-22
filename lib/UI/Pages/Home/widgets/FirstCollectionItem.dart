@@ -133,7 +133,7 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
                   width: width,
                   height: height,
                   color: cBlack,
-                  child: widget.item.isLocalPicture?Image.file(File(widget.item.picture),fit: BoxFit.cover,):Image(image: NetworkImage(widget.item.picture), fit: BoxFit.cover),
+                  child: widget.item.picture == null?Image.asset('assets/images/play.png', fit: BoxFit.cover,):widget.item.isLocalPicture?Image.file(File(widget.item.picture),fit: BoxFit.cover,):Image(image: NetworkImage(widget.item.picture), fit: BoxFit.cover),
                 ),
                 Container(
                   width: width,

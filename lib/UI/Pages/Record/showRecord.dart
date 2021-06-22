@@ -57,8 +57,7 @@ class _RecordPageState extends State<RecordPage> {
             child: StreamBuilder<RecordState>(
                 stream: widget.controller.recordController.streamRecord,
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData ||
-                      snapshot.data.status == RecordingStatus.Initialized) {
+                  if (!snapshot.hasData || snapshot.data.status == RecordingStatus.Initialized) {
                     return Center(
                       child: CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(cBlueSoso)),
@@ -206,7 +205,7 @@ class _RecordPageState extends State<RecordPage> {
                 GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () {
-                    widget.controller.recordController.tapPause();
+                    widget.controller.recordController.tapPause(widget.controller.collectionsController);
                   },
                   child: Container(
                     height: 80,
@@ -381,6 +380,10 @@ class _RecordPageState extends State<RecordPage> {
                     if (state.current.inSeconds > 15)
                       widget.controller.recordController.seek(
                           Duration(seconds: state.current.inSeconds - 15));
+                    else{
+                      widget.controller.recordController.seek(
+                          Duration(seconds: 0));
+                    }
                   } catch (e) {}
                 },
                 child: IconSvg(IconsSvg.back15)),
@@ -405,7 +408,13 @@ class _RecordPageState extends State<RecordPage> {
                     if (state.max.inSeconds - state.current.inSeconds > 15)
                       widget.controller.recordController.seek(
                           Duration(seconds: state.current.inSeconds + 15));
-                  } catch (e) {}
+                    else{
+                      widget.controller.recordController.seek(
+                          Duration(milliseconds: state.max.inMilliseconds));
+                    }
+                  } catch (e) {
+                    print(e);
+                  }
                 },
                 child: IconSvg(IconsSvg.next15)),
           ],
@@ -442,7 +451,7 @@ class _RecordPageState extends State<RecordPage> {
                 max: (state == null || state.max == null
                     ? 1.toDouble()
                     : state.max.inMilliseconds.toDouble()),
-                value: (state == null || state.current == null
+                value: (state == null || state.current == null || state.state == AudioPlayerState.STOPPED
                     ? 0.toDouble()
                     : state.current.inMilliseconds.toDouble()),
                 onChangeStart: (info) {
@@ -468,7 +477,7 @@ class _RecordPageState extends State<RecordPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${time(state == null ? Duration(seconds: 0) : state.current)}",
+                  "${time(state == null|| state.state == AudioPlayerState.STOPPED ? Duration(seconds: 0) : state.current)}",
                   style: TextStyle(
                     color: cBlack,
                     fontSize: 16,
@@ -477,7 +486,7 @@ class _RecordPageState extends State<RecordPage> {
                   ),
                 ),
                 Text(
-                  "${time(state == null ? Duration(seconds: 0) : state.max)}",
+                  "${time(state == null  ? Duration(seconds: 0) : state.max)}",
                   style: TextStyle(
                     color: cBlack,
                     fontSize: 16,

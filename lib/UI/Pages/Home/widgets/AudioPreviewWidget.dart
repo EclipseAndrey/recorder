@@ -81,10 +81,44 @@ class _AudioPreviewState extends State<AudioPreview> {
 
   Widget audiosPreview(BuildContext context) {
     return widget.items.length == 0
-        ? Column(
+        ? emptyAudio()
+        : Padding(
+            padding: const EdgeInsets.only(top: 14.0),
+            child: Column(
+              children: [
+                AudioPreviewGenerate(
+                  isHome: true,
+                  items: widget.items,
+                ),
+
+              ],
+            ),
+          );
+  }
+
+  Widget emptyAudio(){
+    double hAll;
+    double hEmptyView;
+    bool isScroll = true;
+
+    hAll = 64 +48 +24 +44 + ((MediaQuery.of(context).size.width / 2 - 43 / 2)*240/183);
+    hEmptyView = 48.0+58.0+38.0+105.0+24.0;
+    isScroll = (context.read<GeneralController>().collectionsController.audiosAll != null && context.read<GeneralController>().collectionsController.audiosAll.isNotEmpty )?true:(hAll+hEmptyView > MediaQuery.of(context).size.height);
+
+    if(isScroll){
+
+    }else{
+      return Container(
+
+        height: 2000,
+        alignment: Alignment.topCenter,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: hEmptyView,
+          child: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 57.0),
+              Align(
+                alignment: Alignment.center,
                 child: Text(
                   S.of(context).text_of_empty_audios,
                   textAlign: TextAlign.center,
@@ -95,18 +129,43 @@ class _AudioPreviewState extends State<AudioPreview> {
                       color: cBlack.withOpacity(0.5)),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 35.0),
-                child: IconSvg(IconsSvg.audioArrow, width: 60, height: 60),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Positioned(
+                  bottom: 105,
+                  child: IconSvg(IconsSvg.audioArrow, width: 60, height: 60),),
               )
             ],
-          )
-        : Padding(
-            padding: const EdgeInsets.only(top: 14.0),
-            child: AudioPreviewGenerate(
-              isHome: true,
-              items: widget.items,
-            ),
-          );
+          ),
+        ),
+      );
+    }
+
+
+
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 57.0),
+          child: Text(
+            S.of(context).text_of_empty_audios,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20,
+                letterSpacing: 0.5,
+                fontWeight: FontWeight.w400,
+                color: cBlack.withOpacity(0.5)),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 35.0),
+          child: IconSvg(IconsSvg.audioArrow, width: 60, height: 60),
+        ),
+        SizedBox(
+          height: 110,
+        )
+      ],
+    );
   }
 }

@@ -118,7 +118,7 @@ class _PlayerPageState extends State<PlayerPage> {
                         menuItems:[
 
                           FocusedMenuItem(onPressed: (){
-                            addToPlaylist(state.item, context.read<GeneralController>());
+                            addToPlaylist([state.item], context.read<GeneralController>());
                           }, title: Text("Добавить в подборку",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
                           FocusedMenuItem(onPressed: (){
                             editAudio(state.item, context.read<GeneralController>());
@@ -151,6 +151,9 @@ class _PlayerPageState extends State<PlayerPage> {
                         if(state.current.inSeconds > 15)
                           widget.controller.playerController.seek(
                               Duration(seconds: state.current.inSeconds - 15));
+                        else
+                          widget.controller.playerController.seek(
+                              Duration(seconds: 0));
                       }catch(e){
 
                       }
@@ -173,6 +176,10 @@ class _PlayerPageState extends State<PlayerPage> {
                         if(state.max.inSeconds - state.current.inSeconds > 15 )
                           widget.controller.playerController.seek(
                               Duration(seconds: state.current.inSeconds + 15));
+                        else{
+                          widget.controller.playerController.seek(
+                              Duration(milliseconds: state.max.inMilliseconds-1));
+                        }
                       }catch(e){
 
                       }

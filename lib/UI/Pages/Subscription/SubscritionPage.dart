@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Subscription/widgets/chooseSubscription.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
@@ -6,6 +7,7 @@ import 'package:recorder/UI/widgets/Background.dart';
 import 'package:recorder/UI/widgets/ButtonOrange.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
+import 'package:provider/provider.dart';
 
 class SubscriptionPage extends StatefulWidget {
   @override
@@ -30,6 +32,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           buttonMenu: true,
           top: 10,
           height: 80,
+          tapLeftButton: (){
+            context.read<GeneralController>().setMenu(true);
+          },
           child: Column(
             children: [
               Text(

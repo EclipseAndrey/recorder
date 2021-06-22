@@ -3,6 +3,7 @@ import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/UI/Pages/Collections/CollectionsPage.dart';
+import 'package:recorder/UI/Pages/Search/SearchPage.dart';
 import 'file:///C:/Users/koren/AndroidStudioProjects/recorder/lib/UI/Pages/Restore/Restore.dart';
 import 'package:recorder/UI/widgets/MainMenu.dart';
 import 'package:recorder/models/AudioModel.dart';
@@ -77,6 +78,7 @@ class _GeneralState extends State<General> {
                                 Restore(),
                                 AudioListPage(),
                                 ProfilePage(),
+                                SearchPage(),
                               ],
                             ),
                           ],

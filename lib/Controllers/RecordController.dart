@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' as io;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:recorder/Controllers/CollectionsController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/Rest/Audio/AudioProvide.dart';
 import 'package:recorder/Utils/app_keys.dart';
@@ -88,9 +89,13 @@ class RecordController{
     setState();
   }
   recordStop()async{
+    ////////////////////////////////////////////////////0000000000000000000000000000000000000000000000000000000000000000000000
     _recorder.stop();
     _timer.cancel();
+    try{stop();}catch(e){}
     _current = await _recorder.current(channel: 0);
+    _audioPlayer.setUrl(_current.path, isLocal: true);
+
     setState();
 
 
@@ -102,18 +107,33 @@ class RecordController{
     }else if(_playerState == AudioPlayerState.PAUSED){
       resume();
     }else{
-
       play();
     }
   }
 
 
 
-  tapPause()async{
+  tapPause(CollectionsController collectionsController)async{
     await recordPause();
     await recordStop();
     textEditingControllerDesc.text = "";
-    textEditingControllerName.text = "Аудиозапись 1";
+    String out = "Аудиозапись ";
+    bool find = false;
+    int counter = 1;
+    do{
+      find = false;
+      for(int i = 0; i < collectionsController.audiosAll.length; i++){
+        print("${collectionsController.audiosAll[i].name}  ${out+counter.toString()}  " );
+        if(collectionsController.audiosAll[i].name.contains(out+counter.toString())){
+          find = true;
+          break;
+        }
+      }
+      if(find) counter++;
+    }while(find);
+    out+=counter.toString();
+
+    textEditingControllerName.text = out;
   }
 
   closeSheet()async{
@@ -194,6 +214,7 @@ class RecordController{
       _maxDuration = d;
       _loadingPLayer = false;
       setState();
+      print("player record max completed ${_maxDuration.inSeconds}");
     });
 
     ///Current
@@ -205,6 +226,9 @@ class RecordController{
     ///Status
     _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState s) {
       _playerState = s;
+      if(s == AudioPlayerState.COMPLETED){
+        _currentDuration = _maxDuration;
+      }
       setState();
     });
     _audioPlayer.onPlayerCompletion.listen((event) {
@@ -215,13 +239,19 @@ class RecordController{
   play() async {
     print("play ${_current.path}");
 
-    int result = await _audioPlayer.play(_current.path, isLocal: true);
-    if (result == 1) {
-      _loadingPLayer = true;
-    }else{
 
+    print("PLAYER RECORD STATE  ====================  "+_audioPlayer.state.toString());
+    if(_audioPlayer.state == AudioPlayerState.PAUSED) {
+      int result = await _audioPlayer.play(_current.path, isLocal: true);
+      if (result == 1) {
+        _loadingPLayer = true;
+      } else {
+
+      }
+      setState();
+    }else{
+      _audioPlayer.resume();
     }
-    setState();
   }
   pause(){
     _audioPlayer.pause();

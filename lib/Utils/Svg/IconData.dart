@@ -37,4 +37,5 @@ class IconsSvg {
   static int get wallet => 33;
   static int get arrowBottom => 34;
   static int get swap => 35;
+  static int get addOutline => 36;
 }

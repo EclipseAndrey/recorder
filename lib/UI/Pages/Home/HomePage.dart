@@ -20,12 +20,44 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    load();
+  }
+
+  load()async{
     context.read<GeneralController>().homeController.load();
+    setState(() {
+
+    });
+    initSize();
+  }
+
+  double hAll;
+  double hEmptyView= 48.0+58.0+38.0+105.0+24.0;
+  bool isScroll = true;
+
+  initSize(){
+    hAll = 64 +48 +24 +44 + ((MediaQuery.of(context).size.width / 2 - 43 / 2)*240/183);
+    hEmptyView = 48.0+58.0+38.0+105.0+24.0;
+    bool isScrollStep = (hAll > MediaQuery.of(context).size.height+hEmptyView)||
+        (context.read<GeneralController>().collectionsController.audiosAll != null &&
+            context.read<GeneralController>().collectionsController.audiosAll.isNotEmpty );
+    if(isScrollStep != isScroll)
+      setState(() {
+      isScroll = isScrollStep;
+    });
   }
 
 
+
+
+  //64 48 24 44 ((MediaQuery.of(context).size.width / 2 - 43 / 2)) * 240 / 183
+  //
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: cBackground.withOpacity(0.0),
@@ -39,7 +71,7 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: (context.read<GeneralController>().collectionsController.audiosAll != null && context.read<GeneralController>().collectionsController.audiosAll.isNotEmpty )?BouncingScrollPhysics():((64 +48 +24 +44 + ((MediaQuery.of(context).size.width / 2 - 43 / 2)*240/183))+hEmptyView > MediaQuery.of(context).size.height)?BouncingScrollPhysics():NeverScrollableScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: StreamBuilder<HomeState>(
@@ -66,9 +98,8 @@ class _HomePageState extends State<HomePage> {
                         items:  (snapshot.data == null?[]:snapshot.data.audios),
                       ),
                     ),
-                    SizedBox(
-                      height: 110,
-                    )
+                    (context.read<GeneralController>().collectionsController.audiosAll != null && context.read<GeneralController>().collectionsController.audiosAll.isNotEmpty )?SizedBox(height: 110,):((64 +48 +24 +44 + ((MediaQuery.of(context).size.width / 2 - 43 / 2)*240/183))+hEmptyView > MediaQuery.of(context).size.height)?SizedBox(height: 0,):SizedBox(height: 0,),
+
                   ],
                 );
               }

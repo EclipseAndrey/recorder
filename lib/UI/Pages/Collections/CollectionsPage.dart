@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/CollectionsSate.dart';
 import 'package:provider/provider.dart';
+import 'package:recorder/UI/Pages/Collections/SateSelectSeveralCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateAddAudioCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateAddCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateEditCollection.dart';
@@ -41,6 +42,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
             return StateAddAudioCollection();
           }else if(snapshot.data.stateSelect == CollectionsSelection.add){
             return StateAddCollection();
+          }else if(snapshot.data.stateSelect == CollectionsSelection.select){
+            return StateSelectSeveralCollection();
           }else{
             return StateLoadingCollection();
           }
